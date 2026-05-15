@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+scikit-learn
+pandas
+joblib
+langchain
+langchain-community
+chromadb
+pypdf
+sentence-transformers
+langchain-ollama
+chromadb
+pypdf
+sentence-transformers
+python-dotenv
+ollama
