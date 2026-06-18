@@ -15,3 +15,8 @@ pypdf
 sentence-transformers
 python-dotenv
 ollama
+mlflow==2.13.2
+boto3
+prometheus-fastapi-instrumentator
+pytest
+httpx

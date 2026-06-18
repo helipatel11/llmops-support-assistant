@@ -28,7 +28,9 @@ print(f"Created {len(texts)} chunks")
 
 # Ollama embeddings
 embedding = OllamaEmbeddings(
-    model="llama3"
+    # model="llama3"
+    model="nomic-embed-text"
+
 )
 
 

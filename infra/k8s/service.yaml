@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: support-assistant
+  namespace: llmops
+
+spec:
+  selector:
+    app: support-assistant
+
+  ports:
+  - port: 80
+    targetPort: 8000
+
+  type: ClusterIP

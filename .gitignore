@@ -74,3 +74,8 @@ secrets/
 
 # Ollama local files
 ollama/
+
+secret.yaml
+*.pem
+.env
+.env.*

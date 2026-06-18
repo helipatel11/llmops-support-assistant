@@ -1,46 +1,73 @@
 import pandas as pd
 import joblib
+import mlflow
+import mlflow.sklearn
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score
+
+mlflow.set_tracking_uri("file:./mlruns")
+
+# MLflow experiment
+mlflow.set_experiment("support-ticket-classifier")
 
 
 # Load dataset
 df = pd.read_csv("training/data/tickets.csv")
 
-# Features and labels
 X = df["text"]
 y = df["priority"]
 
-# Vectorization
-vectorizer = TfidfVectorizer()
 
-X_vectorized = vectorizer.fit_transform(X)
+with mlflow.start_run():
 
-# Split
-X_train, X_test, y_train, y_test = train_test_split(
-    X_vectorized,
-    y,
-    test_size=0.2,
-    random_state=42
-)
+    # Vectorization
+    vectorizer = TfidfVectorizer()
 
-# Model
-model = LogisticRegression()
+    X_vectorized = vectorizer.fit_transform(X)
 
-# Train
-model.fit(X_train, y_train)
+    # Split
+    X_train, X_test, y_train, y_test = train_test_split(
+        X_vectorized,
+        y,
+        test_size=0.2,
+        random_state=42
+    )
 
-# Predictions
-predictions = model.predict(X_test)
+    # Model
+    model = LogisticRegression()
 
-# Metrics
-print(classification_report(y_test, predictions))
+    # Train
+    model.fit(X_train, y_train)
 
-# Save artifacts
-joblib.dump(model, "training/models/model.pkl")
-joblib.dump(vectorizer, "training/models/vectorizer.pkl")
+    # Predict
+    predictions = model.predict(X_test)
 
-print("Model and vectorizer saved successfully.")
+    # Accuracy
+    accuracy = accuracy_score(y_test, predictions)
+
+    print(f"Accuracy: {accuracy}")
+
+    # Log params
+    mlflow.log_param("model_type", "LogisticRegression")
+
+    # Log metrics
+    mlflow.log_metric("accuracy", accuracy)
+
+    # Log model
+    mlflow.sklearn.log_model(
+        model,
+        "model"
+    )
+
+    # Save artifacts locally
+    joblib.dump(model, "training/models/model.pkl")
+    joblib.dump(vectorizer, "training/models/vectorizer.pkl")
+
+    # Log artifacts
+    mlflow.log_artifact("training/models/model.pkl")
+    mlflow.log_artifact("training/models/vectorizer.pkl")
+
+    print("Training complete.")

@@ -3,11 +3,11 @@ from pydantic import BaseModel
 
 from app.services.predict import predict_priority
 from app.services.rag import ask_question
-
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI(title="LLMOps Support Assistant")
 
-
+Instrumentator().instrument(app).expose(app)
 class TicketRequest(BaseModel):
     text: str
 
@@ -25,7 +25,6 @@ def root():
 def health():
     return {"status": "healthy"}
 
-
 @app.post("/predict")
 def predict(request: TicketRequest):
 
@@ -35,7 +34,6 @@ def predict(request: TicketRequest):
         "text": request.text,
         "prediction": prediction
     }
-
 
 @app.post("/ask")
 def ask(request: QuestionRequest):
