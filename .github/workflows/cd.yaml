@@ -2,7 +2,7 @@ name: CD Pipeline
 
 on:
   workflow_run:
-    workflows: ["Build, Test and Push to ECR"]
+    workflows: ["Build and Push to ECR"]
     types:
       - completed
 
