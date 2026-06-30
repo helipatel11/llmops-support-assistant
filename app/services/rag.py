@@ -41,6 +41,8 @@ llm = ChatOllama(
 def ask_question(question: str):
     logger.info(f"Question received: {question}")
 
+    rag_requests_counter.inc()   
+    
     docs = retriever.invoke(question)
 
     logger.info(f"Retrieved {len(docs)} docs")
@@ -48,7 +50,7 @@ def ask_question(question: str):
     context = "\n\n".join(
         [doc.page_content for doc in docs]
     )
-    # rag_requests_counter.inc()
+
     prompt = f"""
 You are an IT support assistant.
 
