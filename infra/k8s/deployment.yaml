@@ -1,11 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: support-assistant
   namespace: llmops
 
 spec:
   replicas: 2
+
+  strategy:
+    type: RollingUpdate
+
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
 
   selector:
     matchLabels:
@@ -22,20 +30,35 @@ spec:
 
       containers:
         - name: support-assistant
+
           image: 183631323298.dkr.ecr.us-east-1.amazonaws.com/llmops-support-assistant:v1
+
           imagePullPolicy: Always
 
           ports:
             - containerPort: 8000
 
           envFrom:
+            - configMapRef:
+                name: llmops-config
+
             - secretRef:
                 name: llmops-secret
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
 
           readinessProbe:
             httpGet:
               path: /health
               port: 8000
+
             initialDelaySeconds: 10
             periodSeconds: 5
 
@@ -43,5 +66,6 @@ spec:
             httpGet:
               path: /health
               port: 8000
+
             initialDelaySeconds: 30
             periodSeconds: 10

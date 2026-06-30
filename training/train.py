@@ -57,10 +57,17 @@ with mlflow.start_run():
     mlflow.log_metric("accuracy", accuracy)
 
     # Log model
+    
+    # mlflow.sklearn.log_model(
+    #     model,
+    #     "model"
+    # )
+
     mlflow.sklearn.log_model(
-        model,
-        "model"
-    )
+    sk_model=model,
+    artifact_path="model",
+    registered_model_name="support-ticket-classifier"
+)
 
     # Save artifacts locally
     joblib.dump(model, "training/models/model.pkl")
