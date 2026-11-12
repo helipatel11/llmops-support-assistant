@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "timestamp_utc": "2026-11-12T18:40:52+00:00",
-    "git_commit": "4efd724",
+    "timestamp_utc": "2026-11-12T18:42:31+00:00",
+    "git_commit": "eaef223-dirty",
     "python": "3.9.6",
     "machine": "Darwin arm64"
   },
@@ -12,27 +12,27 @@
   "dataset": {
     "path": "training/data/tickets_test.csv",
     "rows": 150,
-    "sha256": "427f55ff86f7"
+    "sha256": "9274218fe93e"
   },
-  "accuracy": 0.3067,
-  "macro_f1": 0.2221,
+  "accuracy": 0.3533,
+  "macro_f1": 0.2877,
   "per_class": {
     "high": {
-      "precision": 0.2977,
-      "recall": 0.8667,
-      "f1": 0.4432,
+      "precision": 0.314,
+      "recall": 0.8444,
+      "f1": 0.4578,
       "support": 45
     },
     "medium": {
-      "precision": 1.0,
-      "recall": 0.0167,
-      "f1": 0.0328,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
       "support": 60
     },
     "low": {
-      "precision": 0.3333,
-      "recall": 0.1333,
-      "f1": 0.1905,
+      "precision": 0.5172,
+      "recall": 0.3333,
+      "f1": 0.4054,
       "support": 45
     }
   },
@@ -46,19 +46,19 @@
     "columns_are": "predicted label",
     "matrix": [
       [
-        39,
+        38,
         0,
-        6
+        7
       ],
       [
         53,
-        1,
-        6
+        0,
+        7
       ],
       [
-        39,
+        30,
         0,
-        6
+        15
       ]
     ]
   }

@@ -1,151 +1,151 @@
 text,priority
-Not urgent but the billing system is showing errors now and then since 9am,medium
-"Small request, order service is showing the wrong timezone label, whenever you have time",low
-"Could you check mobile app, it has been timing out sometimes after the update",medium
-"Could you check file upload, it has been dropping connections for the last hour",medium
-"Small request, billing system is asking me to log in once a week, nothing is blocked",low
-login service outage affecting the whole company for the last hour,high
-shared drive outage affecting every customer for the last hour,high
-"Small request, build pipeline is showing a typo, nothing is blocked",low
-"Could you check Kubernetes cluster, it has been taking minutes to load since 9am",medium
-"Small request, reporting dashboard is showing the wrong timezone label, nothing is blocked",low
-Just letting you know the CRM is missing a dark mode option for one user,low
-"Small request, build pipeline is missing a dark mode option, nothing is blocked",low
-"We have a major problem, mobile app is crashing on startup for the whole company",high
-Not urgent but the SSO is dropping connections since yesterday,medium
-"Small request, billing system is sorting names oddly, nothing is blocked",low
-some customers say billing system is timing out sometimes; we can manage for today,medium
-Not urgent but the mobile app is dropping connections since yesterday,medium
-"Small request, search page is showing a typo, it is only cosmetic",low
-"Could you check HR portal, it has been taking minutes to load for the last hour",medium
-"We have a major problem, payment API is unreachable for the whole company",high
-Please escalate: mobile app crashing on startup and orders are failing,high
-Just letting you know the Kubernetes cluster is showing the wrong timezone label for my account,low
-"We have a major problem, customer database is crashing on startup for all users",high
-Not urgent but the SSO is failing intermittently after the update,medium
-Just letting you know the billing system is showing the wrong timezone label for our intern,low
-Please escalate: SSO not responding at all and orders are failing,high
-Just letting you know the build pipeline is missing a dark mode option for one user,low
-"We have a major problem, email server is unreachable for all regions",high
-Just letting you know the mobile app is asking me to log in once a week for my laptop,low
-two people on the sales team say VPN is showing errors now and then; retrying usually works,medium
-Not urgent but the search page is taking minutes to load since 9am,medium
-"Small request, customer database is showing the wrong timezone label, it is only cosmetic",low
-a few users say search page is dropping connections; it slows the team down,medium
-Not urgent but the login service is showing errors now and then for the last hour,medium
-reporting dashboard outage affecting the entire marketing team since 9am,high
-Please escalate: HR portal unreachable and we are losing revenue,high
-Not urgent but the CRM is slow for the last hour,medium
-Not urgent but the Kubernetes cluster is timing out sometimes since 9am,medium
-Would it be possible to update the shared drive? It is showing a typo,low
-"Small request, order service is asking me to log in once a week, just a suggestion",low
-"We have a major problem, search page is unreachable for everyone",high
-"Small request, email server is showing a typo, nothing is blocked",low
-Please escalate: invoice service completely down and customers cannot pay,high
-"Could you check reporting dashboard, it has been timing out sometimes since this morning",medium
-Not urgent but the checkout page is taking minutes to load for the last hour,medium
-Please escalate: login service rejecting every request and customers cannot pay,high
-"We have a major problem, build pipeline is not responding at all for the entire engineering team",high
-"We have a major problem, reporting dashboard is not responding at all for the entire finance team",high
-"Could you check billing system, it has been failing intermittently for the last hour",medium
-Please escalate: search page returning 500 errors and nobody can work,high
-Kubernetes cluster outage affecting every customer for the last hour,high
-"Could you check mobile app, it has been showing errors now and then after the update",medium
-Not urgent but the invoice service is showing errors now and then after the update,medium
-Just letting you know the checkout page is showing a typo for a new starter,low
-Just letting you know the checkout page is sorting names oddly for me,low
-Not urgent but the VPN is showing errors now and then since yesterday,medium
-Would it be possible to update the Kubernetes cluster? It is showing the wrong timezone label,low
-Please escalate: checkout page unreachable and nobody can work,high
-"Small request, search page is missing a dark mode option, whenever you have time",low
-two people on the engineering team say search page is failing intermittently; there is a workaround,medium
-Please escalate: mobile app returning 500 errors and we are losing revenue,high
-"Small request, customer database is sorting names oddly, it is only cosmetic",low
-Just letting you know the shared drive is using the old logo for my account,low
-Would it be possible to update the checkout page? It is asking me to log in once a week,low
-"We have a major problem, HR portal is unreachable for all regions",high
-users in one region say VPN is taking minutes to load; retrying usually works,medium
-users in one region say payment API is taking minutes to load; it is affecting productivity,medium
-HR portal outage affecting all users since 9am,high
-reporting dashboard outage affecting the entire support team since 9am,high
-several users say payment API is failing intermittently; we can manage for today,medium
-reporting dashboard outage affecting every customer for the last hour,high
-Just letting you know the order service is showing a typo for one user,low
-Would it be possible to update the payment API? It is missing a dark mode option,low
-"Could you check HR portal, it has been timing out sometimes for the last hour",medium
-"We have a major problem, reporting dashboard is returning 500 errors for the entire marketing team",high
-a few users say HR portal is taking minutes to load; we can manage for today,medium
-Please escalate: VPN completely down and we are breaching our SLA,high
-Just letting you know the reporting dashboard is showing a typo for my account,low
-users in one region say mobile app is dropping connections; there is a workaround,medium
-Just letting you know the order service is asking me to log in once a week for our intern,low
-Would it be possible to update the Kubernetes cluster? It is using the old logo,low
-"Small request, mobile app is using the old logo, no rush",low
-"We have a major problem, checkout page is completely down for every customer",high
-"Small request, mobile app is showing the wrong timezone label, low priority",low
-"Small request, build pipeline is asking me to log in once a week, it is only cosmetic",low
-Not urgent but the Kubernetes cluster is timing out sometimes since the last deploy,medium
-"Could you check payment API, it has been taking minutes to load after the update",medium
-Not urgent but the order service is slow after the update,medium
-Just letting you know the mobile app is showing the wrong timezone label for our intern,low
-"Could you check HR portal, it has been dropping connections since yesterday",medium
-Would it be possible to update the billing system? It is showing the wrong timezone label,low
-Not urgent but the Wi-Fi is timing out sometimes since yesterday,medium
-Would it be possible to update the build pipeline? It is using the old logo,low
-"Small request, billing system is showing the wrong timezone label, low priority",low
-"We have a major problem, SSO is not responding at all for all regions",high
-Just letting you know the payment API is missing a dark mode option for one user,low
-several users say reporting dashboard is slow; it slows the team down,medium
-"Could you check file upload, it has been timing out sometimes for the last hour",medium
-Please escalate: SSO crashing on startup and we are losing revenue,high
-"Could you check checkout page, it has been timing out sometimes after the update",medium
-Not urgent but the payment API is timing out sometimes since 9am,medium
-one office say Kubernetes cluster is dropping connections; we can manage for today,medium
-several users say Wi-Fi is showing errors now and then; it is affecting productivity,medium
-Please escalate: customer database returning 500 errors and we are losing revenue,high
-Please escalate: reporting dashboard not responding at all and orders are failing,high
-"We have a major problem, customer database is unreachable for all regions",high
-Not urgent but the order service is taking minutes to load after the update,medium
-Not urgent but the invoice service is slow since 9am,medium
-"Could you check mobile app, it has been showing errors now and then since yesterday",medium
-"Small request, customer database is sorting names oddly, low priority",low
-"Could you check build pipeline, it has been dropping connections since yesterday",medium
-Just letting you know the Wi-Fi is showing the wrong timezone label for a new starter,low
-two people on the legal team say reporting dashboard is timing out sometimes; we can manage for today,medium
-"Could you check search page, it has been showing errors now and then since this morning",medium
-users in one region say CRM is dropping connections; there is a workaround,medium
-Not urgent but the shared drive is failing intermittently since this morning,medium
-shared drive outage affecting everyone since 9am,high
-Not urgent but the SSO is slow since yesterday,medium
-"Could you check login service, it has been dropping connections since 9am",medium
-"We have a major problem, billing system is rejecting every request for everyone",high
-"Small request, checkout page is using the old logo, low priority",low
-users in one region say checkout page is dropping connections; there is a workaround,medium
-Please escalate: checkout page rejecting every request and this is a production outage,high
-Please escalate: login service not responding at all and we are breaching our SLA,high
-"Small request, CRM is showing the wrong timezone label, it is only cosmetic",low
-Just letting you know the Wi-Fi is showing the wrong timezone label for one user,low
-Not urgent but the order service is failing intermittently since the last deploy,medium
-shared drive outage affecting all regions since the last deploy,high
-"We have a major problem, checkout page is unreachable for every customer",high
-Please escalate: build pipeline returning 500 errors and this is a production outage,high
-Just letting you know the email server is sorting names oddly for our intern,low
-"Could you check email server, it has been taking minutes to load since yesterday",medium
-Not urgent but the billing system is failing intermittently since the last deploy,medium
-"We have a major problem, SSO is rejecting every request for all regions",high
-order service outage affecting every customer since 9am,high
-Not urgent but the email server is timing out sometimes since yesterday,medium
-users in one region say shared drive is showing errors now and then; we can manage for today,medium
-Please escalate: login service crashing on startup and nobody can work,high
-"Could you check HR portal, it has been dropping connections since this morning",medium
-Not urgent but the CRM is taking minutes to load after the update,medium
-two people on the HR team say invoice service is timing out sometimes; it is affecting productivity,medium
-Would it be possible to update the reporting dashboard? It is showing the wrong timezone label,low
-Not urgent but the VPN is taking minutes to load since this morning,medium
-"We have a major problem, customer database is returning 500 errors for all users",high
-"Small request, billing system is using the old logo, no rush",low
-"Small request, CRM is showing a typo, nothing is blocked",low
-search page outage affecting the whole company since the last deploy,high
-Please escalate: file upload not responding at all and orders are failing,high
-"Could you check search page, it has been failing intermittently for the last hour",medium
-"We have a major problem, file upload is returning 500 errors for the entire legal team",high
+a handful of people say payment API is lagging badly at times; refreshing the page helps,medium
+Please escalate: CRM dead for everyone and no payments are going through,high
+Would it be possible to update the customer database? It is misspelling a heading,low
+Not urgent but the SSO is erroring every so often after the update,medium
+Please escalate: billing system throwing 503s and no payments are going through,high
+Would it be possible to update the checkout page? It is listing items in a weird order,low
+"Could you check file upload, it has been flaky since this morning",medium
+customer database outage affecting everyone in the building for the last hour,high
+Not urgent but the invoice service is flaky since yesterday,medium
+Not urgent but the invoice service is lagging badly at times for the last hour,medium
+Not urgent but the email server is flaky after the update,medium
+"Could you check SSO, it has been sluggish for the last hour",medium
+Just letting you know the checkout page is misspelling a heading for just me,low
+Not urgent but the VPN is erroring every so often since yesterday,medium
+"Small request, mobile app is listing items in a weird order, not important",low
+Just letting you know the customer database is listing items in a weird order for my profile,low
+Not urgent but the SSO is erroring every so often for the last hour,medium
+"Could you check VPN, it has been erroring every so often for the last hour",medium
+part of the legal team say email server is flaky; refreshing the page helps,medium
+"We have a major problem, customer database is totally broken for the full engineering department",high
+"We have a major problem, login service is dead for everyone for everyone in the building",high
+part of the finance team say HR portal is sluggish; it is hurting our throughput,medium
+Just letting you know the checkout page is misspelling a heading for a single colleague,low
+payment API outage affecting the full marketing department since yesterday,high
+Not urgent but the order service is erroring every so often since 9am,medium
+Would it be possible to update the SSO? It is listing items in a weird order,low
+Not urgent but the VPN is sluggish since yesterday,medium
+Please escalate: customer database hard down and sales have stopped,high
+"We have a major problem, checkout page is dead for everyone for everyone in the building",high
+Would it be possible to update the invoice service? It is using a hard-to-read font,low
+"Small request, mobile app is misspelling a heading, not important",low
+"Could you check checkout page, it has been sluggish since this morning",medium
+"Small request, shared drive is misspelling a heading, purely a nice-to-have",low
+"Could you check build pipeline, it has been lagging badly at times for the last hour",medium
+Please escalate: CRM dead for everyone and sales have stopped,high
+"Could you check Wi-Fi, it has been sluggish since the last deploy",medium
+"We have a major problem, build pipeline is throwing 503s for the full legal department",high
+a handful of people say mobile app is flaky; it is hurting our throughput,medium
+Would it be possible to update the login service? It is showing an outdated icon,low
+Please escalate: VPN totally broken and no payments are going through,high
+part of the operations team say search page is sluggish; refreshing the page helps,medium
+Please escalate: invoice service totally broken and no payments are going through,high
+Not urgent but the mobile app is erroring every so often after the update,medium
+a couple of clients say VPN is lagging badly at times; refreshing the page helps,medium
+Please escalate: mobile app dead for everyone and the business is at a standstill,high
+"We have a major problem, SSO is hard down for the full engineering department",high
+"Could you check VPN, it has been lagging badly at times for the last hour",medium
+Please escalate: billing system totally broken and sales have stopped,high
+part of the engineering team say email server is lagging badly at times; refreshing the page helps,medium
+"We have a major problem, invoice service is throwing 503s for the full operations department",high
+Would it be possible to update the build pipeline? It is using a hard-to-read font,low
+Would it be possible to update the invoice service? It is showing an outdated icon,low
+"We have a major problem, login service is hard down for the full engineering department",high
+Just letting you know the file upload is misspelling a heading for a single colleague,low
+a couple of clients say Kubernetes cluster is lagging badly at times; refreshing the page helps,medium
+payment API outage affecting everyone in the building for the last hour,high
+Just letting you know the customer database is using a hard-to-read font for just me,low
+"We have a major problem, search page is totally broken for the full HR department",high
+Would it be possible to update the VPN? It is listing items in a weird order,low
+"Could you check shared drive, it has been lagging badly at times since the last deploy",medium
+Please escalate: email server throwing 503s and no payments are going through,high
+Just letting you know the email server is showing an outdated icon for just me,low
+a couple of clients say mobile app is sluggish; we found a temporary workaround,medium
+Would it be possible to update the search page? It is showing an outdated icon,low
+"Could you check billing system, it has been sluggish since yesterday",medium
+Would it be possible to update the search page? It is misspelling a heading,low
+"Could you check Kubernetes cluster, it has been lagging badly at times since the last deploy",medium
+"Small request, checkout page is listing items in a weird order, purely a nice-to-have",low
+Just letting you know the shared drive is listing items in a weird order for just me,low
+part of the support team say invoice service is lagging badly at times; it is hurting our throughput,medium
+Not urgent but the file upload is flaky for the last hour,medium
+part of the sales team say VPN is erroring every so often; refreshing the page helps,medium
+Just letting you know the customer database is using a hard-to-read font for a single colleague,low
+"We have a major problem, HR portal is hard down for everyone in the building",high
+"Small request, login service is listing items in a weird order, no impact on work",low
+Please escalate: invoice service totally broken and sales have stopped,high
+Please escalate: billing system dead for everyone and the business is at a standstill,high
+Just letting you know the HR portal is showing an outdated icon for a single colleague,low
+"Could you check shared drive, it has been flaky since the last deploy",medium
+file upload outage affecting all of our clients since yesterday,high
+reporting dashboard outage affecting everyone in the building since 9am,high
+"We have a major problem, file upload is totally broken for the full marketing department",high
+Not urgent but the order service is flaky since the last deploy,medium
+part of the support team say Kubernetes cluster is flaky; we found a temporary workaround,medium
+a couple of clients say search page is lagging badly at times; we found a temporary workaround,medium
+"Could you check VPN, it has been flaky since this morning",medium
+Not urgent but the email server is erroring every so often after the update,medium
+Not urgent but the shared drive is lagging badly at times since 9am,medium
+"We have a major problem, CRM is hard down for all of our clients",high
+Please escalate: Kubernetes cluster hard down and no payments are going through,high
+Would it be possible to update the build pipeline? It is showing an outdated icon,low
+Just letting you know the billing system is using a hard-to-read font for my profile,low
+Just letting you know the login service is misspelling a heading for my profile,low
+Not urgent but the mobile app is erroring every so often since 9am,medium
+Would it be possible to update the payment API? It is misspelling a heading,low
+"Could you check email server, it has been sluggish after the update",medium
+Would it be possible to update the reporting dashboard? It is using a hard-to-read font,low
+"Small request, login service is showing an outdated icon, no impact on work",low
+Would it be possible to update the mobile app? It is showing an outdated icon,low
+Not urgent but the HR portal is flaky for the last hour,medium
+"Could you check login service, it has been erroring every so often since the last deploy",medium
+part of the marketing team say search page is lagging badly at times; we found a temporary workaround,medium
+Please escalate: VPN dead for everyone and the business is at a standstill,high
+"Small request, login service is using a hard-to-read font, purely a nice-to-have",low
+billing system outage affecting the full support department after the update,high
+Not urgent but the email server is flaky since yesterday,medium
+"Could you check invoice service, it has been sluggish since the last deploy",medium
+"We have a major problem, Kubernetes cluster is throwing 503s for the full marketing department",high
+"Small request, invoice service is showing an outdated icon, not important",low
+Just letting you know the Kubernetes cluster is listing items in a weird order for just me,low
+"Could you check SSO, it has been flaky since yesterday",medium
+"We have a major problem, customer database is totally broken for the full operations department",high
+Not urgent but the HR portal is lagging badly at times since yesterday,medium
+Please escalate: Wi-Fi dead for everyone and sales have stopped,high
+Please escalate: reporting dashboard throwing 503s and the business is at a standstill,high
+"Small request, mobile app is listing items in a weird order, no impact on work",low
+"We have a major problem, Kubernetes cluster is totally broken for everyone in the building",high
+"We have a major problem, CRM is hard down for everyone in the building",high
+"We have a major problem, checkout page is throwing 503s for everyone in the building",high
+Please escalate: SSO throwing 503s and no payments are going through,high
+Not urgent but the customer database is erroring every so often since yesterday,medium
+part of the marketing team say invoice service is sluggish; we found a temporary workaround,medium
+Just letting you know the CRM is showing an outdated icon for a single colleague,low
+Just letting you know the Wi-Fi is using a hard-to-read font for a single colleague,low
+"Small request, payment API is listing items in a weird order, not important",low
+part of the HR team say file upload is sluggish; we found a temporary workaround,medium
+"Could you check build pipeline, it has been flaky since yesterday",medium
+a handful of people say invoice service is flaky; we found a temporary workaround,medium
+"Could you check checkout page, it has been sluggish since the last deploy",medium
+"Small request, shared drive is listing items in a weird order, not important",low
+part of the support team say build pipeline is flaky; refreshing the page helps,medium
+Just letting you know the reporting dashboard is showing an outdated icon for my profile,low
+"Small request, Wi-Fi is showing an outdated icon, not important",low
+"We have a major problem, customer database is hard down for everyone in the building",high
+checkout page outage affecting the full support department since this morning,high
+CRM outage affecting all of our clients since the last deploy,high
+part of the operations team say file upload is sluggish; it is hurting our throughput,medium
+file upload outage affecting everyone in the building since the last deploy,high
+Please escalate: payment API totally broken and no payments are going through,high
+Just letting you know the email server is misspelling a heading for my profile,low
+Would it be possible to update the file upload? It is showing an outdated icon,low
+"We have a major problem, invoice service is hard down for the full support department",high
+a couple of clients say invoice service is flaky; refreshing the page helps,medium
+Please escalate: HR portal throwing 503s and the business is at a standstill,high
+Just letting you know the HR portal is misspelling a heading for a single colleague,low
+"Could you check search page, it has been lagging badly at times for the last hour",medium
+"Could you check CRM, it has been sluggish since the last deploy",medium
+Not urgent but the Wi-Fi is lagging badly at times since the last deploy,medium
+part of the marketing team say login service is sluggish; we found a temporary workaround,medium
+Would it be possible to update the Kubernetes cluster? It is using a hard-to-read font,low
