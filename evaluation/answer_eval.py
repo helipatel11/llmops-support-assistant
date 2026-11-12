@@ -23,7 +23,7 @@ from app import config
 from app.services.index import check_index
 from app.services.rag import generate, retrieve
 from evaluation.common import PROJECT_ROOT, RESULTS_DIR, file_sha256, run_metadata, write_result
-from evaluation.judge import Judge, is_refusal
+from evaluation.judge import Judge, is_exact_refusal, is_refusal
 from evaluation.retrieval_eval import GOLDEN, load_golden
 
 SPOT_CHECK_SIZE = 10
@@ -51,6 +51,7 @@ def answer_all(golden: list[dict]) -> list[dict]:
 def judge_all(rows: list[dict], judge: Judge) -> None:
     for i, r in enumerate(rows, 1):
         r["refused"] = is_refusal(r["answer"])
+        r["exact_refusal"] = is_exact_refusal(r["answer"])
         if r["answerable"]:
             r["judge"] = judge.score(r["context"], r["key_facts"], r["answer"])
         else:
@@ -76,6 +77,7 @@ def summarise(rows: list[dict]) -> dict:
         "unanswerable": {
             "n": len(unans),
             "correct_refusal_rate": round(mean(r["refused"] for r in unans), 4),
+            "exact_refusal_format_rate": round(mean(r["exact_refusal"] for r in unans), 4),
         },
         "latency_s_informal": {
             "note": "Single sequential run on the dev laptop; not a load test (see Phase 4).",
