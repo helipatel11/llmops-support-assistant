@@ -1,0 +1,480 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-11-12T20:16:04+00:00",
+    "git_commit": "f1b820e",
+    "python": "3.9.6",
+    "machine": "Darwin arm64"
+  },
+  "versions": {
+    "retrieval": "v2",
+    "index_id": "3bac0b7902c1"
+  },
+  "config": {
+    "embedding_model": "nomic-embed-text",
+    "chunk_size": 500,
+    "chunk_overlap": 50,
+    "serving_top_k": 3,
+    "chunks_in_collection": 36
+  },
+  "dataset": {
+    "path": "evaluation/golden_questions.jsonl",
+    "answerable": 25,
+    "unanswerable": 5,
+    "sha256": "63746028c479"
+  },
+  "hit@1": 0.96,
+  "hit@2": 0.96,
+  "hit@3": 1,
+  "hit@5": 1,
+  "mrr@5": 0.9733,
+  "top1_distance": {
+    "note": "Chroma L2 distance, lower = more similar",
+    "answerable_mean": 0.5932,
+    "answerable_max": 0.9832,
+    "unanswerable_mean": 0.827,
+    "unanswerable_min": 0.5373
+  },
+  "misses_at_serving_k": [],
+  "per_question": [
+    {
+      "id": "q01",
+      "answerable": true,
+      "expected_doc": "password_reset.txt",
+      "retrieved": [
+        "password_reset.txt",
+        "account_lockout.txt",
+        "password_reset.txt",
+        "shared_drive_access.txt",
+        "mfa_setup.txt"
+      ],
+      "top1_distance": 0.4404,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q02",
+      "answerable": true,
+      "expected_doc": "password_reset.txt",
+      "retrieved": [
+        "password_reset.txt",
+        "shared_drive_access.txt",
+        "kubernetes_pod_crashes.txt",
+        "sso_login_errors.txt",
+        "account_lockout.txt"
+      ],
+      "top1_distance": 0.5412,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q03",
+      "answerable": true,
+      "expected_doc": "account_lockout.txt",
+      "retrieved": [
+        "account_lockout.txt",
+        "password_reset.txt",
+        "account_lockout.txt",
+        "password_reset.txt",
+        "sso_login_errors.txt"
+      ],
+      "top1_distance": 0.4969,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q04",
+      "answerable": true,
+      "expected_doc": "account_lockout.txt",
+      "retrieved": [
+        "account_lockout.txt",
+        "account_lockout.txt",
+        "password_reset.txt",
+        "sso_login_errors.txt",
+        "password_reset.txt"
+      ],
+      "top1_distance": 0.3956,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q05",
+      "answerable": true,
+      "expected_doc": "mfa_setup.txt",
+      "retrieved": [
+        "mfa_setup.txt",
+        "mfa_setup.txt",
+        "account_lockout.txt",
+        "sso_login_errors.txt",
+        "password_reset.txt"
+      ],
+      "top1_distance": 0.7102,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q06",
+      "answerable": true,
+      "expected_doc": "mfa_setup.txt",
+      "retrieved": [
+        "mfa_setup.txt",
+        "mfa_setup.txt",
+        "sso_login_errors.txt",
+        "printer_setup.txt",
+        "password_reset.txt"
+      ],
+      "top1_distance": 0.9832,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q07",
+      "answerable": true,
+      "expected_doc": "sso_login_errors.txt",
+      "retrieved": [
+        "sso_login_errors.txt",
+        "account_lockout.txt",
+        "account_lockout.txt",
+        "software_install.txt",
+        "shared_drive_access.txt"
+      ],
+      "top1_distance": 0.4904,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q08",
+      "answerable": true,
+      "expected_doc": "sso_login_errors.txt",
+      "retrieved": [
+        "sso_login_errors.txt",
+        "sso_login_errors.txt",
+        "account_lockout.txt",
+        "password_reset.txt",
+        "vpn_troubleshooting.txt"
+      ],
+      "top1_distance": 0.7475,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q09",
+      "answerable": true,
+      "expected_doc": "vpn_troubleshooting.txt",
+      "retrieved": [
+        "vpn_troubleshooting.txt",
+        "vpn_troubleshooting.txt",
+        "shared_drive_access.txt",
+        "kubernetes_pod_crashes.txt",
+        "office_wifi.txt"
+      ],
+      "top1_distance": 0.6417,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q10",
+      "answerable": true,
+      "expected_doc": "vpn_troubleshooting.txt",
+      "retrieved": [
+        "vpn_troubleshooting.txt",
+        "database_timeouts.txt",
+        "vpn_troubleshooting.txt",
+        "deployment_failures.txt",
+        "new_starter_onboarding.txt"
+      ],
+      "top1_distance": 0.7867,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q11",
+      "answerable": true,
+      "expected_doc": "office_wifi.txt",
+      "retrieved": [
+        "office_wifi.txt",
+        "office_wifi.txt",
+        "vpn_troubleshooting.txt",
+        "vpn_troubleshooting.txt",
+        "shared_drive_access.txt"
+      ],
+      "top1_distance": 0.5717,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q12",
+      "answerable": true,
+      "expected_doc": "office_wifi.txt",
+      "retrieved": [
+        "office_wifi.txt",
+        "office_wifi.txt",
+        "vpn_troubleshooting.txt",
+        "vpn_troubleshooting.txt",
+        "printer_setup.txt"
+      ],
+      "top1_distance": 0.4836,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q13",
+      "answerable": true,
+      "expected_doc": "email_mailbox.txt",
+      "retrieved": [
+        "email_mailbox.txt",
+        "email_mailbox.txt",
+        "password_reset.txt",
+        "sso_login_errors.txt",
+        "account_lockout.txt"
+      ],
+      "top1_distance": 0.4276,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q14",
+      "answerable": true,
+      "expected_doc": "email_mailbox.txt",
+      "retrieved": [
+        "shared_drive_access.txt",
+        "new_starter_onboarding.txt",
+        "email_mailbox.txt",
+        "password_reset.txt",
+        "mfa_setup.txt"
+      ],
+      "top1_distance": 0.6728,
+      "rank": 3,
+      "reciprocal_rank": 0.3333
+    },
+    {
+      "id": "q15",
+      "answerable": true,
+      "expected_doc": "printer_setup.txt",
+      "retrieved": [
+        "printer_setup.txt",
+        "printer_setup.txt",
+        "vpn_troubleshooting.txt",
+        "office_wifi.txt",
+        "software_install.txt"
+      ],
+      "top1_distance": 0.6081,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q16",
+      "answerable": true,
+      "expected_doc": "laptop_hardware.txt",
+      "retrieved": [
+        "laptop_hardware.txt",
+        "office_wifi.txt",
+        "laptop_hardware.txt",
+        "printer_setup.txt",
+        "printer_setup.txt"
+      ],
+      "top1_distance": 0.7406,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q17",
+      "answerable": true,
+      "expected_doc": "laptop_hardware.txt",
+      "retrieved": [
+        "laptop_hardware.txt",
+        "laptop_hardware.txt",
+        "new_starter_onboarding.txt",
+        "office_wifi.txt",
+        "refund_policy.txt"
+      ],
+      "top1_distance": 0.5378,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q18",
+      "answerable": true,
+      "expected_doc": "software_install.txt",
+      "retrieved": [
+        "software_install.txt",
+        "software_install.txt",
+        "vpn_troubleshooting.txt",
+        "printer_setup.txt",
+        "office_wifi.txt"
+      ],
+      "top1_distance": 0.6681,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q19",
+      "answerable": true,
+      "expected_doc": "payment_failures.txt",
+      "retrieved": [
+        "payment_failures.txt",
+        "payment_failures.txt",
+        "refund_policy.txt",
+        "refund_policy.txt",
+        "shared_drive_access.txt"
+      ],
+      "top1_distance": 0.364,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q20",
+      "answerable": true,
+      "expected_doc": "payment_failures.txt",
+      "retrieved": [
+        "payment_failures.txt",
+        "incident_severity.txt",
+        "payment_failures.txt",
+        "incident_severity.txt",
+        "refund_policy.txt"
+      ],
+      "top1_distance": 0.5179,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q21",
+      "answerable": true,
+      "expected_doc": "refund_policy.txt",
+      "retrieved": [
+        "refund_policy.txt",
+        "refund_policy.txt",
+        "shared_drive_access.txt",
+        "laptop_hardware.txt",
+        "password_reset.txt"
+      ],
+      "top1_distance": 0.3899,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q22",
+      "answerable": true,
+      "expected_doc": "deployment_failures.txt",
+      "retrieved": [
+        "deployment_failures.txt",
+        "deployment_failures.txt",
+        "incident_severity.txt",
+        "laptop_hardware.txt",
+        "printer_setup.txt"
+      ],
+      "top1_distance": 0.7923,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q23",
+      "answerable": true,
+      "expected_doc": "kubernetes_pod_crashes.txt",
+      "retrieved": [
+        "kubernetes_pod_crashes.txt",
+        "kubernetes_pod_crashes.txt",
+        "deployment_failures.txt",
+        "software_install.txt",
+        "email_mailbox.txt"
+      ],
+      "top1_distance": 0.675,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q24",
+      "answerable": true,
+      "expected_doc": "incident_severity.txt",
+      "retrieved": [
+        "incident_severity.txt",
+        "incident_severity.txt",
+        "payment_failures.txt",
+        "laptop_hardware.txt",
+        "laptop_hardware.txt"
+      ],
+      "top1_distance": 0.6006,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q25",
+      "answerable": true,
+      "expected_doc": "new_starter_onboarding.txt",
+      "retrieved": [
+        "new_starter_onboarding.txt",
+        "new_starter_onboarding.txt",
+        "sso_login_errors.txt",
+        "shared_drive_access.txt",
+        "mfa_setup.txt"
+      ],
+      "top1_distance": 0.5471,
+      "rank": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "id": "q26",
+      "answerable": false,
+      "expected_doc": null,
+      "retrieved": [
+        "incident_severity.txt",
+        "software_install.txt",
+        "mfa_setup.txt",
+        "kubernetes_pod_crashes.txt",
+        "database_timeouts.txt"
+      ],
+      "top1_distance": 1.2048
+    },
+    {
+      "id": "q27",
+      "answerable": false,
+      "expected_doc": null,
+      "retrieved": [
+        "office_wifi.txt",
+        "office_wifi.txt",
+        "password_reset.txt",
+        "password_reset.txt",
+        "account_lockout.txt"
+      ],
+      "top1_distance": 0.5501
+    },
+    {
+      "id": "q28",
+      "answerable": false,
+      "expected_doc": null,
+      "retrieved": [
+        "refund_policy.txt",
+        "password_reset.txt",
+        "new_starter_onboarding.txt",
+        "software_install.txt",
+        "refund_policy.txt"
+      ],
+      "top1_distance": 0.8846
+    },
+    {
+      "id": "q29",
+      "answerable": false,
+      "expected_doc": null,
+      "retrieved": [
+        "laptop_hardware.txt",
+        "laptop_hardware.txt",
+        "office_wifi.txt",
+        "software_install.txt",
+        "shared_drive_access.txt"
+      ],
+      "top1_distance": 0.5373
+    },
+    {
+      "id": "q30",
+      "answerable": false,
+      "expected_doc": null,
+      "retrieved": [
+        "vpn_troubleshooting.txt",
+        "office_wifi.txt",
+        "office_wifi.txt",
+        "payment_failures.txt",
+        "account_lockout.txt"
+      ],
+      "top1_distance": 0.958
+    }
+  ]
+}
