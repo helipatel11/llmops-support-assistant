@@ -1,57 +1,13 @@
+from functools import lru_cache
+
 from langchain_community.vectorstores import Chroma
-from langchain_ollama import ChatOllama
-from langchain_ollama import OllamaEmbeddings
-import os
-from app.monitoring.metrics import rag_requests_counter
+from langchain_ollama import ChatOllama, OllamaEmbeddings
+
+from app import config
 from app.logging_config import logger
+from app.monitoring.metrics import rag_requests_counter
 
-# Embeddings
-embedding = OllamaEmbeddings(
-    
-    model="nomic-embed-text",
-
-    base_url=os.getenv(
-        "OLLAMA_BASE_URL",
-        "http://localhost:11434"
-    )
-)
-
-
-# Vector DB
-vectordb = Chroma(
-    persist_directory="llm/chroma_db",
-    embedding_function=embedding
-)
-
-retriever = vectordb.as_retriever(
-    search_kwargs={"k": 2}
-)
-# Local LLM
-
-llm = ChatOllama(
-    # model="llama3",
-    model="tinyllama",
-    temperature=0,
-    base_url=os.getenv(
-        "OLLAMA_BASE_URL",
-        "http://localhost:11434"
-    )
-)
-
-def ask_question(question: str):
-    logger.info(f"Question received: {question}")
-
-    rag_requests_counter.inc()   
-    
-    docs = retriever.invoke(question)
-
-    logger.info(f"Retrieved {len(docs)} docs")
-
-    context = "\n\n".join(
-        [doc.page_content for doc in docs]
-    )
-
-    prompt = f"""
+PROMPT_TEMPLATE = """
 You are an IT support assistant.
 
 Answer ONLY from the provided context.
@@ -69,6 +25,42 @@ Question:
 Answer:
 """
 
-    response = llm.invoke(prompt)
+
+@lru_cache(maxsize=1)
+def get_retriever():
+    """Open the persisted ChromaDB collection on first use, not at import time."""
+    embedding = OllamaEmbeddings(
+        model=config.EMBEDDING_MODEL,
+        base_url=config.OLLAMA_BASE_URL,
+    )
+    vectordb = Chroma(
+        persist_directory=str(config.CHROMA_DIR),
+        embedding_function=embedding,
+    )
+    return vectordb.as_retriever(search_kwargs={"k": config.RETRIEVER_K})
+
+
+@lru_cache(maxsize=1)
+def get_llm():
+    return ChatOllama(
+        model=config.OLLAMA_MODEL,
+        temperature=0,
+        base_url=config.OLLAMA_BASE_URL,
+    )
+
+
+def ask_question(question: str) -> str:
+    logger.info("Question received (%d chars)", len(question))
+
+    rag_requests_counter.inc()
+
+    docs = get_retriever().invoke(question)
+
+    logger.info("Retrieved %d docs", len(docs))
+
+    context = "\n\n".join(doc.page_content for doc in docs)
+    prompt = PROMPT_TEMPLATE.format(context=context, question=question)
+
+    response = get_llm().invoke(prompt)
 
     return response.content
