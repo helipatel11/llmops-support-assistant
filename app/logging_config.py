@@ -6,3 +6,5 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger("llmops-app")
+# One INFO line per Ollama HTTP call is noise in pod logs and eval output.
+logging.getLogger("httpx").setLevel(logging.WARNING)
