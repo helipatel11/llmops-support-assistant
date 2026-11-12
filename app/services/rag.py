@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Optional
 
 from langchain_community.vectorstores import Chroma
 from langchain_ollama import ChatOllama, OllamaEmbeddings
@@ -27,17 +28,16 @@ Answer:
 
 
 @lru_cache(maxsize=1)
-def get_retriever():
+def get_vectordb():
     """Open the persisted ChromaDB collection on first use, not at import time."""
     embedding = OllamaEmbeddings(
         model=config.EMBEDDING_MODEL,
         base_url=config.OLLAMA_BASE_URL,
     )
-    vectordb = Chroma(
+    return Chroma(
         persist_directory=str(config.CHROMA_DIR),
         embedding_function=embedding,
     )
-    return vectordb.as_retriever(search_kwargs={"k": config.RETRIEVER_K})
 
 
 @lru_cache(maxsize=1)
@@ -49,18 +49,24 @@ def get_llm():
     )
 
 
+def retrieve(question: str, k: Optional[int] = None) -> list:
+    """Return the top-k chunks for a question, most similar first."""
+    return get_vectordb().similarity_search(question, k=k or config.RETRIEVER_K)
+
+
+def generate(question: str, docs: list) -> str:
+    context = "\n\n".join(doc.page_content for doc in docs)
+    prompt = PROMPT_TEMPLATE.format(context=context, question=question)
+    return get_llm().invoke(prompt).content
+
+
 def ask_question(question: str) -> str:
     logger.info("Question received (%d chars)", len(question))
 
     rag_requests_counter.inc()
 
-    docs = get_retriever().invoke(question)
+    docs = retrieve(question)
 
     logger.info("Retrieved %d docs", len(docs))
 
-    context = "\n\n".join(doc.page_content for doc in docs)
-    prompt = PROMPT_TEMPLATE.format(context=context, question=question)
-
-    response = get_llm().invoke(prompt)
-
-    return response.content
+    return generate(question, docs)

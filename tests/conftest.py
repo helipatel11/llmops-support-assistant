@@ -7,14 +7,14 @@ from app.main import app
 from app.services import rag
 
 
-class FakeRetriever:
+class FakeVectorDB:
     def __init__(self, docs):
         self.docs = docs
         self.queries = []
 
-    def invoke(self, question):
+    def similarity_search(self, question, k):
         self.queries.append(question)
-        return [SimpleNamespace(page_content=d) for d in self.docs]
+        return [SimpleNamespace(page_content=d) for d in self.docs[:k]]
 
 
 class FakeLLM:
@@ -35,8 +35,8 @@ def client():
 @pytest.fixture
 def fake_rag(monkeypatch):
     """Replace ChromaDB and Ollama so /ask tests need no external services."""
-    retriever = FakeRetriever(["Users can reset passwords using the forgot password page."])
+    retriever = FakeVectorDB(["Users can reset passwords using the forgot password page."])
     llm = FakeLLM("Use the forgot password page.")
-    monkeypatch.setattr(rag, "get_retriever", lambda: retriever)
+    monkeypatch.setattr(rag, "get_vectordb", lambda: retriever)
     monkeypatch.setattr(rag, "get_llm", lambda: llm)
     return SimpleNamespace(retriever=retriever, llm=llm)
