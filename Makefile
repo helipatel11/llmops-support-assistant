@@ -54,7 +54,7 @@ eval-answers:
 eval: eval-classifier ingest eval-retrieval eval-judge eval-answers
 
 spot-check:
-	$(PYTHON) -m evaluation.spot_check_agreement --label $(LABEL)
+	$(PYTHON) -m evaluation.spot_check agree --label $(LABEL)
 
 compare:
 	$(PYTHON) -m evaluation.compare $(KIND) $(A) $(B)

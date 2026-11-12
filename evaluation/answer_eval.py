@@ -13,9 +13,7 @@ Unanswerable questions are scored by rule: success = the exact refusal sentence.
 """
 
 import argparse
-import csv
 import json
-import random
 import time
 from statistics import mean, median
 
@@ -25,8 +23,7 @@ from app.services.rag import generate, retrieve
 from evaluation.common import PROJECT_ROOT, RESULTS_DIR, file_sha256, run_metadata, write_result
 from evaluation.judge import Judge, is_exact_refusal, is_refusal
 from evaluation.retrieval_eval import GOLDEN, load_golden
-
-SPOT_CHECK_SIZE = 10
+from evaluation.spot_check import make_sheet
 
 
 def answer_all(golden: list[dict]) -> list[dict]:
@@ -88,21 +85,6 @@ def summarise(rows: list[dict]) -> dict:
     }
 
 
-def write_spot_check(rows: list[dict], label: str) -> str:
-    """Seeded sample of answerable questions for a human to score with the same rubric."""
-    sample = random.Random(42).sample([r for r in rows if r["answerable"]], SPOT_CHECK_SIZE)
-    path = RESULTS_DIR / f"spot_check_{label}.csv"
-    with path.open("w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["id", "question", "key_facts", "context", "answer",
-                    "judge_grounded", "judge_correct", "human_grounded", "human_correct"])
-        for r in sorted(sample, key=lambda r: r["id"]):
-            w.writerow([r["id"], r["question"], " | ".join(r["key_facts"]), r["context"],
-                        r["answer"], r["judge"].get("grounded"), r["judge"].get("correct"),
-                        "", ""])
-    return str(path.relative_to(PROJECT_ROOT))
-
-
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--label", default="current")
@@ -143,7 +125,7 @@ def main() -> None:
     }
     print(json.dumps(summary, indent=2))
     write_result(f"answers_{args.label}", result)
-    print(f"wrote {out_path.relative_to(PROJECT_ROOT)} and {write_spot_check(rows, args.label)}")
+    print(f"wrote {out_path.relative_to(PROJECT_ROOT)} and {make_sheet(args.label)[0]}")
 
 
 if __name__ == "__main__":
