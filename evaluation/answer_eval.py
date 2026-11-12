@@ -20,6 +20,7 @@ import time
 from statistics import mean, median
 
 from app import config
+from app.services.index import check_index
 from app.services.rag import generate, retrieve
 from evaluation.common import PROJECT_ROOT, RESULTS_DIR, file_sha256, run_metadata, write_result
 from evaluation.judge import Judge, is_refusal
@@ -118,6 +119,9 @@ def main() -> None:
     else:
         rows = answer_all(load_golden())
         serving = {
+            "prompt_version": config.PROMPT_VERSION,
+            "retrieval_version": config.RETRIEVAL_VERSION,
+            "index_id": check_index()["found"],
             "serving_model": config.OLLAMA_MODEL,
             "embedding_model": config.EMBEDDING_MODEL,
             "serving_top_k": config.RETRIEVER_K,

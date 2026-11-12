@@ -12,6 +12,7 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from app import config
+from app.services.index import write_manifest
 
 
 def main() -> None:
@@ -40,7 +41,9 @@ def main() -> None:
         embedding=embedding,
         persist_directory=str(config.CHROMA_DIR),
     )
-    print(f"ChromaDB written to {config.CHROMA_DIR}")
+    manifest = write_manifest(config.CHROMA_DIR, config.RETRIEVAL, config.DOCS_DIR, len(chunks))
+    print(f"ChromaDB written to {config.CHROMA_DIR} "
+          f"(index {manifest['index_id']}, retrieval {config.RETRIEVAL_VERSION})")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,8 @@
+{
+  "version": "v1",
+  "description": "Baseline: nomic-embed-text, 500/50 character chunks, top-2 chunks to the LLM.",
+  "embedding_model": "nomic-embed-text",
+  "chunk_size": 500,
+  "chunk_overlap": 50,
+  "top_k": 2
+}
