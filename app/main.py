@@ -1,9 +1,9 @@
 from fastapi import FastAPI
+from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel
 
 from app.services.predict import predict_priority
 from app.services.rag import ask_question
-from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI(title="LLMOps Support Assistant")
 
