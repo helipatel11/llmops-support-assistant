@@ -1,0 +1,17 @@
+# Allowlist: exclude everything, then re-include only what the runtime image needs.
+# New files (secrets, state, venvs) stay out of the image by default.
+*
+
+!requirements.txt
+!app/
+!training/models/
+!llm/docs/
+
+# Never ship these, even inside allowed folders
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/__pycache__
+**/*.pyc
+**/.DS_Store
