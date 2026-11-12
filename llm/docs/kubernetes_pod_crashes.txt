@@ -1,0 +1,9 @@
+Kubernetes Pod Crashes
+
+CrashLoopBackOff means the container starts and then exits repeatedly. Check the logs of the previous run with kubectl logs <pod> --previous; the cause is usually a missing configuration value or a failed connection at startup.
+
+OOMKilled means the container used more memory than its limit. Check kubectl describe pod for "Reason: OOMKilled", then either fix the memory usage or raise the memory limit.
+
+ImagePullBackOff means the node could not download the image. Check that the image tag exists in the registry and that the image pull secret is valid; registry tokens can expire.
+
+A pod that is Running but not Ready is failing its readiness probe. Check the probe path and the application's health endpoint.

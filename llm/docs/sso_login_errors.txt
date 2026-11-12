@@ -1,0 +1,10 @@
+Single Sign-On (SSO) Login Errors
+
+Most internal applications use single sign-on. If an application shows "Access denied" after signing in, your account has not been assigned to that application. Ask your manager to request access through the access request form; approval usually takes one business day.
+
+If you see a redirect loop (the page keeps reloading between the app and the sign-in page):
+- clear cookies for the application and the sign-in domain
+- try a private browser window
+- make sure the computer clock is correct; SSO tokens fail if the clock is off by more than 5 minutes
+
+The error "AADSTS50076" means MFA is required but was not completed. Sign out completely and sign in again, approving the MFA prompt.

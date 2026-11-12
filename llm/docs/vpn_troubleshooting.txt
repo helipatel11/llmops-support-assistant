@@ -1,0 +1,13 @@
+VPN Troubleshooting
+
+The company VPN is required to reach internal systems from outside the office. It is not needed in the office.
+
+If the VPN connection fails:
+- check that your internet connection works without the VPN
+- quit and restart the VPN client
+- sign in with your company credentials, not a personal account
+- make sure the client is version 5.2 or newer; older versions are blocked
+
+If the VPN connects but internal sites do not load, disconnect, flush DNS (ipconfig /flushdns on Windows, or restart the laptop), and reconnect.
+
+The VPN disconnects automatically after 12 hours, even if you are active. Reconnect to continue. Hotel and airport networks sometimes block the VPN; use a phone hotspot as a workaround.

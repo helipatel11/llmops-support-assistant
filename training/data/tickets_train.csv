@@ -1,0 +1,601 @@
+text,priority
+"Production billing system is not responding at all, we are breaching our SLA",high
+"Hello for HR portal: nothing is blocked, but it is sorting names oddly",low
+Can someone look at the order service? It is showing errors now and then,medium
+Question: how do I change the SSO settings for me?,low
+The build pipeline is missing a dark mode option. whenever you have time,low
+"Emergency - the entire support team cannot use the login service, customers cannot pay",high
+two people on the finance team report the mobile app is timing out sometimes,medium
+Question: the billing system is showing a typo for me,low
+Noticed the customer database is dropping connections for two people on the support team,medium
+The invoice service has been returning 500 errors since 9am and we are losing revenue,high
+Hi team! billing system completely down for the whole company. customers cannot pay,high
+"Ticket for file upload: no rush, but it is showing the wrong timezone label",low
+Minor: billing system using the old logo for my account,low
+Critical incident: reporting dashboard rejecting every request after the update,high
+Problem with SSO: showing errors now and then since the last deploy,medium
+Emergency incident: login service returning 500 errors since yesterday,high
+Problem: mobile app is failing intermittently for one office,medium
+Emergency! order service rejecting every request for the entire marketing team. customers cannot pay,high
+The email server has been completely down after the update and nobody can work,medium
+Support request - could the build pipeline stop using the old logo? whenever you have time,low
+Request: how do I change the CRM settings for a new starter?,low
+Support request: HR portal is failing intermittently for a few users,medium
+Support request! SSO crashing on startup for every customer. we are breaching our SLA,high
+"Request for HR portal: just a suggestion, but it is showing a typo",low
+Hi team! order service not responding at all for every customer. customers cannot pay,high
+Minor: search page showing a typo for my account,low
+Hello! reporting dashboard returning 500 errors for the whole company. nobody can work,high
+Help incident: order service rejecting every request since this morning,high
+"The shared drive has been dropping connections after the update, it is affecting productivity",medium
+Hello with Kubernetes cluster: slow since 9am,medium
+Can someone look at the Wi-Fi? It is failing intermittently,medium
+"Production CRM is returning 500 errors, nobody can work",high
+Support request: the CRM is using the old logo for me,high
+Issue with SSO: slow for the last hour,medium
+"P1 - the whole company cannot use the VPN, we are breaching our SLA",high
+Issue with HR portal: failing intermittently since 9am,medium
+The VPN has been rejecting every request since this morning and customers cannot pay,high
+Noticed the VPN is slow for a few users,medium
+FYI - could the file upload stop using the old logo? no rush,low
+the entire finance team are blocked because the CRM is not responding at all,high
+The Kubernetes cluster has been rejecting every request since yesterday and we are losing revenue,high
+"customer database returning 500 errors for the last hour, customers cannot pay",high
+"Production Wi-Fi is completely down, orders are failing",high
+Noticed the customer database is showing errors now and then for a few users,medium
+Minor: shared drive using the old logo for me,low
+The build pipeline is showing a typo. no rush,low
+"Critical - every customer cannot use the billing system, we are breaching our SLA",high
+"The SSO has been showing errors now and then after the update, we can manage for today",high
+Noticed the VPN is failing intermittently for two people on the HR team,medium
+every customer are blocked because the shared drive is rejecting every request,high
+"search page rejecting every request after the update, nobody can work",high
+Suggestion: how do I change the file upload settings for my account?,high
+Ticket: CRM is crashing on startup for the whole company,high
+"Ticket - all users cannot use the file upload, customers cannot pay",high
+URGENT: payment API is crashing on startup for every customer,high
+Suggestion: how do I change the reporting dashboard settings for me?,low
+"SSO not responding at all since this morning, we are breaching our SLA",high
+Question: the VPN is missing a dark mode option for my account,low
+P1 incident: order service completely down after the update,high
+Noticed the email server is slow for a few users,medium
+Minor: Wi-Fi showing a typo for my account,low
+Hi team with login service: failing intermittently since this morning,medium
+Ticket with customer database: showing errors now and then since this morning,medium
+a few users report the VPN is failing intermittently,medium
+Problem with billing system: slow after the update,medium
+Degraded with invoice service: dropping connections since this morning,high
+Noticed the invoice service is failing intermittently for some customers,medium
+The order service has been rejecting every request after the update and we are losing revenue,high
+"Ticket - Wi-Fi showing errors now and then, we can manage for today",medium
+some customers report the Wi-Fi is slow,medium
+Can someone look at the invoice service? It is showing errors now and then,medium
+Question: the mobile app is missing a dark mode option for me,low
+Minor: shared drive showing the wrong timezone label for one user,low
+"CRM keeps failing intermittently for one office, we can manage for today",medium
+"Support request - login service timing out sometimes, there is a workaround",medium
+Emergency: invoice service is completely down for every customer,high
+all users are blocked because the login service is rejecting every request,high
+"Suggestion about the Wi-Fi, it is showing a typo, no rush",low
+Ticket - could the SSO stop missing a dark mode option? whenever you have time,low
+"The payment API has been timing out sometimes for the last hour, there is a workaround",medium
+"billing system keeps failing intermittently for some customers, we can manage for today",medium
+"checkout page rejecting every request for the last hour, we are breaching our SLA",high
+Question: the shared drive is sorting names oddly for me,low
+The Kubernetes cluster is using the old logo. whenever you have time,low
+two people on the HR team report the SSO is timing out sometimes,medium
+Support request: mobile app is not responding at all for the whole company,high
+"P1 - the entire support team cannot use the HR portal, customers cannot pay",high
+Hello! search page crashing on startup for the entire sales team. orders are failing,high
+Support request with Wi-Fi: timing out sometimes since 9am,medium
+the whole company are blocked because the payment API is crashing on startup,high
+The CRM is showing a typo. just a suggestion,low
+"order service keeps failing intermittently for one office, it slows the team down",medium
+"Degraded - VPN timing out sometimes, retrying usually works",medium
+"URGENT - the whole company cannot use the HR portal, nobody can work",high
+"Request about the email server, it is using the old logo, whenever you have time",low
+Suggestion: how do I change the order service settings for me?,low
+Support request! Wi-Fi crashing on startup for every customer. customers cannot pay,high
+"Wi-Fi keeps showing errors now and then for one office, we can manage for today",medium
+Hi team: the order service is sorting names oddly for my account,low
+"The Wi-Fi has been failing intermittently after the update, we can manage for today",medium
+"Question for mobile app: it is only cosmetic, but it is showing a typo",low
+the entire engineering team are blocked because the VPN is completely down,high
+Help: Kubernetes cluster is failing intermittently for some customers,medium
+Problem with reporting dashboard: slow since yesterday,medium
+"login service keeps failing intermittently for two people on the sales team, we can manage for today",medium
+"Emergency - all users cannot use the HR portal, customers cannot pay",high
+Ticket: customer database is completely down for the entire HR team,medium
+Can someone look at the login service? It is showing errors now and then,medium
+"login service keeps failing intermittently for some customers, we can manage for today",medium
+Hello: the search page is missing a dark mode option for my account,low
+one office report the VPN is timing out sometimes,medium
+The customer database has been returning 500 errors since this morning and customers cannot pay,high
+"Request for SSO: just a suggestion, but it is missing a dark mode option",low
+"Degraded - order service slow, retrying usually works",high
+"Production payment API is returning 500 errors, orders are failing",high
+Ticket! checkout page not responding at all for the entire finance team. we are losing revenue,high
+Question - could the VPN stop missing a dark mode option? whenever you have time,medium
+Emergency incident: order service not responding at all since the last deploy,high
+"When you get a chance, the payment API is showing the wrong timezone label",low
+"Production customer database is rejecting every request, customers cannot pay",high
+The billing system is showing the wrong timezone label. whenever you have time,low
+"Emergency - all users cannot use the HR portal, we are losing revenue",high
+Critical! search page crashing on startup for all users. customers cannot pay,high
+P1: login service is crashing on startup for the entire legal team,medium
+"Production login service is completely down, we are breaching our SLA",high
+"Production Wi-Fi is completely down, we are losing revenue",high
+Can someone look at the mobile app? It is slow,medium
+Question: how do I change the VPN settings for my account?,low
+"Help about the payment API, it is missing a dark mode option, nothing is blocked",low
+"When you get a chance, the VPN is sorting names oddly",low
+Can someone look at the HR portal? It is showing errors now and then,medium
+one office report the checkout page is timing out sometimes,medium
+"mobile app keeps slow for a few users, we can manage for today",medium
+Can someone look at the VPN? It is dropping connections,medium
+Emergency: shared drive is not responding at all for the whole company,high
+The customer database has been completely down since the last deploy and we are losing revenue,high
+one office report the customer database is dropping connections,medium
+two people on the legal team report the Kubernetes cluster is showing errors now and then,medium
+"order service keeps failing intermittently for one office, retrying usually works",medium
+Noticed the search page is dropping connections for one office,medium
+"Ticket - every customer cannot use the reporting dashboard, we are losing revenue",high
+Suggestion: the SSO is sorting names oddly for one user,low
+one office report the email server is dropping connections,medium
+"FYI for SSO: whenever you have time, but it is sorting names oddly",low
+"When you get a chance, the billing system is sorting names oddly",low
+Question - could the payment API stop sorting names oddly? nothing is blocked,low
+URGENT incident: VPN crashing on startup for the last hour,high
+"When you get a chance, the email server is showing the wrong timezone label",low
+"VPN keeps slow for some customers, it is affecting productivity",medium
+Minor: mobile app using the old logo for my account,low
+Problem: email server is timing out sometimes for a few users,medium
+"Hi team for invoice service: whenever you have time, but it is sorting names oddly",low
+Suggestion: the SSO is missing a dark mode option for a new starter,low
+Noticed the checkout page is slow for two people on the finance team,medium
+The Wi-Fi is missing a dark mode option. it is only cosmetic,medium
+"Production file upload is not responding at all, we are losing revenue",high
+Support request: invoice service is dropping connections for two people on the engineering team,medium
+Help! invoice service completely down for the whole company. we are losing revenue,high
+Noticed the customer database is dropping connections for a few users,medium
+URGENT incident: build pipeline not responding at all for the last hour,high
+Minor: payment API missing a dark mode option for my account,low
+"shared drive keeps timing out sometimes for a few users, there is a workaround",medium
+Emergency! SSO crashing on startup for every customer. customers cannot pay,low
+"Issue - customer database failing intermittently, it slows the team down",medium
+Request - could the customer database stop showing the wrong timezone label? no rush,low
+The SSO is showing the wrong timezone label. it is only cosmetic,low
+"SSO keeps failing intermittently for one office, it is affecting productivity",medium
+"Hello - mobile app timing out sometimes, there is a workaround",medium
+"billing system rejecting every request since 9am, we are losing revenue",high
+"Production reporting dashboard is crashing on startup, orders are failing",high
+Minor: checkout page showing the wrong timezone label for a new starter,low
+Help: VPN is returning 500 errors for every customer,high
+some customers report the login service is slow,medium
+Suggestion: how do I change the SSO settings for one user?,low
+"P1 - every customer cannot use the shared drive, customers cannot pay",high
+"The file upload has been showing errors now and then after the update, it slows the team down",medium
+Support request: email server is completely down for the whole company,high
+Hi team: the shared drive is using the old logo for one user,low
+"The SSO has been slow after the update, it is affecting productivity",low
+Support request with mobile app: slow since yesterday,medium
+Suggestion: the search page is sorting names oddly for me,low
+Question: the payment API is sorting names oddly for one user,low
+The search page has been crashing on startup for the last hour and nobody can work,high
+Hello: mobile app is crashing on startup for all users,high
+"Ticket - the whole company cannot use the order service, we are breaching our SLA",high
+"Emergency - the entire support team cannot use the Kubernetes cluster, we are losing revenue",high
+P1: Kubernetes cluster is rejecting every request for every customer,high
+"Critical - the whole company cannot use the invoice service, we are breaching our SLA",high
+Support request with VPN: slow since yesterday,medium
+The file upload is showing the wrong timezone label. nothing is blocked,low
+Ticket: the login service is using the old logo for one user,low
+"The order service has been slow since the last deploy, it is affecting productivity",medium
+Can someone look at the customer database? It is dropping connections,medium
+Hello: the file upload is missing a dark mode option for me,low
+"The build pipeline has been showing errors now and then since yesterday, it is affecting productivity",medium
+"Degraded - login service timing out sometimes, it slows the team down",medium
+"Bug - billing system showing errors now and then, it slows the team down",medium
+"Problem - invoice service dropping connections, we can manage for today",medium
+"The order service has been showing errors now and then since this morning, it slows the team down",medium
+"Issue - shared drive dropping connections, there is a workaround",medium
+"When you get a chance, the mobile app is showing a typo",low
+Issue: HR portal is failing intermittently for one office,medium
+"Request about the HR portal, it is showing a typo, no rush",low
+two people on the marketing team report the mobile app is dropping connections,medium
+Support request with build pipeline: slow since 9am,medium
+the whole company are blocked because the HR portal is completely down,high
+FYI: the search page is missing a dark mode option for my account,low
+"Hi team - search page dropping connections, we can manage for today",medium
+"Suggestion for email server: it is only cosmetic, but it is missing a dark mode option",low
+"Suggestion about the order service, it is showing the wrong timezone label, it is only cosmetic",low
+Problem with build pipeline: dropping connections since the last deploy,medium
+Support request with build pipeline: slow since yesterday,medium
+The checkout page is sorting names oddly. it is only cosmetic,low
+The SSO has been crashing on startup since yesterday and customers cannot pay,high
+Help: the billing system is showing a typo for me,low
+"file upload keeps failing intermittently for one office, it slows the team down",medium
+Hello with payment API: showing errors now and then since yesterday,medium
+"The HR portal has been failing intermittently since the last deploy, retrying usually works",medium
+Hi team: invoice service is completely down for all users,high
+one office report the reporting dashboard is timing out sometimes,medium
+P1! invoice service not responding at all for the whole company. we are losing revenue,high
+"Issue - customer database showing errors now and then, retrying usually works",medium
+Help! checkout page rejecting every request for the entire HR team. customers cannot pay,high
+The CRM is showing a typo. whenever you have time,low
+"Issue - order service showing errors now and then, it is affecting productivity",medium
+"When you get a chance, the shared drive is sorting names oddly",low
+"When you get a chance, the invoice service is sorting names oddly",low
+all users are blocked because the checkout page is rejecting every request,high
+"The CRM has been showing errors now and then since yesterday, it slows the team down",medium
+Degraded with payment API: dropping connections since the last deploy,high
+Issue: email server is dropping connections for a few users,medium
+"Help for file upload: it is only cosmetic, but it is missing a dark mode option",low
+The VPN is sorting names oddly. whenever you have time,high
+"Problem - order service slow, it slows the team down",medium
+The build pipeline has been rejecting every request since this morning and we are breaching our SLA,high
+The HR portal has been not responding at all for the last hour and we are losing revenue,high
+"build pipeline returning 500 errors since 9am, customers cannot pay",high
+"checkout page keeps failing intermittently for a few users, retrying usually works",medium
+"Production shared drive is crashing on startup, we are losing revenue",high
+"Production HR portal is returning 500 errors, we are losing revenue",high
+"Emergency - all users cannot use the login service, orders are failing",high
+Degraded with checkout page: timing out sometimes after the update,medium
+"checkout page returning 500 errors since this morning, orders are failing",high
+Critical! search page not responding at all for the entire operations team. customers cannot pay,high
+Minor: VPN using the old logo for a new starter,low
+Bug: invoice service is timing out sometimes for some customers,medium
+Question - could the order service stop sorting names oddly? no rush,low
+The Wi-Fi is missing a dark mode option. just a suggestion,low
+every customer are blocked because the reporting dashboard is rejecting every request,high
+the entire HR team are blocked because the checkout page is rejecting every request,high
+"Production email server is crashing on startup, we are breaching our SLA",high
+"The invoice service has been dropping connections for the last hour, we can manage for today",medium
+two people on the sales team report the build pipeline is dropping connections,medium
+"Suggestion for Wi-Fi: whenever you have time, but it is sorting names oddly",low
+"Kubernetes cluster keeps dropping connections for a few users, we can manage for today",medium
+FYI: the customer database is showing the wrong timezone label for me,low
+Minor: Wi-Fi using the old logo for a new starter,low
+"Ticket for payment API: no rush, but it is sorting names oddly",low
+The VPN is sorting names oddly. nothing is blocked,low
+"Request about the VPN, it is missing a dark mode option, it is only cosmetic",low
+The HR portal is using the old logo. whenever you have time,low
+"Production checkout page is completely down, orders are failing",high
+"The mobile app has been slow since yesterday, we can manage for today",medium
+URGENT! file upload returning 500 errors for the whole company. we are breaching our SLA,high
+"Suggestion about the billing system, it is using the old logo, just a suggestion",medium
+Issue with checkout page: timing out sometimes for the last hour,medium
+Hello - could the billing system stop missing a dark mode option? no rush,low
+Hi team with reporting dashboard: dropping connections since yesterday,low
+a few users report the shared drive is dropping connections,medium
+"Critical - the whole company cannot use the reporting dashboard, nobody can work",high
+"Production login service is crashing on startup, we are breaching our SLA",high
+Can someone look at the billing system? It is showing errors now and then,medium
+Help: how do I change the search page settings for a new starter?,low
+"Production search page is completely down, orders are failing",medium
+Can someone look at the checkout page? It is slow,medium
+Noticed the email server is slow for one office,medium
+"Kubernetes cluster keeps failing intermittently for one office, it slows the team down",medium
+"The SSO has been failing intermittently since 9am, there is a workaround",medium
+"SSO keeps dropping connections for two people on the engineering team, retrying usually works",medium
+"Suggestion about the VPN, it is missing a dark mode option, it is only cosmetic",low
+"When you get a chance, the Wi-Fi is sorting names oddly",low
+"P1 - the entire engineering team cannot use the CRM, we are breaching our SLA",high
+"Support request - email server timing out sometimes, it slows the team down",medium
+Bug: login service is showing errors now and then for one office,medium
+"VPN returning 500 errors since this morning, orders are failing",high
+Bug with shared drive: showing errors now and then since 9am,medium
+"Hi team - payment API timing out sometimes, there is a workaround",medium
+Problem with shared drive: slow for the last hour,medium
+"Request about the build pipeline, it is showing a typo, nothing is blocked",low
+"FYI for mobile app: no rush, but it is sorting names oddly",low
+Hi team with Wi-Fi: showing errors now and then for the last hour,medium
+Minor: customer database sorting names oddly for me,low
+"When you get a chance, the billing system is using the old logo",low
+"Production login service is completely down, we are losing revenue",high
+"URGENT - the entire operations team cannot use the mobile app, orders are failing",high
+Problem: order service is timing out sometimes for one office,medium
+The login service has been crashing on startup since yesterday and customers cannot pay,high
+the whole company are blocked because the checkout page is not responding at all,high
+"Hi team - every customer cannot use the customer database, we are breaching our SLA",high
+Support request with CRM: failing intermittently since 9am,medium
+Request: how do I change the billing system settings for me?,low
+Hi team! invoice service completely down for the entire support team. we are losing revenue,high
+all users are blocked because the build pipeline is not responding at all,high
+Issue with reporting dashboard: slow since 9am,medium
+"Support request - mobile app showing errors now and then, it is affecting productivity",medium
+Support request: login service is slow for one office,medium
+Hello: email server is rejecting every request for the whole company,high
+Noticed the invoice service is showing errors now and then for one office,medium
+"Emergency - the entire support team cannot use the VPN, we are breaching our SLA",high
+"Production email server is rejecting every request, we are losing revenue",high
+"When you get a chance, the build pipeline is sorting names oddly",low
+URGENT incident: customer database completely down since the last deploy,high
+Noticed the customer database is slow for a few users,medium
+"Production billing system is returning 500 errors, we are breaching our SLA",high
+Ticket: order service is dropping connections for two people on the legal team,medium
+Can someone look at the build pipeline? It is failing intermittently,medium
+The order service is using the old logo. just a suggestion,low
+The search page is missing a dark mode option. it is only cosmetic,low
+Noticed the file upload is failing intermittently for a few users,medium
+"Question about the VPN, it is showing the wrong timezone label, just a suggestion",low
+Suggestion: the checkout page is sorting names oddly for a new starter,low
+Critical incident: email server not responding at all for the last hour,high
+URGENT incident: build pipeline rejecting every request since the last deploy,high
+Help: invoice service is rejecting every request for the entire finance team,high
+"Hi team for invoice service: no rush, but it is using the old logo",low
+"Question for shared drive: whenever you have time, but it is showing a typo",low
+Problem: login service is showing errors now and then for a few users,medium
+Hi team: Wi-Fi is not responding at all for the entire legal team,high
+"Problem - checkout page timing out sometimes, it slows the team down",medium
+"Suggestion for file upload: it is only cosmetic, but it is showing the wrong timezone label",low
+Can someone look at the file upload? It is showing errors now and then,medium
+Can someone look at the Kubernetes cluster? It is failing intermittently,medium
+Hi team: VPN is showing errors now and then for some customers,medium
+The file upload is showing the wrong timezone label. it is only cosmetic,low
+"Problem - mobile app slow, retrying usually works",medium
+"Suggestion about the CRM, it is missing a dark mode option, whenever you have time",low
+"FYI about the VPN, it is showing the wrong timezone label, just a suggestion",low
+Request: how do I change the email server settings for a new starter?,low
+Emergency incident: HR portal returning 500 errors since the last deploy,high
+"The reporting dashboard has been timing out sometimes since this morning, it is affecting productivity",medium
+Help with order service: slow since the last deploy,medium
+Issue with Kubernetes cluster: failing intermittently since this morning,medium
+all users are blocked because the HR portal is rejecting every request,high
+Can someone look at the search page? It is dropping connections,medium
+Request - could the billing system stop showing the wrong timezone label? just a suggestion,low
+Problem with file upload: showing errors now and then for the last hour,high
+The invoice service is sorting names oddly. no rush,low
+Emergency: order service is completely down for all users,high
+Support request: the build pipeline is showing the wrong timezone label for a new starter,high
+"Support request - search page timing out sometimes, there is a workaround",medium
+"Support request - billing system dropping connections, it slows the team down",medium
+"The build pipeline has been failing intermittently since yesterday, there is a workaround",medium
+Minor: order service showing the wrong timezone label for my account,low
+"customer database keeps showing errors now and then for one office, we can manage for today",medium
+"Production VPN is rejecting every request, we are breaching our SLA",high
+Help: reporting dashboard is slow for two people on the engineering team,medium
+Support request: how do I change the billing system settings for my account?,low
+"Production build pipeline is returning 500 errors, orders are failing",high
+Noticed the payment API is dropping connections for some customers,medium
+Can someone look at the login service? It is timing out sometimes,medium
+FYI - could the shared drive stop missing a dark mode option? whenever you have time,low
+every customer are blocked because the file upload is not responding at all,high
+two people on the support team report the search page is dropping connections,medium
+The mobile app is missing a dark mode option. it is only cosmetic,medium
+"The checkout page has been timing out sometimes since yesterday, there is a workaround",medium
+Can someone look at the VPN? It is timing out sometimes,low
+URGENT: VPN is completely down for all users,high
+the whole company are blocked because the CRM is rejecting every request,medium
+Minor: checkout page showing the wrong timezone label for me,low
+Bug with checkout page: timing out sometimes since 9am,medium
+Minor: file upload showing the wrong timezone label for my account,low
+"Support request - Wi-Fi slow, retrying usually works",medium
+Hello incident: Kubernetes cluster not responding at all for the last hour,high
+"Ticket - VPN dropping connections, it is affecting productivity",medium
+Hello - could the checkout page stop sorting names oddly? it is only cosmetic,low
+The search page has been returning 500 errors for the last hour and we are breaching our SLA,high
+Help: SSO is dropping connections for some customers,medium
+"file upload keeps slow for two people on the sales team, it slows the team down",medium
+"When you get a chance, the payment API is using the old logo",low
+The mobile app has been completely down since this morning and nobody can work,high
+"Ticket about the Wi-Fi, it is missing a dark mode option, nothing is blocked",low
+Hi team: mobile app is timing out sometimes for a few users,medium
+The reporting dashboard is using the old logo. just a suggestion,low
+Request - could the invoice service stop showing a typo? no rush,low
+Noticed the login service is failing intermittently for two people on the legal team,medium
+The SSO is sorting names oddly. whenever you have time,low
+Can someone look at the email server? It is dropping connections,medium
+Can someone look at the email server? It is timing out sometimes,medium
+"Hello for file upload: nothing is blocked, but it is missing a dark mode option",low
+a few users report the Wi-Fi is slow,medium
+a few users report the shared drive is slow,medium
+Hi team! reporting dashboard crashing on startup for all users. customers cannot pay,high
+Help: the HR portal is showing a typo for my account,low
+Noticed the customer database is slow for some customers,medium
+"FYI for invoice service: nothing is blocked, but it is missing a dark mode option",low
+The mobile app is sorting names oddly. nothing is blocked,low
+"The billing system has been timing out sometimes since yesterday, there is a workaround",medium
+Issue with HR portal: timing out sometimes since 9am,medium
+"The customer database has been showing errors now and then for the last hour, retrying usually works",medium
+Emergency! file upload completely down for every customer. customers cannot pay,high
+The shared drive has been completely down since 9am and we are breaching our SLA,high
+"Production login service is not responding at all, nobody can work",high
+Can someone look at the Kubernetes cluster? It is timing out sometimes,medium
+two people on the engineering team report the invoice service is failing intermittently,medium
+"FYI for VPN: just a suggestion, but it is missing a dark mode option",low
+"The CRM has been showing errors now and then for the last hour, we can manage for today",medium
+URGENT! build pipeline returning 500 errors for all users. nobody can work,high
+Critical: HR portal is not responding at all for the entire sales team,high
+"Issue - order service failing intermittently, it slows the team down",medium
+P1: invoice service is completely down for every customer,high
+"checkout page returning 500 errors since the last deploy, we are losing revenue",high
+"shared drive crashing on startup for the last hour, we are breaching our SLA",high
+every customer are blocked because the Wi-Fi is completely down,high
+Ticket with SSO: slow for the last hour,medium
+"Help about the login service, it is missing a dark mode option, nothing is blocked",low
+URGENT: customer database is completely down for the whole company,high
+Request: how do I change the mobile app settings for my account?,low
+"Bug - Kubernetes cluster slow, it is affecting productivity",medium
+Issue: checkout page is failing intermittently for one office,medium
+two people on the support team report the file upload is timing out sometimes,medium
+every customer are blocked because the reporting dashboard is crashing on startup,high
+"Hi team about the checkout page, it is using the old logo, no rush",low
+Noticed the reporting dashboard is failing intermittently for one office,medium
+Question - could the build pipeline stop showing a typo? nothing is blocked,low
+Noticed the invoice service is timing out sometimes for two people on the HR team,medium
+"Suggestion about the mobile app, it is using the old logo, whenever you have time",low
+Support request with shared drive: dropping connections after the update,medium
+"When you get a chance, the HR portal is missing a dark mode option",low
+Hello - could the billing system stop showing a typo? it is only cosmetic,low
+Noticed the order service is showing errors now and then for some customers,medium
+"SSO keeps dropping connections for one office, it is affecting productivity",medium
+Ticket: the customer database is missing a dark mode option for one user,low
+"FYI about the customer database, it is missing a dark mode option, just a suggestion",low
+Issue: Wi-Fi is failing intermittently for two people on the finance team,medium
+Noticed the order service is failing intermittently for some customers,medium
+Bug with order service: failing intermittently since this morning,medium
+Ticket: the build pipeline is showing the wrong timezone label for a new starter,low
+Support request: shared drive is slow for some customers,medium
+URGENT: checkout page is crashing on startup for every customer,high
+Ticket: billing system is completely down for all users,high
+the whole company are blocked because the build pipeline is returning 500 errors,medium
+The email server is showing the wrong timezone label. just a suggestion,low
+Emergency: search page is not responding at all for all users,high
+"Support request about the Kubernetes cluster, it is using the old logo, no rush",low
+"Suggestion about the payment API, it is showing a typo, whenever you have time",low
+Noticed the Kubernetes cluster is slow for some customers,medium
+"Support request - order service dropping connections, it slows the team down",medium
+The build pipeline is missing a dark mode option. nothing is blocked,low
+URGENT: checkout page is completely down for every customer,low
+Can someone look at the invoice service? It is failing intermittently,medium
+"CRM keeps showing errors now and then for a few users, we can manage for today",medium
+Minor: invoice service missing a dark mode option for me,low
+"Support request - the whole company cannot use the checkout page, we are breaching our SLA",high
+FYI: how do I change the shared drive settings for a new starter?,low
+Support request: invoice service is completely down for the whole company,high
+"FYI about the login service, it is using the old logo, whenever you have time",low
+"Problem - order service timing out sometimes, we can manage for today",medium
+"email server keeps showing errors now and then for some customers, it is affecting productivity",medium
+"The reporting dashboard has been slow since the last deploy, there is a workaround",medium
+P1: reporting dashboard is crashing on startup for all users,high
+Problem: checkout page is slow for one office,medium
+"Production Wi-Fi is returning 500 errors, orders are failing",high
+"Help - the entire support team cannot use the payment API, customers cannot pay",high
+"invoice service keeps failing intermittently for two people on the sales team, retrying usually works",medium
+"email server keeps timing out sometimes for some customers, it slows the team down",medium
+the whole company are blocked because the order service is not responding at all,high
+one office report the login service is dropping connections,medium
+Can someone look at the HR portal? It is dropping connections,medium
+"Degraded - login service slow, we can manage for today",low
+"Hi team - every customer cannot use the mobile app, nobody can work",high
+"When you get a chance, the SSO is using the old logo",low
+Hello - could the checkout page stop using the old logo? it is only cosmetic,low
+Minor: file upload showing the wrong timezone label for me,low
+Request - could the HR portal stop showing the wrong timezone label? nothing is blocked,low
+"Production file upload is crashing on startup, we are losing revenue",high
+"The file upload has been slow since this morning, retrying usually works",medium
+"Degraded - order service showing errors now and then, it is affecting productivity",medium
+Minor: Kubernetes cluster using the old logo for my account,low
+"The customer database has been failing intermittently since yesterday, we can manage for today",medium
+"VPN rejecting every request since yesterday, we are breaching our SLA",high
+"The email server has been timing out sometimes since 9am, we can manage for today",medium
+Help: build pipeline is dropping connections for one office,medium
+Emergency! customer database crashing on startup for all users. nobody can work,high
+Minor: mobile app showing the wrong timezone label for me,low
+The build pipeline has been not responding at all since the last deploy and we are losing revenue,high
+"Problem - Kubernetes cluster slow, we can manage for today",medium
+"payment API returning 500 errors for the last hour, we are losing revenue",high
+"The reporting dashboard has been showing errors now and then since 9am, there is a workaround",medium
+"Problem - invoice service dropping connections, there is a workaround",medium
+Bug with login service: timing out sometimes since yesterday,medium
+The search page is using the old logo. it is only cosmetic,low
+Can someone look at the build pipeline? It is dropping connections,medium
+Support request: the CRM is sorting names oddly for me,low
+The SSO has been completely down since yesterday and nobody can work,high
+"invoice service keeps dropping connections for some customers, we can manage for today",medium
+"Production order service is rejecting every request, nobody can work",high
+"Critical - all users cannot use the billing system, nobody can work",high
+Critical! customer database not responding at all for every customer. nobody can work,high
+The payment API is missing a dark mode option. it is only cosmetic,medium
+"billing system keeps timing out sometimes for two people on the sales team, there is a workaround",medium
+Issue: payment API is showing errors now and then for one office,medium
+URGENT: order service is not responding at all for every customer,high
+Can someone look at the search page? It is showing errors now and then,medium
+Can someone look at the file upload? It is dropping connections,medium
+Problem: build pipeline is dropping connections for a few users,medium
+some customers report the reporting dashboard is timing out sometimes,medium
+Can someone look at the order service? It is failing intermittently,medium
+Request: the checkout page is showing the wrong timezone label for my account,low
+Ticket - could the billing system stop missing a dark mode option? it is only cosmetic,low
+"The email server has been failing intermittently since this morning, it is affecting productivity",medium
+Ticket! login service crashing on startup for the entire legal team. we are losing revenue,high
+The email server is using the old logo. whenever you have time,low
+"email server keeps failing intermittently for one office, we can manage for today",medium
+Noticed the CRM is timing out sometimes for one office,medium
+Help: how do I change the search page settings for one user?,low
+Support request - could the order service stop showing the wrong timezone label? nothing is blocked,high
+"Question for Wi-Fi: just a suggestion, but it is missing a dark mode option",low
+"When you get a chance, the VPN is missing a dark mode option",low
+all users are blocked because the search page is rejecting every request,high
+The build pipeline is sorting names oddly. no rush,low
+the entire engineering team are blocked because the billing system is rejecting every request,high
+"Production Wi-Fi is rejecting every request, nobody can work",high
+Ticket with CRM: timing out sometimes since 9am,medium
+two people on the legal team report the Kubernetes cluster is dropping connections,medium
+"When you get a chance, the login service is using the old logo",low
+Ticket - could the Kubernetes cluster stop using the old logo? just a suggestion,low
+Noticed the email server is showing errors now and then for some customers,medium
+Help with search page: failing intermittently since yesterday,high
+P1! billing system crashing on startup for the entire legal team. nobody can work,high
+"Problem - reporting dashboard showing errors now and then, it slows the team down",medium
+Request - could the email server stop sorting names oddly? whenever you have time,low
+"Hello - the entire finance team cannot use the Kubernetes cluster, we are losing revenue",high
+"Issue - payment API dropping connections, retrying usually works",medium
+Support request with customer database: failing intermittently since the last deploy,medium
+Question: the Wi-Fi is showing the wrong timezone label for one user,low
+Noticed the mobile app is showing errors now and then for two people on the legal team,medium
+"Suggestion for Wi-Fi: no rush, but it is using the old logo",low
+"The order service has been timing out sometimes since the last deploy, it is affecting productivity",medium
+Hello: how do I change the reporting dashboard settings for my account?,low
+a few users report the CRM is dropping connections,medium
+"P1 - the entire sales team cannot use the email server, we are breaching our SLA",high
+"Hello - search page dropping connections, it slows the team down",medium
+P1 incident: build pipeline not responding at all since this morning,high
+Ticket - could the invoice service stop showing a typo? whenever you have time,low
+"Production customer database is completely down, orders are failing",high
+Noticed the CRM is timing out sometimes for some customers,medium
+Issue: reporting dashboard is timing out sometimes for a few users,medium
+Hi team! VPN crashing on startup for the entire operations team. customers cannot pay,high
+Hello: how do I change the Wi-Fi settings for me?,low
+Help: the CRM is missing a dark mode option for me,low
+Problem: customer database is dropping connections for two people on the finance team,medium
+The VPN has been rejecting every request since 9am and we are losing revenue,high
+Question: how do I change the customer database settings for me?,low
+Critical incident: email server returning 500 errors since the last deploy,high
+"Ticket - all users cannot use the build pipeline, orders are failing",high
+"FYI for customer database: just a suggestion, but it is sorting names oddly",low
+"When you get a chance, the customer database is showing the wrong timezone label",low
+Noticed the file upload is slow for one office,medium
+Bug with order service: showing errors now and then since 9am,medium
+"CRM keeps dropping connections for two people on the marketing team, we can manage for today",medium
+Suggestion - could the CRM stop sorting names oddly? just a suggestion,low
+"Support request - email server showing errors now and then, we can manage for today",medium
+Noticed the customer database is failing intermittently for one office,medium
+"Production mobile app is rejecting every request, orders are failing",high
+"Problem - invoice service showing errors now and then, there is a workaround",medium
+"Problem - customer database dropping connections, it is affecting productivity",medium
+"When you get a chance, the search page is sorting names oddly",low
+"FYI about the VPN, it is missing a dark mode option, no rush",low
+"The search page has been slow for the last hour, there is a workaround",medium
+"When you get a chance, the order service is showing the wrong timezone label",low
+the whole company are blocked because the customer database is not responding at all,low
+FYI - could the reporting dashboard stop missing a dark mode option? whenever you have time,low
+Hello! build pipeline crashing on startup for the entire legal team. orders are failing,high
+"Support request - every customer cannot use the search page, we are losing revenue",high
+Minor: CRM showing the wrong timezone label for my account,low
+all users are blocked because the build pipeline is returning 500 errors,low
+"When you get a chance, the customer database is sorting names oddly",low
+"search page keeps dropping connections for one office, retrying usually works",medium
+Ticket: shared drive is dropping connections for two people on the sales team,medium
+Can someone look at the shared drive? It is slow,medium
+Issue: billing system is timing out sometimes for one office,medium
+"Help for SSO: whenever you have time, but it is sorting names oddly",low
+Support request: invoice service is dropping connections for some customers,medium
+"Wi-Fi keeps slow for some customers, it slows the team down",medium
+Hi team - could the shared drive stop sorting names oddly? nothing is blocked,low
+the whole company are blocked because the SSO is rejecting every request,high
+"Production file upload is returning 500 errors, orders are failing",high
+"Issue - shared drive slow, there is a workaround",medium
+P1 incident: build pipeline returning 500 errors after the update,high
+"Help for HR portal: just a suggestion, but it is using the old logo",low
+Minor: VPN using the old logo for my account,low
+Support request: billing system is not responding at all for the whole company,high
+Ticket: billing system is not responding at all for every customer,high
+"reporting dashboard rejecting every request since yesterday, we are breaching our SLA",high
+Support request: how do I change the email server settings for one user?,low
+Hello - could the CRM stop showing the wrong timezone label? whenever you have time,low
+"Help - SSO timing out sometimes, we can manage for today",medium
+"Problem - customer database timing out sometimes, retrying usually works",medium
+The build pipeline has been rejecting every request since yesterday and we are breaching our SLA,high
+"Production billing system is completely down, orders are failing",high

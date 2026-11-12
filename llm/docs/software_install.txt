@@ -1,0 +1,9 @@
+Software Installation
+
+Staff cannot install software with administrator rights. Approved applications can be installed at any time from the Company Portal app without a ticket.
+
+For software that is not in the Company Portal, submit a software request with the business reason. The security team reviews new software within 5 business days. Paid software also needs budget approval from your manager.
+
+Browser extensions are limited to an approved list. Unapproved extensions are removed automatically.
+
+Developers who need local admin rights can request a time-limited elevation of up to 8 hours through the access request form.

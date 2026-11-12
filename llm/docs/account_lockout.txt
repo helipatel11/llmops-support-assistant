@@ -1,0 +1,9 @@
+Account Lockout
+
+An account is locked automatically after 5 failed sign-in attempts in a row. The lock lasts 15 minutes and then clears by itself; you do not need to contact support for a single lockout.
+
+If your account locks again straight after unlocking, an old password is probably saved somewhere and retrying in the background. Common sources are a phone mail app, a mapped network drive, or the VPN client. Update or remove the saved password on each device.
+
+To unlock immediately, call the service desk and verify your identity with your employee ID and manager's name. The service desk cannot unlock accounts by email.
+
+Repeated lockouts from unknown locations are treated as a possible security incident and reported to the security team.

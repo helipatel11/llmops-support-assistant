@@ -1,0 +1,9 @@
+Printing
+
+Office printers use secure "follow-me" printing. Send the job to the "FollowMe" queue, then tap your badge on any office printer to release it. Jobs not released within 8 hours are deleted.
+
+To add the FollowMe queue on a company laptop, open the Company Portal app and install "FollowMe Printing". You must be on the Corp network or the VPN.
+
+If the printer says "badge not recognised", register your badge once by entering your employee ID on the printer screen.
+
+Paper jams and empty toner should be reported using the QR code on the printer, not through a service desk ticket. Colour printing is disabled by default; managers can request it for their team.

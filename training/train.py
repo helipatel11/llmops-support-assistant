@@ -1,79 +1,67 @@
+"""Train the ticket-priority classifier and log the run to MLflow.
+
+Run from the repo root:  python -m training.train
+Trains on tickets_train.csv only; metrics come from the held-out tickets_test.csv,
+computed by the same code as evaluation/classifier_eval.py.
+"""
+
 import joblib
 import mlflow
 import mlflow.sklearn
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
 
-mlflow.set_tracking_uri("file:./mlruns")
+from app import config
+from evaluation.classifier_eval import evaluate, print_summary
+from evaluation.common import PROJECT_ROOT, write_result
 
-# MLflow experiment
-mlflow.set_experiment("support-ticket-classifier")
+TRAIN_SET = PROJECT_ROOT / "training" / "data" / "tickets_train.csv"
 
-
-# Load dataset
-df = pd.read_csv("training/data/tickets.csv")
-
-X = df["text"]
-y = df["priority"]
+PARAMS = {
+    "model_type": "LogisticRegression",
+    "max_iter": 1000,
+    "tfidf_ngram_range": "(1, 1)",
+}
 
 
-with mlflow.start_run():
+def main() -> None:
+    mlflow.set_tracking_uri(f"file:{PROJECT_ROOT / 'mlruns'}")
+    mlflow.set_experiment("support-ticket-classifier")
 
-    # Vectorization
-    vectorizer = TfidfVectorizer()
+    df = pd.read_csv(TRAIN_SET)
 
-    X_vectorized = vectorizer.fit_transform(X)
+    with mlflow.start_run():
+        # Fit the vectorizer on training data only (no test data leaks into the vocabulary).
+        vectorizer = TfidfVectorizer()
+        X_train = vectorizer.fit_transform(df["text"])
 
-    # Split
-    X_train, X_test, y_train, y_test = train_test_split(
-        X_vectorized,
-        y,
-        test_size=0.2,
-        random_state=42
-    )
+        model = LogisticRegression(max_iter=PARAMS["max_iter"])
+        model.fit(X_train, df["priority"])
 
-    # Model
-    model = LogisticRegression()
+        config.MODEL_DIR.mkdir(parents=True, exist_ok=True)
+        joblib.dump(model, config.MODEL_PATH)
+        joblib.dump(vectorizer, config.VECTORIZER_PATH)
 
-    # Train
-    model.fit(X_train, y_train)
+        result = evaluate()
+        print_summary(result)
 
-    # Predict
-    predictions = model.predict(X_test)
+        mlflow.log_params({**PARAMS, "train_rows": len(df)})
+        mlflow.log_metrics({"accuracy": result["accuracy"], "macro_f1": result["macro_f1"]})
+        for label, m in result["per_class"].items():
+            mlflow.log_metrics({f"{label}_{k}": m[k] for k in ("precision", "recall", "f1")})
 
-    # Accuracy
-    accuracy = accuracy_score(y_test, predictions)
+        mlflow.sklearn.log_model(
+            sk_model=model,
+            artifact_path="model",
+            registered_model_name="support-ticket-classifier",
+        )
+        mlflow.log_artifact(str(config.MODEL_PATH))
+        mlflow.log_artifact(str(config.VECTORIZER_PATH))
 
-    print(f"Accuracy: {accuracy}")
+        path = write_result("classifier_current", result)
+        print(f"Training complete. Eval written to {path.relative_to(PROJECT_ROOT)}")
 
-    # Log params
-    mlflow.log_param("model_type", "LogisticRegression")
 
-    # Log metrics
-    mlflow.log_metric("accuracy", accuracy)
-
-    # Log model
-    
-    # mlflow.sklearn.log_model(
-    #     model,
-    #     "model"
-    # )
-
-    mlflow.sklearn.log_model(
-    sk_model=model,
-    artifact_path="model",
-    registered_model_name="support-ticket-classifier"
-)
-
-    # Save artifacts locally
-    joblib.dump(model, "training/models/model.pkl")
-    joblib.dump(vectorizer, "training/models/vectorizer.pkl")
-
-    # Log artifacts
-    mlflow.log_artifact("training/models/model.pkl")
-    mlflow.log_artifact("training/models/vectorizer.pkl")
-
-    print("Training complete.")
+if __name__ == "__main__":
+    main()

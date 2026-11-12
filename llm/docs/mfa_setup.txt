@@ -1,0 +1,9 @@
+Multi-Factor Authentication (MFA)
+
+MFA is required for all staff accounts. The supported method is the Authenticator app on a phone; SMS codes are only allowed as a temporary fallback for up to 7 days.
+
+To set up MFA, sign in to the security portal, choose "Add method", and scan the QR code with the Authenticator app. Enter the 6-digit code to confirm.
+
+New phone: before wiping the old phone, open the security portal and move MFA to the new device. If the old phone is lost or already wiped, the service desk can issue a one-time bypass code valid for 24 hours after identity verification.
+
+Codes are time-based. If codes are always rejected, check that the phone's clock is set automatically.

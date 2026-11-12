@@ -1,0 +1,11 @@
+Incident Severity Levels
+
+Sev1 (critical): a production service is down or most customers are affected, for example payments failing or a full outage. Response within 15 minutes, 24/7, and the on-call engineer is paged.
+
+Sev2 (major): a service is degraded or a subset of customers is affected and there is no good workaround. Response within 1 hour during business hours.
+
+Sev3 (minor): a single user is affected, or there is a workaround. Response within 1 business day.
+
+Sev4 (request): questions, cosmetic issues and feature suggestions. Response within 3 business days.
+
+When unsure, choose the higher severity; it can be lowered later.

@@ -1,0 +1,9 @@
+New Starter Onboarding
+
+Managers request accounts for new starters at least 5 business days before the start date using the new starter form. Late requests may mean the person has no laptop on day one.
+
+On day one the new starter collects their laptop and badge from the service desk, signs in with the temporary password from their manager, and is asked to set a new password and set up MFA immediately.
+
+Access to team systems is not automatic; the manager requests it through the access request form.
+
+Leavers: managers submit the leaver form before the last day. Accounts are disabled at 6pm on the last working day and the laptop must be returned the same day.

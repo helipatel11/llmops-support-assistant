@@ -1,0 +1,12 @@
+Office Wi-Fi
+
+There are two office networks. "Corp" is for company laptops and connects automatically using your device certificate. "Guest" is for visitors and personal devices and has no access to internal systems.
+
+Guest access codes are issued by reception and are valid for 24 hours. Staff must not share their Corp credentials with visitors.
+
+If a company laptop cannot join Corp:
+- toggle Wi-Fi off and on
+- forget the Corp network and reconnect
+- restart the laptop so the certificate is renewed
+
+If the whole floor has no Wi-Fi, report it as an outage to the service desk, including the building and floor. Personal phones should use Guest, not Corp.

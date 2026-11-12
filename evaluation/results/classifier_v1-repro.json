@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-11-12T19:22:29+00:00",
+    "git_commit": "4b32599",
+    "python": "3.9.6",
+    "machine": "Darwin arm64"
+  },
+  "artifacts": {
+    "model_sha256": "97c5df0ca212",
+    "vectorizer_sha256": "57e56be1460b"
+  },
+  "dataset": {
+    "path": "training/data/tickets_test.csv",
+    "rows": 150,
+    "sha256": "9274218fe93e"
+  },
+  "accuracy": 0.4933,
+  "macro_f1": 0.4991,
+  "per_class": {
+    "high": {
+      "precision": 0.2791,
+      "recall": 0.2667,
+      "f1": 0.2727,
+      "support": 45
+    },
+    "medium": {
+      "precision": 0.4615,
+      "recall": 0.6,
+      "f1": 0.5217,
+      "support": 60
+    },
+    "low": {
+      "precision": 0.8966,
+      "recall": 0.5778,
+      "f1": 0.7027,
+      "support": 45
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "high",
+      "medium",
+      "low"
+    ],
+    "rows_are": "true label",
+    "columns_are": "predicted label",
+    "matrix": [
+      [
+        12,
+        33,
+        0
+      ],
+      [
+        21,
+        36,
+        3
+      ],
+      [
+        10,
+        9,
+        26
+      ]
+    ]
+  }
+}
