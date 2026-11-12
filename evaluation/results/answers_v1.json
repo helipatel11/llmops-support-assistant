@@ -1,0 +1,771 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-11-12T20:42:32+00:00",
+    "git_commit": "9f56297",
+    "python": "3.9.6",
+    "machine": "Darwin arm64"
+  },
+  "config": {
+    "prompt_version": "v1",
+    "retrieval_version": "v1",
+    "generation_version": "v1",
+    "index_id": "3bac0b7902c1",
+    "serving_model": "tinyllama",
+    "embedding_model": "nomic-embed-text",
+    "serving_top_k": 2,
+    "temperature": 0,
+    "judge_model": "llama3"
+  },
+  "dataset": {
+    "path": "evaluation/golden_questions.jsonl",
+    "sha256": "63746028c479"
+  },
+  "answerable": {
+    "n": 25,
+    "judged": 25,
+    "fully_correct_rate": 0.28,
+    "mean_correct_score_0_to_2": 0.8,
+    "grounded_rate": 0.52,
+    "false_refusal_rate": 0.32
+  },
+  "unanswerable": {
+    "n": 5,
+    "correct_refusal_rate": 1,
+    "exact_refusal_format_rate": 0
+  },
+  "latency_s_informal": {
+    "note": "Single sequential run on the dev laptop; not a load test (see Phase 4).",
+    "retrieval_median": 0.022,
+    "generation_median": 1.121,
+    "generation_max": 3.454
+  },
+  "per_question": [
+    {
+      "id": "q01",
+      "question": "How long is a password reset link good for?",
+      "expected_doc": "password_reset.txt",
+      "answerable": true,
+      "reference_answer": "The reset link expires after 30 minutes.",
+      "key_facts": [
+        "the link expires after 30 minutes"
+      ],
+      "context": "Password Reset\n\nUsers can reset their own password from the \"Forgot password\" link on the sign-in page. A reset link is emailed to the registered work address and expires after 30 minutes.\n\nIf the reset email does not arrive within 5 minutes:\n- check the spam or junk folder\n- confirm the registered email address in the HR portal\n- request a new link (only the most recent link works)\n- contact the support team if it still has not arrived\n\nAccount Lockout\n\nAn account is locked automatically after 5 failed sign-in attempts in a row. The lock lasts 15 minutes and then clears by itself; you do not need to contact support for a single lockout.\n\nIf your account locks again straight after unlocking, an old password is probably saved somewhere and retrying in the background. Common sources are a phone mail app, a mapped network drive, or the VPN client. Update or remove the saved password on each device.",
+      "answer": "The provided context does not mention the length of a password reset link. The answer is not present in the context, and it is not mentioned in the given context.",
+      "retrieval_s": 0.498,
+      "generation_s": 2.779,
+      "refused": true,
+      "judge": {
+        "grounded": 1,
+        "correct": 0,
+        "rule": "refusal"
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q02",
+      "question": "I asked for a reset link ten minutes ago and nothing came. What should I do?",
+      "expected_doc": "password_reset.txt",
+      "answerable": true,
+      "reference_answer": "Check spam/junk, confirm the registered email in the HR portal, request a new link (only the latest works), then contact support.",
+      "key_facts": [
+        "check the spam or junk folder",
+        "confirm the registered email address",
+        "request a new link",
+        "contact support if it still has not arrived"
+      ],
+      "context": "Password Reset\n\nUsers can reset their own password from the \"Forgot password\" link on the sign-in page. A reset link is emailed to the registered work address and expires after 30 minutes.\n\nIf the reset email does not arrive within 5 minutes:\n- check the spam or junk folder\n- confirm the registered email address in the HR portal\n- request a new link (only the most recent link works)\n- contact the support team if it still has not arrived\n\nDeleted files can be restored from the folder's version history for 30 days. After 30 days, the service desk can restore from backup within 90 days.\n\nDo not store customer personal data on shared drives; use the customer records system instead.",
+      "answer": "If you asked for a reset link ten minutes ago and have not received it within 5 minutes, check your spam or junk folder, confirm your registered email address in the HR portal, request a new link (only the most recent link works), contact the support team if it still has not arrived, and then contact the support team if the reset link has expired or if you need to restore a deleted file from the folder's version history for 30 days. After 30 days, the service desk can restore from backup within 90 days.",
+      "retrieval_s": 0.022,
+      "generation_s": 1.738,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 1,
+        "unsupported_claims": [
+          "If you asked for a reset link ten minutes ago and have not received it within 5 minutes, check your spam or junk folder, confirm your registered email address in the HR portal, request a new link (only the most recent link works), contact the support team if it still has not arrived, and then contact the support team if the reset link has expired or if you need to restore a deleted file from the folder's version history for 30 days. After 30 days, the service desk can restore from backup within 90 days."
+        ],
+        "correct": 2,
+        "facts_present": 4,
+        "facts_total": 4,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q03",
+      "question": "How many wrong password attempts before I get locked out, and for how long?",
+      "expected_doc": "account_lockout.txt",
+      "answerable": true,
+      "reference_answer": "5 failed attempts in a row; the lock lasts 15 minutes and clears by itself.",
+      "key_facts": [
+        "locked after 5 failed attempts",
+        "the lock lasts 15 minutes"
+      ],
+      "context": "Account Lockout\n\nAn account is locked automatically after 5 failed sign-in attempts in a row. The lock lasts 15 minutes and then clears by itself; you do not need to contact support for a single lockout.\n\nIf your account locks again straight after unlocking, an old password is probably saved somewhere and retrying in the background. Common sources are a phone mail app, a mapped network drive, or the VPN client. Update or remove the saved password on each device.\n\nPassword rules: at least 12 characters, not one of your last 5 passwords. Passwords expire every 180 days and you are reminded by email 14 days before expiry.\n\nSupport staff will never ask for your password. Do not share it in tickets, chat or email.",
+      "answer": "The context provided does not mention any information about the number of wrong password attempts before being locked out, or the length of the lockout. The answer provided is based on the knowledge base information provided.",
+      "retrieval_s": 0.028,
+      "generation_s": 0.85,
+      "refused": true,
+      "judge": {
+        "grounded": 1,
+        "correct": 0,
+        "rule": "refusal"
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q04",
+      "question": "My account keeps getting locked again right after it unlocks. Why?",
+      "expected_doc": "account_lockout.txt",
+      "answerable": true,
+      "reference_answer": "An old saved password (phone mail app, mapped drive, VPN client) keeps retrying; update or remove it on each device.",
+      "key_facts": [
+        "an old saved password keeps retrying",
+        "update or remove the saved password on each device"
+      ],
+      "context": "Account Lockout\n\nAn account is locked automatically after 5 failed sign-in attempts in a row. The lock lasts 15 minutes and then clears by itself; you do not need to contact support for a single lockout.\n\nIf your account locks again straight after unlocking, an old password is probably saved somewhere and retrying in the background. Common sources are a phone mail app, a mapped network drive, or the VPN client. Update or remove the saved password on each device.\n\nTo unlock immediately, call the service desk and verify your identity with your employee ID and manager's name. The service desk cannot unlock accounts by email.\n\nRepeated lockouts from unknown locations are treated as a possible security incident and reported to the security team.",
+      "answer": "The provided context states that if your account is locked again after unlocking, an old password is probably saved on your device(s) and retrieving it in the background. Common sources of saved passwords include phone mail apps, mapped network drives, or VPN clients. To unlock immediately, call the service desk and verify your identity with your employee ID and manager's name. The service desk cannot unlock accounts by email. The repeated lockouts from unknown locations are treated as a possible security incident and reported to the security team.",
+      "retrieval_s": 0.017,
+      "generation_s": 1.657,
+      "refused": false,
+      "judge": {
+        "grounded": 1,
+        "claims": 5,
+        "unsupported_claims": [],
+        "correct": 1,
+        "facts_present": 1,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q05",
+      "question": "I'm getting a new phone. How do I move my authenticator?",
+      "expected_doc": "mfa_setup.txt",
+      "answerable": true,
+      "reference_answer": "Before wiping the old phone, move MFA to the new device in the security portal; if the old phone is gone, the service desk can issue a 24-hour bypass code after verifying identity.",
+      "key_facts": [
+        "move MFA to the new phone in the security portal before wiping the old one",
+        "if the old phone is gone, the service desk can issue a bypass code"
+      ],
+      "context": "New phone: before wiping the old phone, open the security portal and move MFA to the new device. If the old phone is lost or already wiped, the service desk can issue a one-time bypass code valid for 24 hours after identity verification.\n\nCodes are time-based. If codes are always rejected, check that the phone's clock is set automatically.\n\nMulti-Factor Authentication (MFA)\n\nMFA is required for all staff accounts. The supported method is the Authenticator app on a phone; SMS codes are only allowed as a temporary fallback for up to 7 days.\n\nTo set up MFA, sign in to the security portal, choose \"Add method\", and scan the QR code with the Authenticator app. Enter the 6-digit code to confirm.",
+      "answer": "To move your authenticator to the new phone, follow these steps:\n\n1. Log in to the security portal on the new phone.\n2. Click on \"Add method\" and select \"Authenticator app.\"\n3. Scan the QR code with the Authenticator app on the old phone.\n4. Enter the 6-digit code to confirm the move.\n\nIf the authenticator is not working on the new phone, check that the phone's clock is set automatically. If the phone is still not working, contact the IT support team for assistance.",
+      "retrieval_s": 0.023,
+      "generation_s": 1.975,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 7,
+        "unsupported_claims": [
+          "To move your authenticator to the new phone, follow these steps:",
+          "1. Log in to the security portal on the new phone.",
+          "2. Click on 'Add method' and select 'Authenticator app.'",
+          "3. Scan the QR code with the Authenticator app on the old phone.",
+          "4. Enter the 6-digit code to confirm the move.",
+          "If the phone is still not working, contact the IT support team for assistance."
+        ],
+        "correct": 0,
+        "facts_present": 0,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q06",
+      "question": "Can I keep using text message codes instead of the app?",
+      "expected_doc": "mfa_setup.txt",
+      "answerable": true,
+      "reference_answer": "No, SMS is only a temporary fallback for up to 7 days; the Authenticator app is required.",
+      "key_facts": [
+        "no, SMS is only a temporary fallback",
+        "SMS is allowed for up to 7 days",
+        "the Authenticator app is required"
+      ],
+      "context": "Multi-Factor Authentication (MFA)\n\nMFA is required for all staff accounts. The supported method is the Authenticator app on a phone; SMS codes are only allowed as a temporary fallback for up to 7 days.\n\nTo set up MFA, sign in to the security portal, choose \"Add method\", and scan the QR code with the Authenticator app. Enter the 6-digit code to confirm.\n\nNew phone: before wiping the old phone, open the security portal and move MFA to the new device. If the old phone is lost or already wiped, the service desk can issue a one-time bypass code valid for 24 hours after identity verification.\n\nCodes are time-based. If codes are always rejected, check that the phone's clock is set automatically.",
+      "answer": "Yes, you can keep using text message codes instead of the Authenticator app. The supported method for temporary fallback is SMS codes, which are only valid for up to 7 days. To set up MFA using text message codes, sign in to the security portal, choose \"Add method\", and scan the SMS code with the Authenticator app. Enter the 6-digit code to confirm. If you lose or wipe your phone, you can use the one-time bypass code to temporarily verify your identity.",
+      "retrieval_s": 0.021,
+      "generation_s": 1.909,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 5,
+        "unsupported_claims": [
+          "Yes, you can keep using text message codes instead of the Authenticator app.",
+          "To set up MFA using text message codes, sign in to the security portal, choose 'Add method', and scan the SMS code with the Authenticator app.",
+          "If you lose or wipe your phone, you can use the one-time bypass code to temporarily verify your identity."
+        ],
+        "correct": 1,
+        "facts_present": 2,
+        "facts_total": 3,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q07",
+      "question": "An internal app says access denied after I sign in. How do I get in?",
+      "expected_doc": "sso_login_errors.txt",
+      "answerable": true,
+      "reference_answer": "Your account is not assigned to the app; your manager requests access via the access request form, usually approved in one business day.",
+      "key_facts": [
+        "the account is not assigned to the application",
+        "the manager requests access through the access request form"
+      ],
+      "context": "Single Sign-On (SSO) Login Errors\n\nMost internal applications use single sign-on. If an application shows \"Access denied\" after signing in, your account has not been assigned to that application. Ask your manager to request access through the access request form; approval usually takes one business day.\n\nAccount Lockout\n\nAn account is locked automatically after 5 failed sign-in attempts in a row. The lock lasts 15 minutes and then clears by itself; you do not need to contact support for a single lockout.\n\nIf your account locks again straight after unlocking, an old password is probably saved somewhere and retrying in the background. Common sources are a phone mail app, a mapped network drive, or the VPN client. Update or remove the saved password on each device.",
+      "answer": "Yes, the provided context mentions that internal applications use single sign-on (SSO), and if an application shows \"Access denied\" after signing in, your account has not been assigned to that application. To get in, you should ask your manager to request access through the access request form, which usually takes one business day. If your account is locked automatically after 5 failed sign-in attempts in a row, the lock lasts 15 minutes, and then clear automatically. If your account is locked again after unlocking, an old password is probably saved somewhere, and retrieving it on each device is necessary. To update or remove saved passwords, you should check each device and update or remove the saved password on each one.",
+      "retrieval_s": 0.029,
+      "generation_s": 2.424,
+      "refused": false,
+      "judge": {
+        "grounded": 1,
+        "claims": 6,
+        "unsupported_claims": [],
+        "correct": 2,
+        "facts_present": 2,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q08",
+      "question": "The login page keeps bouncing me back and forth and never loads. Fix?",
+      "expected_doc": "sso_login_errors.txt",
+      "answerable": true,
+      "reference_answer": "Clear cookies for the app and sign-in domain, try a private window, and check the computer clock (tokens fail if off by more than 5 minutes).",
+      "key_facts": [
+        "clear cookies",
+        "try a private browser window",
+        "check the computer clock"
+      ],
+      "context": "Single Sign-On (SSO) Login Errors\n\nMost internal applications use single sign-on. If an application shows \"Access denied\" after signing in, your account has not been assigned to that application. Ask your manager to request access through the access request form; approval usually takes one business day.\n\nIf you see a redirect loop (the page keeps reloading between the app and the sign-in page):\n- clear cookies for the application and the sign-in domain\n- try a private browser window\n- make sure the computer clock is correct; SSO tokens fail if the clock is off by more than 5 minutes\n\nThe error \"AADSTS50076\" means MFA is required but was not completed. Sign out completely and sign in again, approving the MFA prompt.",
+      "answer": "If the login page keeps bouncing you back and forth and never loads, it could be due to a redirect loop. Clear cookies for the application and the sign-in domain, try a private browser window, make sure the computer clock is correct, and SSO tokens fail if the clock is off by more than 5 minutes. The error \"AADSTS50076\" means MFA is required but was not completed. Sign out completely and sign in again, approving the MFA prompt.",
+      "retrieval_s": 0.027,
+      "generation_s": 1.58,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 4,
+        "unsupported_claims": [
+          "If the login page keeps bouncing you back and forth and never loads, it could be due to a redirect loop."
+        ],
+        "correct": 2,
+        "facts_present": 3,
+        "facts_total": 3,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q09",
+      "question": "Which VPN client version do I need?",
+      "expected_doc": "vpn_troubleshooting.txt",
+      "answerable": true,
+      "reference_answer": "Version 5.2 or newer; older versions are blocked.",
+      "key_facts": [
+        "version 5.2 or newer"
+      ],
+      "context": "VPN Troubleshooting\n\nThe company VPN is required to reach internal systems from outside the office. It is not needed in the office.\n\nIf the VPN connection fails:\n- check that your internet connection works without the VPN\n- quit and restart the VPN client\n- sign in with your company credentials, not a personal account\n- make sure the client is version 5.2 or newer; older versions are blocked\n\nIf the VPN connects but internal sites do not load, disconnect, flush DNS (ipconfig /flushdns on Windows, or restart the laptop), and reconnect.\n\nThe VPN disconnects automatically after 12 hours, even if you are active. Reconnect to continue. Hotel and airport networks sometimes block the VPN; use a phone hotspot as a workaround.",
+      "answer": "The context provided does not mention which VPN client version you need. The answer is not present in the context, and it is recommended to check the knowledge base for more information.",
+      "retrieval_s": 0.023,
+      "generation_s": 0.753,
+      "refused": true,
+      "judge": {
+        "grounded": 1,
+        "correct": 0,
+        "rule": "refusal"
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q10",
+      "question": "Why does my remote connection drop every evening even though I'm working?",
+      "expected_doc": "vpn_troubleshooting.txt",
+      "answerable": true,
+      "reference_answer": "The VPN disconnects automatically after 12 hours; reconnect to continue.",
+      "key_facts": [
+        "the VPN disconnects automatically after 12 hours"
+      ],
+      "context": "If the VPN connects but internal sites do not load, disconnect, flush DNS (ipconfig /flushdns on Windows, or restart the laptop), and reconnect.\n\nThe VPN disconnects automatically after 12 hours, even if you are active. Reconnect to continue. Hotel and airport networks sometimes block the VPN; use a phone hotspot as a workaround.\n\nDatabase Connection Timeouts\n\nConnection timeouts usually mean the connection pool is exhausted or the database is overloaded. Each application instance may open at most 20 connections.\n\nSteps:\n- check the database dashboard for CPU above 80% or active connections near the limit\n- look for long-running queries; queries running longer than 60 seconds are killed automatically\n- restart the application only after confirming it is leaking connections",
+      "answer": "The provided context mentions that the VPN connects but internal sites do not load, and if the VPN disconnects, it automatically reconnects after 12 hours. However, the VPN may sometimes block the VPN, and in such cases, the hotel or airport networks may block the VPN. In such cases, the database connection timeouts usually mean that the connection pool is exhausted or the database is overloaded. To resolve this issue, check the database dashboard for CPU above 80% or active connections near the limit, look for long-running queries, and restart the application only after confirming that it is not leaking connections.",
+      "retrieval_s": 0.025,
+      "generation_s": 2.12,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 4,
+        "unsupported_claims": [
+          "To resolve this issue, check the database dashboard for CPU above 80% or active connections near the limit, look for long-running queries, and restart the application only after confirming that it is not leaking connections."
+        ],
+        "correct": 2,
+        "facts_present": 1,
+        "facts_total": 1,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q11",
+      "question": "Which wireless network should visitors use and how do they get on?",
+      "expected_doc": "office_wifi.txt",
+      "answerable": true,
+      "reference_answer": "The Guest network, with an access code from reception valid for 24 hours.",
+      "key_facts": [
+        "visitors use the Guest network",
+        "access codes come from reception"
+      ],
+      "context": "Office Wi-Fi\n\nThere are two office networks. \"Corp\" is for company laptops and connects automatically using your device certificate. \"Guest\" is for visitors and personal devices and has no access to internal systems.\n\nGuest access codes are issued by reception and are valid for 24 hours. Staff must not share their Corp credentials with visitors.\n\nIf a company laptop cannot join Corp:\n- toggle Wi-Fi off and on\n- forget the Corp network and reconnect\n- restart the laptop so the certificate is renewed\n\nIf the whole floor has no Wi-Fi, report it as an outage to the service desk, including the building and floor. Personal phones should use Guest, not Corp.",
+      "answer": "If the question is not present in the context, reply:\n\n\"I could not find this information in the knowledge base.\"",
+      "retrieval_s": 0.023,
+      "generation_s": 0.621,
+      "refused": true,
+      "judge": {
+        "grounded": 1,
+        "correct": 0,
+        "rule": "refusal"
+      },
+      "exact_refusal": true
+    },
+    {
+      "id": "q12",
+      "question": "My work laptop won't join the corporate wireless network.",
+      "expected_doc": "office_wifi.txt",
+      "answerable": true,
+      "reference_answer": "Toggle Wi-Fi, forget and rejoin Corp, and restart the laptop so the certificate renews.",
+      "key_facts": [
+        "toggle Wi-Fi off and on",
+        "forget the Corp network and reconnect",
+        "restart the laptop"
+      ],
+      "context": "If a company laptop cannot join Corp:\n- toggle Wi-Fi off and on\n- forget the Corp network and reconnect\n- restart the laptop so the certificate is renewed\n\nIf the whole floor has no Wi-Fi, report it as an outage to the service desk, including the building and floor. Personal phones should use Guest, not Corp.\n\nOffice Wi-Fi\n\nThere are two office networks. \"Corp\" is for company laptops and connects automatically using your device certificate. \"Guest\" is for visitors and personal devices and has no access to internal systems.\n\nGuest access codes are issued by reception and are valid for 24 hours. Staff must not share their Corp credentials with visitors.",
+      "answer": "If the answer is not present in the context, please provide a reply as follows:\n\n\"I could not find this information in the knowledge base.\"",
+      "retrieval_s": 0.02,
+      "generation_s": 0.688,
+      "refused": true,
+      "judge": {
+        "grounded": 1,
+        "correct": 0,
+        "rule": "refusal"
+      },
+      "exact_refusal": true
+    },
+    {
+      "id": "q13",
+      "question": "I can't send emails anymore and Outlook says my mailbox is full. What now?",
+      "expected_doc": "email_mailbox.txt",
+      "answerable": true,
+      "reference_answer": "The limit is 50 GB; empty Deleted Items and archive old mail (archive has no limit).",
+      "key_facts": [
+        "the mailbox limit is 50 GB",
+        "empty Deleted Items",
+        "archive old mail"
+      ],
+      "context": "Email and Mailbox Issues\n\nEach mailbox has a 50 GB limit. You receive a warning at 45 GB, and at 50 GB you can no longer send email. To free space, empty Deleted Items and archive old mail; the archive has no size limit.\n\nShared mailboxes are requested by a manager through the access request form. Access appears within 2 hours of approval; restart Outlook if it does not appear.\n\nIf Outlook is not syncing, check the status bar for \"Working offline\" and turn it off. If mail still does not arrive, use webmail to confirm whether the problem is the mailbox or the Outlook app.\n\nReport suspected phishing with the \"Report phishing\" button. Do not forward phishing emails to colleagues.",
+      "answer": "To resolve the issue, follow these steps:\n\n1. Check your mailbox limit: Log in to your email account and check your mailbox limit. If you have exceeded the limit, you will receive a warning message.\n\n2. Empty your Delete Items folder: Go to the \"Deleted Items\" folder in your email account and empty it. This will free up space in your mailbox.\n\n3. Archive old mail: If you have old emails that you no longer need, archive them. This will free up space in your mailbox.\n\n4. Restart Outlook: If Outlook is not syncing, restart Outlook.\n\n5. Check the status bar: Check the status bar for \"Working offline\" and turn it off.\n\n6. Use webmail: If you are unable to access Outlook, use webmail to confirm whether the problem is with your mailbox or the Outlook app.\n\n7. Report phishing: If you suspect phishing, report it to your manager.\n\n8. Follow the steps: If you are still experiencing issues, follow the steps provided in the context.",
+      "retrieval_s": 0.022,
+      "generation_s": 3.454,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 10,
+        "unsupported_claims": [
+          "To resolve the issue, follow these steps:",
+          "Check your mailbox limit: Log in to your email account and check your mailbox limit.",
+          "If you have exceeded the limit, you will receive a warning message.",
+          "Restart Outlook: If Outlook is not syncing, restart Outlook.",
+          "If you are still experiencing issues, follow the steps provided in the context."
+        ],
+        "correct": 1,
+        "facts_present": 2,
+        "facts_total": 3,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q14",
+      "question": "How do I get access to the team's shared inbox?",
+      "expected_doc": "email_mailbox.txt",
+      "answerable": true,
+      "reference_answer": "A manager requests it via the access request form; it appears within 2 hours of approval (restart Outlook).",
+      "key_facts": [
+        "a manager requests it through the access request form",
+        "access appears within 2 hours of approval"
+      ],
+      "context": "Shared Drive Access\n\nAccess to shared drives and team folders is controlled by the folder owner. Request access through the access request form and name the folder path; the owner approves it, normally within one business day.\n\nIf access was approved but the folder is still missing, sign out and sign in again, or reconnect to the VPN when working remotely.\n\nAccess to team systems is not automatic; the manager requests it through the access request form.\n\nLeavers: managers submit the leaver form before the last day. Accounts are disabled at 6pm on the last working day and the laptop must be returned the same day.",
+      "answer": "If you are an IT support assistant, the answer to your question is that you cannot get access to the team's shared inbox. The folder owner (the team's manager) must approve your access request through the access request form and name the folder path. If the folder is still missing, you can sign out and sign in again, or reconnected to the VPN when working remotely. Access to team systems is not automatic, and the manager must request it through the access request form before the last day. The laptop must be returned the same day.",
+      "retrieval_s": 0.024,
+      "generation_s": 1.821,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 5,
+        "unsupported_claims": [
+          "you cannot get access to the team's shared inbox."
+        ],
+        "correct": 1,
+        "facts_present": 1,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q15",
+      "question": "How do I print a document at the office?",
+      "expected_doc": "printer_setup.txt",
+      "answerable": true,
+      "reference_answer": "Send it to the FollowMe queue and tap your badge on any printer within 8 hours to release it.",
+      "key_facts": [
+        "send the job to the FollowMe queue",
+        "tap your badge on a printer to release it"
+      ],
+      "context": "Printing\n\nOffice printers use secure \"follow-me\" printing. Send the job to the \"FollowMe\" queue, then tap your badge on any office printer to release it. Jobs not released within 8 hours are deleted.\n\nTo add the FollowMe queue on a company laptop, open the Company Portal app and install \"FollowMe Printing\". You must be on the Corp network or the VPN.\n\nIf the printer says \"badge not recognised\", register your badge once by entering your employee ID on the printer screen.\n\nPaper jams and empty toner should be reported using the QR code on the printer, not through a service desk ticket. Colour printing is disabled by default; managers can request it for their team.",
+      "answer": "To print a document at the office, follow these steps:\n\n1. Open the Company Portal app and install \"FollowMe Printing\".\n2. Tap your badge on any office printer to release it.\n3. Jobs not releaased within 8 hours are deleted.\n4. To add the FollowMe queue on a company laptop, open the Company Portal app and install \"FollowMe Printing\".\n5. If the printer says \"badge not recognised\", register your badge once by entering your employee ID on the printer screen.\n6. To print a document, open the printer screen and tap the \"FollowMe\" queue.\n7. The document will be printed on the printer.\n\nNote: If the printer says \"badge not recognised\", you will need to register your badge once by entering your employee ID on the printer screen.",
+      "retrieval_s": 0.021,
+      "generation_s": 2.784,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 8,
+        "unsupported_claims": [
+          "6. To print a document, open the printer screen and tap the 'FollowMe' queue.",
+          "7. The document will be printed on the printer."
+        ],
+        "correct": 0,
+        "facts_present": 0,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q16",
+      "question": "I spilled coffee on my laptop. What should I do?",
+      "expected_doc": "laptop_hardware.txt",
+      "answerable": true,
+      "reference_answer": "Report liquid damage immediately, switch the laptop off and do not charge it.",
+      "key_facts": [
+        "report it immediately",
+        "switch the laptop off",
+        "do not charge it"
+      ],
+      "context": "Laptops and Hardware\n\nStandard laptops are replaced every 4 years. Early replacement is possible if the laptop is damaged or cannot run required software; your manager approves the request.\n\nIf a laptop is damaged, report it within 2 business days and include how it happened. Liquid damage should be reported immediately; switch the laptop off and do not charge it.\n\nIf a company laptop cannot join Corp:\n- toggle Wi-Fi off and on\n- forget the Corp network and reconnect\n- restart the laptop so the certificate is renewed\n\nIf the whole floor has no Wi-Fi, report it as an outage to the service desk, including the building and floor. Personal phones should use Guest, not Corp.",
+      "answer": "If you spilled coffee on your laptop, report it immediately to the IT support assistant. Standard laptops are replaced every 4 years, and early replacement is possible if the laptop is damaged or cannot run required software. If the laptop is damaged, report it within 2 business days and include how it happened. Liquiid damage should be reported immediately, and switch the laptop off and do not charge it. If a company laptop cannot join Corp, toggle Wi-Fi off and on, forget the Corp network, and restart the laptop. If the whole floor has no Wi-Fi, report it as an outage to the service desk, including the building and floor. Personal phone usage should be used Guest, not Corp.",
+      "retrieval_s": 0.023,
+      "generation_s": 2.345,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 7,
+        "unsupported_claims": [
+          "If you spilled coffee on your laptop, report it immediately to the IT support assistant."
+        ],
+        "correct": 2,
+        "facts_present": 3,
+        "facts_total": 3,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q17",
+      "question": "How often do we get new laptops?",
+      "expected_doc": "laptop_hardware.txt",
+      "answerable": true,
+      "reference_answer": "Every 4 years; earlier if damaged or unable to run required software, with manager approval.",
+      "key_facts": [
+        "laptops are replaced every 4 years"
+      ],
+      "context": "Laptops and Hardware\n\nStandard laptops are replaced every 4 years. Early replacement is possible if the laptop is damaged or cannot run required software; your manager approves the request.\n\nIf a laptop is damaged, report it within 2 business days and include how it happened. Liquid damage should be reported immediately; switch the laptop off and do not charge it.\n\nLost or stolen laptops must be reported to the service desk and security team within 24 hours so the device can be locked and wiped remotely.\n\nAccessories (monitor, keyboard, mouse, headset) are ordered through the Company Portal and normally arrive within 5 business days. Docking stations are only provided for desk-based staff.",
+      "answer": "The provided context does not mention the frequency of getting new laptop models. The answer is not present in the given context.",
+      "retrieval_s": 0.021,
+      "generation_s": 0.48,
+      "refused": true,
+      "judge": {
+        "grounded": 1,
+        "correct": 0,
+        "rule": "refusal"
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q18",
+      "question": "I need a tool that isn't in the Company Portal. How do I get it installed?",
+      "expected_doc": "software_install.txt",
+      "answerable": true,
+      "reference_answer": "Submit a software request with a business reason; security reviews within 5 business days; paid software needs manager budget approval.",
+      "key_facts": [
+        "submit a software request with a business reason",
+        "the security team reviews it",
+        "paid software needs manager budget approval"
+      ],
+      "context": "Software Installation\n\nStaff cannot install software with administrator rights. Approved applications can be installed at any time from the Company Portal app without a ticket.\n\nFor software that is not in the Company Portal, submit a software request with the business reason. The security team reviews new software within 5 business days. Paid software also needs budget approval from your manager.\n\nBrowser extensions are limited to an approved list. Unapproved extensions are removed automatically.\n\nDevelopers who need local admin rights can request a time-limited elevation of up to 8 hours through the access request form.",
+      "answer": "If the context does not mention the Company Portal app, the answer is not present in the knowledge base.",
+      "retrieval_s": 0.021,
+      "generation_s": 0.522,
+      "refused": true,
+      "judge": {
+        "grounded": 1,
+        "correct": 0,
+        "rule": "refusal"
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q19",
+      "question": "A customer's payment failed with PG-504. Can they try again?",
+      "expected_doc": "payment_failures.txt",
+      "answerable": true,
+      "reference_answer": "Yes, PG-504 is a gateway timeout; the payment was not taken and it is safe to retry.",
+      "key_facts": [
+        "yes, it is safe to retry",
+        "PG-504 is a gateway timeout and the payment was not taken"
+      ],
+      "context": "Payment Failure Troubleshooting\n\nIf customer payments fail:\n- check the payment gateway status page for an ongoing incident\n- check the payment service logs for the error code\n- confirm the customer's billing details and card expiry date\n- ask the customer to retry after 5 minutes\n\nError code PG-402 means the card was declined by the bank; the customer must contact their bank. PG-504 means the gateway timed out; the payment was not taken and it is safe to retry.\n\nIf more than 5% of payments fail within 15 minutes, treat it as a Sev1 incident and page the on-call engineer. Never ask customers to send full card numbers by email or chat.",
+      "answer": "Yes, customers can try again after 5 minutes. The payment gateway status page or payment service logs may show the error code PG-504, indicating that the bank declined the payment. However, it is not safe to send full card numbers by email or chat, as this could lead to a Sev1 incident. The on-call engineer will be notified and will assess the situation accordingly.",
+      "retrieval_s": 0.023,
+      "generation_s": 1.392,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 4,
+        "unsupported_claims": [
+          "The payment gateway status page or payment service logs may show the error code PG-504, indicating that the bank declined the payment.",
+          "The on-call engineer will be notified and will assess the situation accordingly."
+        ],
+        "correct": 0,
+        "facts_present": 0,
+        "facts_total": 2,
+        "contradiction": true
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q20",
+      "question": "At what point do failed payments become a Sev1?",
+      "expected_doc": "payment_failures.txt",
+      "answerable": true,
+      "reference_answer": "If more than 5% of payments fail within 15 minutes; page the on-call engineer.",
+      "key_facts": [
+        "more than 5% of payments fail",
+        "within 15 minutes"
+      ],
+      "context": "If more than 5% of payments fail within 15 minutes, treat it as a Sev1 incident and page the on-call engineer. Never ask customers to send full card numbers by email or chat.\n\nIncident Severity Levels\n\nSev1 (critical): a production service is down or most customers are affected, for example payments failing or a full outage. Response within 15 minutes, 24/7, and the on-call engineer is paged.\n\nSev2 (major): a service is degraded or a subset of customers is affected and there is no good workaround. Response within 1 hour during business hours.\n\nSev3 (minor): a single user is affected, or there is a workaround. Response within 1 business day.",
+      "answer": "At the point where more than 5% of payment failures occur within 15 minutes, the incident is classified as a Sev1.",
+      "retrieval_s": 0.024,
+      "generation_s": 0.701,
+      "refused": false,
+      "judge": {
+        "grounded": 1,
+        "claims": 1,
+        "unsupported_claims": [],
+        "correct": 2,
+        "facts_present": 2,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q21",
+      "question": "How long until a customer sees their refund?",
+      "expected_doc": "refund_policy.txt",
+      "answerable": true,
+      "reference_answer": "5 to 10 business days, to the original payment method.",
+      "key_facts": [
+        "5 to 10 business days"
+      ],
+      "context": "Refunds\n\nCustomers can request a full refund within 30 days of purchase. After 30 days, refunds are only given for duplicate charges or service outages.\n\nRefunds are issued to the original payment method. They appear on the customer's statement within 5 to 10 business days, depending on the bank.\n\nSupport agents can approve refunds up to 200 dollars. Larger refunds need approval from a team lead.\n\nFor duplicate charges, check the payment service for two successful transactions with the same order ID before refunding. A pending authorisation is not a charge and drops off automatically within 7 days.",
+      "answer": "The provided context does not mention how long a customer will see their refund. The answer provided is based on the information provided in the knowledge base.",
+      "retrieval_s": 0.021,
+      "generation_s": 0.642,
+      "refused": true,
+      "judge": {
+        "grounded": 1,
+        "correct": 0,
+        "rule": "refusal"
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q22",
+      "question": "Our release to production just broke. What's the first thing to do?",
+      "expected_doc": "deployment_failures.txt",
+      "answerable": true,
+      "reference_answer": "Roll back to the previous stable version first (kubectl rollout undo), then investigate.",
+      "key_facts": [
+        "roll back to the previous stable version first"
+      ],
+      "context": "Deployments to production are frozen on Friday after 3pm and during declared incidents. Every production deployment needs an approved change request and a passing CI pipeline.\n\nDeployment Failure Guide\n\nIf a production deployment fails:\n- roll back to the previous stable version first, then investigate\n- check the CI/CD pipeline logs for the failing step\n- check Kubernetes pod logs and events for the new version\n- verify that required environment variables and secrets exist\n\nRollback command: kubectl rollout undo deployment/<name> -n <namespace>. Confirm with kubectl rollout status.",
+      "answer": "Yes, the first thing to do is to check the CI/CD pipeline logs for the failing step. This will help identify the root cause of the issue and ensure that the necessary environment variables and secrets are present. Once the issue has been resolved, rollback the deployment using the \"kubectl rollout undo deployment/<name> -n <namespace>\" command. Confirm with \"kubectl rollout status\" to ensure that the deployment has been successfully rolled back.",
+      "retrieval_s": 0.021,
+      "generation_s": 1.562,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 4,
+        "unsupported_claims": [
+          "This will help identify the root cause of the issue and ensure that the necessary environment variables and secrets are present."
+        ],
+        "correct": 0,
+        "facts_present": 0,
+        "facts_total": 1,
+        "contradiction": true
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q23",
+      "question": "What does OOMKilled mean on a pod?",
+      "expected_doc": "kubernetes_pod_crashes.txt",
+      "answerable": true,
+      "reference_answer": "The container exceeded its memory limit; fix memory usage or raise the limit.",
+      "key_facts": [
+        "the container used more memory than its limit"
+      ],
+      "context": "Kubernetes Pod Crashes\n\nCrashLoopBackOff means the container starts and then exits repeatedly. Check the logs of the previous run with kubectl logs <pod> --previous; the cause is usually a missing configuration value or a failed connection at startup.\n\nOOMKilled means the container used more memory than its limit. Check kubectl describe pod for \"Reason: OOMKilled\", then either fix the memory usage or raise the memory limit.\n\nImagePullBackOff means the node could not download the image. Check that the image tag exists in the registry and that the image pull secret is valid; registry tokens can expire.\n\nA pod that is Running but not Ready is failing its readiness probe. Check the probe path and the application's health endpoint.",
+      "answer": "OOMKilled means that the container ran out of memory. Check the logs of the previous run with kubectl logs <pod> --previous to identify the memory usage and fix it if necessary.",
+      "retrieval_s": 0.024,
+      "generation_s": 0.834,
+      "refused": false,
+      "judge": {
+        "grounded": 0,
+        "claims": 2,
+        "unsupported_claims": [
+          "OOMKilled means that the container ran out of memory.",
+          "Check the logs of the previous run with kubectl logs <pod> --previous to identify the memory usage and fix it if necessary."
+        ],
+        "correct": 2,
+        "facts_present": 1,
+        "facts_total": 1,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q24",
+      "question": "How quickly must we respond to a Sev2?",
+      "expected_doc": "incident_severity.txt",
+      "answerable": true,
+      "reference_answer": "Within 1 hour during business hours.",
+      "key_facts": [
+        "within 1 hour",
+        "during business hours"
+      ],
+      "context": "Sev4 (request): questions, cosmetic issues and feature suggestions. Response within 3 business days.\n\nWhen unsure, choose the higher severity; it can be lowered later.\n\nIncident Severity Levels\n\nSev1 (critical): a production service is down or most customers are affected, for example payments failing or a full outage. Response within 15 minutes, 24/7, and the on-call engineer is paged.\n\nSev2 (major): a service is degraded or a subset of customers is affected and there is no good workaround. Response within 1 hour during business hours.\n\nSev3 (minor): a single user is affected, or there is a workaround. Response within 1 business day.",
+      "answer": "If the Sev2 severity level is reached, the response time is 1 hour during business hours.",
+      "retrieval_s": 0.02,
+      "generation_s": 0.611,
+      "refused": false,
+      "judge": {
+        "grounded": 1,
+        "claims": 1,
+        "unsupported_claims": [],
+        "correct": 1,
+        "facts_present": 1,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q25",
+      "question": "When should a manager request accounts for someone joining the team?",
+      "expected_doc": "new_starter_onboarding.txt",
+      "answerable": true,
+      "reference_answer": "At least 5 business days before the start date, using the new starter form.",
+      "key_facts": [
+        "at least 5 business days before the start date",
+        "using the new starter form"
+      ],
+      "context": "New Starter Onboarding\n\nManagers request accounts for new starters at least 5 business days before the start date using the new starter form. Late requests may mean the person has no laptop on day one.\n\nOn day one the new starter collects their laptop and badge from the service desk, signs in with the temporary password from their manager, and is asked to set a new password and set up MFA immediately.\n\nAccess to team systems is not automatic; the manager requests it through the access request form.\n\nLeavers: managers submit the leaver form before the last day. Accounts are disabled at 6pm on the last working day and the laptop must be returned the same day.",
+      "answer": "When should a manager request accounts for someone joining the team?\n\nAnswer:\nThe manager should request accounts for new starters at least 5 business days before the start date using the new starter form. Late requests may mean the person has no laptop on day one, and on day one the new starter collects their laptop and badge from the service desk, signs in with the temporary password from their manager, and is asked to set a new password and set up MFA immediately. Access to team systems is not automatic; the manager requests it through the access request form.",
+      "retrieval_s": 0.019,
+      "generation_s": 1.834,
+      "refused": false,
+      "judge": {
+        "grounded": 1,
+        "claims": 4,
+        "unsupported_claims": [],
+        "correct": 1,
+        "facts_present": 1,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "exact_refusal": false
+    },
+    {
+      "id": "q26",
+      "question": "What is Terraform?",
+      "expected_doc": null,
+      "answerable": false,
+      "reference_answer": "Not in the knowledge base; the assistant should say it could not find this.",
+      "context": "Sev4 (request): questions, cosmetic issues and feature suggestions. Response within 3 business days.\n\nWhen unsure, choose the higher severity; it can be lowered later.\n\nBrowser extensions are limited to an approved list. Unapproved extensions are removed automatically.\n\nDevelopers who need local admin rights can request a time-limited elevation of up to 8 hours through the access request form.",
+      "answer": "The provided context does not contain information about Terraform.",
+      "retrieval_s": 0.023,
+      "generation_s": 0.269,
+      "refused": true,
+      "judge": null,
+      "exact_refusal": false
+    },
+    {
+      "id": "q27",
+      "question": "What is the guest Wi-Fi password today?",
+      "expected_doc": null,
+      "answerable": false,
+      "reference_answer": "Not in the knowledge base (codes come from reception); the assistant should not invent one.",
+      "context": "Office Wi-Fi\n\nThere are two office networks. \"Corp\" is for company laptops and connects automatically using your device certificate. \"Guest\" is for visitors and personal devices and has no access to internal systems.\n\nGuest access codes are issued by reception and are valid for 24 hours. Staff must not share their Corp credentials with visitors.\n\nIf a company laptop cannot join Corp:\n- toggle Wi-Fi off and on\n- forget the Corp network and reconnect\n- restart the laptop so the certificate is renewed\n\nIf the whole floor has no Wi-Fi, report it as an outage to the service desk, including the building and floor. Personal phones should use Guest, not Corp.",
+      "answer": "The guest Wi-Fi password today is not available in the knowledge base. It is recommended to report the outage to the service desk and provide the building and floor information.",
+      "retrieval_s": 0.021,
+      "generation_s": 0.523,
+      "refused": true,
+      "judge": null,
+      "exact_refusal": false
+    },
+    {
+      "id": "q28",
+      "question": "How many days of annual leave do I get?",
+      "expected_doc": null,
+      "answerable": false,
+      "reference_answer": "Not in the knowledge base; the assistant should say it could not find this.",
+      "context": "Refunds\n\nCustomers can request a full refund within 30 days of purchase. After 30 days, refunds are only given for duplicate charges or service outages.\n\nRefunds are issued to the original payment method. They appear on the customer's statement within 5 to 10 business days, depending on the bank.\n\nSupport agents can approve refunds up to 200 dollars. Larger refunds need approval from a team lead.\n\nPassword rules: at least 12 characters, not one of your last 5 passwords. Passwords expire every 180 days and you are reminded by email 14 days before expiry.\n\nSupport staff will never ask for your password. Do not share it in tickets, chat or email.",
+      "answer": "The provided context does not mention the number of days of annual leave that a support agent can approve for a customer requesting a refund. The context only mentions the refund policy and the process for requesting a refund.",
+      "retrieval_s": 0.02,
+      "generation_s": 0.787,
+      "refused": true,
+      "judge": null,
+      "exact_refusal": false
+    },
+    {
+      "id": "q29",
+      "question": "How much does a replacement laptop cost my department?",
+      "expected_doc": null,
+      "answerable": false,
+      "reference_answer": "Not in the knowledge base; the assistant should not invent a price.",
+      "context": "Laptops and Hardware\n\nStandard laptops are replaced every 4 years. Early replacement is possible if the laptop is damaged or cannot run required software; your manager approves the request.\n\nIf a laptop is damaged, report it within 2 business days and include how it happened. Liquid damage should be reported immediately; switch the laptop off and do not charge it.\n\nLost or stolen laptops must be reported to the service desk and security team within 24 hours so the device can be locked and wiped remotely.\n\nAccessories (monitor, keyboard, mouse, headset) are ordered through the Company Portal and normally arrive within 5 business days. Docking stations are only provided for desk-based staff.",
+      "answer": "The provided context does not mention any information about the cost of a replacement laptop for the department. The answer provided is based on the information provided in the knowledge base.",
+      "retrieval_s": 0.021,
+      "generation_s": 0.488,
+      "refused": true,
+      "judge": null,
+      "exact_refusal": false
+    },
+    {
+      "id": "q30",
+      "question": "What is the CEO's phone number?",
+      "expected_doc": null,
+      "answerable": false,
+      "reference_answer": "Not in the knowledge base; the assistant should say it could not find this.",
+      "context": "VPN Troubleshooting\n\nThe company VPN is required to reach internal systems from outside the office. It is not needed in the office.\n\nIf the VPN connection fails:\n- check that your internet connection works without the VPN\n- quit and restart the VPN client\n- sign in with your company credentials, not a personal account\n- make sure the client is version 5.2 or newer; older versions are blocked\n\nOffice Wi-Fi\n\nThere are two office networks. \"Corp\" is for company laptops and connects automatically using your device certificate. \"Guest\" is for visitors and personal devices and has no access to internal systems.\n\nGuest access codes are issued by reception and are valid for 24 hours. Staff must not share their Corp credentials with visitors.",
+      "answer": "The CEO's phone number is not mentioned in the given context.",
+      "retrieval_s": 0.02,
+      "generation_s": 0.366,
+      "refused": true,
+      "judge": null,
+      "exact_refusal": false
+    }
+  ]
+}

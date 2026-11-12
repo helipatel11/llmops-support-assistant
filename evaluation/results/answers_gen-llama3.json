@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "timestamp_utc": "2026-11-12T19:21:40+00:00",
-    "git_commit": "fd31b7e-dirty",
+    "timestamp_utc": "2026-11-12T20:52:10+00:00",
+    "git_commit": "9f56297",
     "python": "3.9.6",
     "machine": "Darwin arm64"
   },
@@ -26,7 +26,8 @@
   },
   "unanswerable": {
     "n": 5,
-    "correct_refusal_rate": 1
+    "correct_refusal_rate": 1,
+    "exact_refusal_format_rate": 1
   },
   "latency_s_informal": {
     "note": "Single sequential run on the dev laptop; not a load test (see Phase 4).",
@@ -57,7 +58,8 @@
         "facts_present": 1,
         "facts_total": 1,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q02",
@@ -84,7 +86,8 @@
         "facts_present": 4,
         "facts_total": 4,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q03",
@@ -109,7 +112,8 @@
         "facts_present": 2,
         "facts_total": 2,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q04",
@@ -134,7 +138,8 @@
         "facts_present": 2,
         "facts_total": 2,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q05",
@@ -159,7 +164,8 @@
         "facts_present": 1,
         "facts_total": 2,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q06",
@@ -185,7 +191,8 @@
         "facts_present": 2,
         "facts_total": 3,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q07",
@@ -210,7 +217,8 @@
         "facts_present": 1,
         "facts_total": 2,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q08",
@@ -236,7 +244,8 @@
         "facts_present": 1,
         "facts_total": 3,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q09",
@@ -260,7 +269,8 @@
         "facts_present": 1,
         "facts_total": 1,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q10",
@@ -284,7 +294,8 @@
         "facts_present": 1,
         "facts_total": 1,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q11",
@@ -309,7 +320,8 @@
         "facts_present": 2,
         "facts_total": 2,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q12",
@@ -335,7 +347,8 @@
         "facts_present": 3,
         "facts_total": 3,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q13",
@@ -363,7 +376,8 @@
         "facts_present": 2,
         "facts_total": 3,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q14",
@@ -384,7 +398,8 @@
         "grounded": 1,
         "correct": 0,
         "rule": "refusal"
-      }
+      },
+      "exact_refusal": true
     },
     {
       "id": "q15",
@@ -409,7 +424,8 @@
         "facts_present": 2,
         "facts_total": 2,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q16",
@@ -435,7 +451,8 @@
         "facts_present": 0,
         "facts_total": 3,
         "contradiction": true
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q17",
@@ -459,7 +476,8 @@
         "facts_present": 1,
         "facts_total": 1,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q18",
@@ -485,7 +503,8 @@
         "facts_present": 2,
         "facts_total": 3,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q19",
@@ -510,7 +529,8 @@
         "facts_present": 2,
         "facts_total": 2,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q20",
@@ -535,7 +555,8 @@
         "facts_present": 2,
         "facts_total": 2,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q21",
@@ -559,7 +580,8 @@
         "facts_present": 1,
         "facts_total": 1,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q22",
@@ -583,7 +605,8 @@
         "facts_present": 1,
         "facts_total": 1,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q23",
@@ -607,7 +630,8 @@
         "facts_present": 1,
         "facts_total": 1,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q24",
@@ -632,7 +656,8 @@
         "facts_present": 2,
         "facts_total": 2,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q25",
@@ -657,7 +682,8 @@
         "facts_present": 1,
         "facts_total": 2,
         "contradiction": false
-      }
+      },
+      "exact_refusal": false
     },
     {
       "id": "q26",
@@ -670,7 +696,8 @@
       "retrieval_s": 0.057,
       "generation_s": 1.578,
       "refused": true,
-      "judge": null
+      "judge": null,
+      "exact_refusal": true
     },
     {
       "id": "q27",
@@ -683,7 +710,8 @@
       "retrieval_s": 0.067,
       "generation_s": 1.227,
       "refused": true,
-      "judge": null
+      "judge": null,
+      "exact_refusal": true
     },
     {
       "id": "q28",
@@ -696,7 +724,8 @@
       "retrieval_s": 0.05,
       "generation_s": 2.018,
       "refused": true,
-      "judge": null
+      "judge": null,
+      "exact_refusal": true
     },
     {
       "id": "q29",
@@ -709,7 +738,8 @@
       "retrieval_s": 0.061,
       "generation_s": 1.249,
       "refused": true,
-      "judge": null
+      "judge": null,
+      "exact_refusal": true
     },
     {
       "id": "q30",
@@ -722,7 +752,8 @@
       "retrieval_s": 0.062,
       "generation_s": 2.068,
       "refused": true,
-      "judge": null
+      "judge": null,
+      "exact_refusal": true
     }
   ]
 }
