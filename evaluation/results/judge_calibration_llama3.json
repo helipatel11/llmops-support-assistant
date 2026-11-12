@@ -1,0 +1,217 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-11-12T19:13:01+00:00",
+    "git_commit": "bd83710-dirty",
+    "python": "3.9.6",
+    "machine": "Darwin arm64"
+  },
+  "judge_model": "llama3",
+  "dataset": {
+    "path": "evaluation/judge_calibration.jsonl",
+    "cases": 10,
+    "sha256": "c7b2013b4cac"
+  },
+  "grounded_agreement": 1.0,
+  "correct_agreement": 0.9,
+  "both_agreement": 0.9,
+  "per_case": [
+    {
+      "id": "c01",
+      "case": "correct paraphrase",
+      "expected": {
+        "grounded": 1,
+        "correct": 2
+      },
+      "got": {
+        "grounded": 1,
+        "claims": 1,
+        "unsupported_claims": [],
+        "correct": 2,
+        "facts_present": 1,
+        "facts_total": 1,
+        "contradiction": false
+      },
+      "grounded_ok": true,
+      "correct_ok": true
+    },
+    {
+      "id": "c02",
+      "case": "wrong number",
+      "expected": {
+        "grounded": 0,
+        "correct": 0
+      },
+      "got": {
+        "grounded": 0,
+        "claims": 1,
+        "unsupported_claims": [
+          "The reset link is valid for 60 minutes."
+        ],
+        "correct": 0,
+        "facts_present": 0,
+        "facts_total": 1,
+        "contradiction": true
+      },
+      "grounded_ok": true,
+      "correct_ok": true
+    },
+    {
+      "id": "c03",
+      "case": "partial answer",
+      "expected": {
+        "grounded": 1,
+        "correct": 1
+      },
+      "got": {
+        "grounded": 1,
+        "claims": 1,
+        "unsupported_claims": [],
+        "correct": 1,
+        "facts_present": 1,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "grounded_ok": true,
+      "correct_ok": true
+    },
+    {
+      "id": "c04",
+      "case": "correct but adds an invented fact",
+      "expected": {
+        "grounded": 0,
+        "correct": 2
+      },
+      "got": {
+        "grounded": 0,
+        "claims": 3,
+        "unsupported_claims": [
+          "you can download it from the IT wiki"
+        ],
+        "correct": 2,
+        "facts_present": 2,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "grounded_ok": true,
+      "correct_ok": true
+    },
+    {
+      "id": "c05",
+      "case": "grounded but answers the wrong thing",
+      "expected": {
+        "grounded": 1,
+        "correct": 0
+      },
+      "got": {
+        "grounded": 1,
+        "claims": 2,
+        "unsupported_claims": [],
+        "correct": 0,
+        "facts_present": 0,
+        "facts_total": 3,
+        "contradiction": true
+      },
+      "grounded_ok": true,
+      "correct_ok": true
+    },
+    {
+      "id": "c06",
+      "case": "off-topic hallucination",
+      "expected": {
+        "grounded": 0,
+        "correct": 0
+      },
+      "got": {
+        "grounded": 0,
+        "claims": 1,
+        "unsupported_claims": [
+          "Restart your router and call your internet provider."
+        ],
+        "correct": 0,
+        "facts_present": 0,
+        "facts_total": 3,
+        "contradiction": true
+      },
+      "grounded_ok": true,
+      "correct_ok": true
+    },
+    {
+      "id": "c07",
+      "case": "full multi-fact answer",
+      "expected": {
+        "grounded": 1,
+        "correct": 2
+      },
+      "got": {
+        "grounded": 1,
+        "claims": 2,
+        "unsupported_claims": [],
+        "correct": 2,
+        "facts_present": 3,
+        "facts_total": 3,
+        "contradiction": false
+      },
+      "grounded_ok": true,
+      "correct_ok": true
+    },
+    {
+      "id": "c08",
+      "case": "contradiction",
+      "expected": {
+        "grounded": 0,
+        "correct": 0
+      },
+      "got": {
+        "grounded": 0,
+        "claims": 1,
+        "unsupported_claims": [
+          "Yes, you can use SMS codes permanently instead of the app."
+        ],
+        "correct": 0,
+        "facts_present": 0,
+        "facts_total": 3,
+        "contradiction": true
+      },
+      "grounded_ok": true,
+      "correct_ok": true
+    },
+    {
+      "id": "c09",
+      "case": "paraphrase with number in words",
+      "expected": {
+        "grounded": 1,
+        "correct": 2
+      },
+      "got": {
+        "grounded": 1,
+        "claims": 1,
+        "unsupported_claims": [],
+        "correct": 1,
+        "facts_present": 1,
+        "facts_total": 2,
+        "contradiction": false
+      },
+      "grounded_ok": true,
+      "correct_ok": false
+    },
+    {
+      "id": "c10",
+      "case": "one fact out of several",
+      "expected": {
+        "grounded": 1,
+        "correct": 1
+      },
+      "got": {
+        "grounded": 1,
+        "claims": 1,
+        "unsupported_claims": [],
+        "correct": 1,
+        "facts_present": 1,
+        "facts_total": 4,
+        "contradiction": false
+      },
+      "grounded_ok": true,
+      "correct_ok": true
+    }
+  ]
+}
