@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-11-12T20:14:59+00:00",
+    "git_commit": "280e5c3",
+    "python": "3.9.6",
+    "machine": "Darwin arm64"
+  },
+  "classifier_version": "v2",
+  "artifact_sha256": "de89449ba121",
+  "dataset": {
+    "path": "training/data/tickets_test.csv",
+    "rows": 150,
+    "sha256": "9274218fe93e"
+  },
+  "accuracy": 0.4667,
+  "macro_f1": 0.4783,
+  "per_class": {
+    "high": {
+      "precision": 0.3462,
+      "recall": 0.4,
+      "f1": 0.3711,
+      "support": 45
+    },
+    "medium": {
+      "precision": 0.4262,
+      "recall": 0.4333,
+      "f1": 0.4298,
+      "support": 60
+    },
+    "low": {
+      "precision": 0.7027,
+      "recall": 0.5778,
+      "f1": 0.6341,
+      "support": 45
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "high",
+      "medium",
+      "low"
+    ],
+    "rows_are": "true label",
+    "columns_are": "predicted label",
+    "matrix": [
+      [
+        18,
+        26,
+        1
+      ],
+      [
+        24,
+        26,
+        10
+      ],
+      [
+        10,
+        9,
+        26
+      ]
+    ]
+  }
+}

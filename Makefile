@@ -6,7 +6,7 @@ LABEL ?= current
 MODEL_VERSION ?= v1
 
 .PHONY: help install lint test data train ingest \
-        eval eval-classifier eval-retrieval eval-judge eval-answers spot-check
+        eval eval-classifier eval-retrieval eval-judge eval-answers spot-check compare
 
 help:
 	@echo "install          install runtime + dev dependencies"
@@ -18,6 +18,7 @@ help:
 	@echo "eval-classifier  classifier only (no Ollama needed)"
 	@echo "eval-judge       test the LLM judge on cases with known labels"
 	@echo "spot-check       judge vs human agreement, after filling the spot-check CSV"
+	@echo "compare          side-by-side table, e.g. make compare KIND=classifier A=v1 B=v2"
 	@echo "Set LABEL=v2 to name result files, e.g. make eval LABEL=v2"
 
 install:
@@ -54,3 +55,6 @@ eval: eval-classifier ingest eval-retrieval eval-judge eval-answers
 
 spot-check:
 	$(PYTHON) -m evaluation.spot_check_agreement --label $(LABEL)
+
+compare:
+	$(PYTHON) -m evaluation.compare $(KIND) $(A) $(B)
