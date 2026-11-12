@@ -1,6 +1,5 @@
 from prometheus_client import Counter
 
-
 prediction_counter = Counter(
     "ml_predictions_total",
     "Total ML predictions",

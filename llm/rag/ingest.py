@@ -1,46 +1,47 @@
-from langchain_community.document_loaders import DirectoryLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+"""Build the ChromaDB vector store from the support docs.
+
+Run from the repo root:  python -m llm.rag.ingest
+The store is rebuilt from scratch each time, so re-running never duplicates chunks.
+"""
+
+import shutil
+
+from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain_community.vectorstores import Chroma
 from langchain_ollama import OllamaEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+from app import config
 
 
-# Load documents
-loader = DirectoryLoader(
-    "llm/docs",
-    glob="**/*.txt"
-)
+def main() -> None:
+    loader = DirectoryLoader(str(config.DOCS_DIR), glob="**/*.txt", loader_cls=TextLoader)
+    documents = loader.load()
+    print(f"Loaded {len(documents)} documents from {config.DOCS_DIR}")
 
-documents = loader.load()
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=config.CHUNK_SIZE,
+        chunk_overlap=config.CHUNK_OVERLAP,
+    )
+    chunks = splitter.split_documents(documents)
+    print(f"Created {len(chunks)} chunks")
 
-print(f"Loaded {len(documents)} documents")
+    embedding = OllamaEmbeddings(
+        model=config.EMBEDDING_MODEL,
+        base_url=config.OLLAMA_BASE_URL,
+    )
+
+    if config.CHROMA_DIR.exists():
+        shutil.rmtree(config.CHROMA_DIR)
+
+    # chromadb >= 0.4 persists automatically; no .persist() call needed.
+    Chroma.from_documents(
+        documents=chunks,
+        embedding=embedding,
+        persist_directory=str(config.CHROMA_DIR),
+    )
+    print(f"ChromaDB written to {config.CHROMA_DIR}")
 
 
-# Split documents
-text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=500,
-    chunk_overlap=50
-)
-
-texts = text_splitter.split_documents(documents)
-
-print(f"Created {len(texts)} chunks")
-
-
-# Ollama embeddings
-embedding = OllamaEmbeddings(
-    # model="llama3"
-    model="nomic-embed-text"
-
-)
-
-
-# Store vectors
-vectordb = Chroma.from_documents(
-    documents=texts,
-    embedding=embedding,
-    persist_directory="llm/chroma_db"
-)
-
-vectordb.persist()
-
-print("ChromaDB created successfully.")
+if __name__ == "__main__":
+    main()
