@@ -6,6 +6,8 @@
 !app/
 !training/models/
 !llm/docs/
+!configs/
+!prompts/
 
 # Never ship these, even inside allowed folders
 **/.env

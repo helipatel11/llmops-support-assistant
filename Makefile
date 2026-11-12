@@ -2,6 +2,8 @@
 PYTHON ?= $(if $(wildcard venv/bin/python),venv/bin/python,python)
 # Name for result files: evaluation/results/<kind>_$(LABEL).json
 LABEL ?= current
+# Classifier version to train/evaluate: configs/classifier_$(MODEL_VERSION).json
+MODEL_VERSION ?= v1
 
 .PHONY: help install lint test data train ingest \
         eval eval-classifier eval-retrieval eval-judge eval-answers spot-check
@@ -31,13 +33,13 @@ data:
 	$(PYTHON) -m training.generate_data
 
 train:
-	$(PYTHON) -m training.train
+	$(PYTHON) -m training.train --version $(MODEL_VERSION)
 
 ingest:
 	$(PYTHON) -m llm.rag.ingest
 
 eval-classifier:
-	$(PYTHON) -m evaluation.classifier_eval --label $(LABEL)
+	$(PYTHON) -m evaluation.classifier_eval --version $(MODEL_VERSION) --label $(LABEL)
 
 eval-retrieval:
 	$(PYTHON) -m evaluation.retrieval_eval --label $(LABEL)

@@ -21,7 +21,17 @@ RETRIEVER_K = int(os.getenv("RETRIEVER_K", "2"))
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "500"))
 CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "50"))
 
-# Classifier artifacts
+# Versioned configs (configs/<kind>_<version>.json)
+CONFIGS_DIR = Path(os.getenv("CONFIGS_DIR", PROJECT_ROOT / "configs"))
+
+# Classifier: one sklearn Pipeline file + metadata per version; pick with MODEL_VERSION.
 MODEL_DIR = Path(os.getenv("MODEL_DIR", PROJECT_ROOT / "training" / "models"))
-MODEL_PATH = MODEL_DIR / "model.pkl"
-VECTORIZER_PATH = MODEL_DIR / "vectorizer.pkl"
+MODEL_VERSION = os.getenv("MODEL_VERSION", "v1")
+
+
+def classifier_artifact(version: str) -> Path:
+    return MODEL_DIR / f"classifier_{version}.joblib"
+
+
+def classifier_meta(version: str) -> Path:
+    return MODEL_DIR / f"classifier_{version}.meta.json"
