@@ -79,3 +79,4 @@ secret.yaml
 *.pem
 .env
 .env.*
+evaluation/results/*_current.json
