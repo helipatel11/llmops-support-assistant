@@ -40,7 +40,7 @@ def get_vectordb():
 def get_llm():
     return ChatOllama(
         model=config.OLLAMA_MODEL,
-        temperature=0,
+        temperature=config.LLM_TEMPERATURE,
         base_url=config.OLLAMA_BASE_URL,
     )
 

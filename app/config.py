@@ -15,9 +15,16 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CONFIGS_DIR = Path(os.getenv("CONFIGS_DIR", PROJECT_ROOT / "configs"))
 PROMPTS_DIR = Path(os.getenv("PROMPTS_DIR", PROJECT_ROOT / "prompts"))
 
-# Ollama (generation model)
+# Ollama server (infrastructure setting, not a model choice)
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "tinyllama")
+
+# Generation: LLM model and decoding settings, versioned in configs/generation_<version>.json.
+GENERATION_VERSION = os.getenv("GENERATION_VERSION", "v1")
+GENERATION = json.loads((CONFIGS_DIR / f"generation_{GENERATION_VERSION}.json").read_text())
+OLLAMA_MODEL = GENERATION["model"]
+LLM_TEMPERATURE = GENERATION["temperature"]
+# A leftover OLLAMA_MODEL (old .env or k8s Secret) must not silently change the model.
+IGNORED_ENV = [name for name in ("OLLAMA_MODEL",) if os.getenv(name)]
 
 # Prompt
 PROMPT_VERSION = os.getenv("PROMPT_VERSION", "v1")

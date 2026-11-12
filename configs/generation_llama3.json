@@ -1,0 +1,6 @@
+{
+  "version": "llama3",
+  "description": "Comparison: llama3 8B as the answering model (Phase 1 runs used this by accident via a local .env).",
+  "model": "llama3",
+  "temperature": 0
+}

@@ -121,11 +121,12 @@ def main() -> None:
         serving = {
             "prompt_version": config.PROMPT_VERSION,
             "retrieval_version": config.RETRIEVAL_VERSION,
+            "generation_version": config.GENERATION_VERSION,
             "index_id": check_index()["found"],
             "serving_model": config.OLLAMA_MODEL,
             "embedding_model": config.EMBEDDING_MODEL,
             "serving_top_k": config.RETRIEVER_K,
-            "temperature": 0,
+            "temperature": config.LLM_TEMPERATURE,
         }
 
     judge_all(rows, Judge(args.judge_model))
