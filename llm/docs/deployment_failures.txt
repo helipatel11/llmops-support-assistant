@@ -1,0 +1,11 @@
+Deployment Failure Guide
+
+If a production deployment fails:
+- roll back to the previous stable version first, then investigate
+- check the CI/CD pipeline logs for the failing step
+- check Kubernetes pod logs and events for the new version
+- verify that required environment variables and secrets exist
+
+Rollback command: kubectl rollout undo deployment/<name> -n <namespace>. Confirm with kubectl rollout status.
+
+Deployments to production are frozen on Friday after 3pm and during declared incidents. Every production deployment needs an approved change request and a passing CI pipeline.

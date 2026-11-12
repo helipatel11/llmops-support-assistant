@@ -1,0 +1,11 @@
+Payment Failure Troubleshooting
+
+If customer payments fail:
+- check the payment gateway status page for an ongoing incident
+- check the payment service logs for the error code
+- confirm the customer's billing details and card expiry date
+- ask the customer to retry after 5 minutes
+
+Error code PG-402 means the card was declined by the bank; the customer must contact their bank. PG-504 means the gateway timed out; the payment was not taken and it is safe to retry.
+
+If more than 5% of payments fail within 15 minutes, treat it as a Sev1 incident and page the on-call engineer. Never ask customers to send full card numbers by email or chat.

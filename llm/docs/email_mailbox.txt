@@ -1,0 +1,9 @@
+Email and Mailbox Issues
+
+Each mailbox has a 50 GB limit. You receive a warning at 45 GB, and at 50 GB you can no longer send email. To free space, empty Deleted Items and archive old mail; the archive has no size limit.
+
+Shared mailboxes are requested by a manager through the access request form. Access appears within 2 hours of approval; restart Outlook if it does not appear.
+
+If Outlook is not syncing, check the status bar for "Working offline" and turn it off. If mail still does not arrive, use webmail to confirm whether the problem is the mailbox or the Outlook app.
+
+Report suspected phishing with the "Report phishing" button. Do not forward phishing emails to colleagues.

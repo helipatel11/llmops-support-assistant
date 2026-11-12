@@ -1,0 +1,12 @@
+Database Connection Timeouts
+
+Connection timeouts usually mean the connection pool is exhausted or the database is overloaded. Each application instance may open at most 20 connections.
+
+Steps:
+- check the database dashboard for CPU above 80% or active connections near the limit
+- look for long-running queries; queries running longer than 60 seconds are killed automatically
+- restart the application only after confirming it is leaking connections
+
+If timeouts affect customers, open an incident. Read replicas can be used for reporting queries so they do not load the primary database.
+
+Never run schema changes on the primary database during business hours without an approved change request.

@@ -1,0 +1,9 @@
+Shared Drive Access
+
+Access to shared drives and team folders is controlled by the folder owner. Request access through the access request form and name the folder path; the owner approves it, normally within one business day.
+
+If access was approved but the folder is still missing, sign out and sign in again, or reconnect to the VPN when working remotely.
+
+Deleted files can be restored from the folder's version history for 30 days. After 30 days, the service desk can restore from backup within 90 days.
+
+Do not store customer personal data on shared drives; use the customer records system instead.

@@ -1,0 +1,9 @@
+Refunds
+
+Customers can request a full refund within 30 days of purchase. After 30 days, refunds are only given for duplicate charges or service outages.
+
+Refunds are issued to the original payment method. They appear on the customer's statement within 5 to 10 business days, depending on the bank.
+
+Support agents can approve refunds up to 200 dollars. Larger refunds need approval from a team lead.
+
+For duplicate charges, check the payment service for two successful transactions with the same order ID before refunding. A pending authorisation is not a charge and drops off automatically within 7 days.
