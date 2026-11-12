@@ -1,0 +1,9 @@
+# Training, evaluation, lint and test tooling. Not installed in the runtime image.
+-r requirements.txt
+
+pandas==2.3.3
+mlflow==2.13.2
+
+pytest==8.3.5
+httpx==0.28.1
+ruff==0.8.6

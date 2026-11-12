@@ -1,22 +1,21 @@
-fastapi
-uvicorn[standard]
-python-dotenv
-scikit-learn
-pandas
-joblib
-langchain
-langchain-community
-chromadb
-pypdf
-sentence-transformers
-langchain-ollama
-chromadb
-pypdf
-sentence-transformers
-python-dotenv
-ollama
-mlflow==2.13.2
-boto3
-prometheus-fastapi-instrumentator
-pytest
-httpx
+# Runtime dependencies for the API image. Pinned to the versions the committed
+# model artifacts were trained and tested with (scikit-learn/numpy matter for pickles).
+fastapi==0.128.8
+uvicorn[standard]==0.39.0
+python-dotenv==1.2.1
+
+# Classifier
+scikit-learn==1.6.1
+numpy==1.26.4
+joblib==1.5.3
+
+# RAG
+langchain-core==0.3.86
+langchain-community==0.3.31
+langchain-ollama==0.3.10
+langchain-text-splitters==0.3.11
+chromadb==1.5.9
+
+# Metrics
+prometheus-client==0.25.0
+prometheus-fastapi-instrumentator==7.1.0
