@@ -7,7 +7,7 @@
   ],
   "timezone": "browser",
   "schemaVersion": 39,
-  "version": 1,
+  "version": 2,
   "refresh": "10s",
   "time": {
     "from": "now-30m",
@@ -191,7 +191,7 @@
       "id": 5,
       "type": "stat",
       "title": "Error ratio (5xx)",
-      "description": "Share of requests answered with a 5xx status. 503 on /ask = a dependency (Ollama, index) is failing.",
+      "description": "Share of requests answered with a 5xx status. 503 on /ask = a dependency (Ollama, index) is failing. Shows 0 (not 'No data') when there are no errors.",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -209,7 +209,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(http_requests_total{status=~\"5.*\",handler!~\"/metrics\"}[$__rate_interval])) / sum(rate(http_requests_total{handler!~\"/metrics\"}[$__rate_interval]))",
+          "expr": "(sum(rate(http_requests_total{status=~\"5.*\",handler!~\"/metrics\"}[$__rate_interval])) or vector(0)) / sum(rate(http_requests_total{handler!~\"/metrics\"}[$__rate_interval]))",
           "legendFormat": "errors"
         }
       ],
