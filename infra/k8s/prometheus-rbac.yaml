@@ -1,0 +1,32 @@
+# Prometheus discovers support-assistant pods through the Kubernetes API, so it can
+# scrape every pod (a Service would send each scrape to one random pod).
+# Least privilege: read-only access to pods, in this namespace only.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus
+  namespace: llmops
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: prometheus-pod-reader
+  namespace: llmops
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: prometheus-pod-reader
+  namespace: llmops
+subjects:
+  - kind: ServiceAccount
+    name: prometheus
+    namespace: llmops
+roleRef:
+  kind: Role
+  name: prometheus-pod-reader
+  apiGroup: rbac.authorization.k8s.io

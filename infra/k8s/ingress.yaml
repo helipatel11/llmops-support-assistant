@@ -6,6 +6,8 @@ metadata:
 spec:
   ingressClassName: traefik
 
+  # Prometheus is NOT exposed (it has no login); use:
+  #   kubectl -n llmops port-forward svc/prometheus 9090:9090
   rules:
   - http:
       paths:
@@ -33,11 +35,3 @@ spec:
             name: grafana
             port:
               number: 3000
-      - path: /prometheus
-        pathType: Prefix
-        backend:
-          service:
-            name: prometheus
-            port:
-              number: 9090
-      

@@ -3,52 +3,69 @@ kind: Deployment
 metadata:
   name: grafana
   namespace: llmops
-
 spec:
   replicas: 1
-
   selector:
     matchLabels:
       app: grafana
-
   template:
     metadata:
       labels:
         app: grafana
-
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana:latest
+          image: grafana/grafana:11.1.0
           ports:
             - containerPort: 3000
-
           env:
-            # IMPORTANT: fixes /grafana subpath issue
+            # Served under /grafana by the Traefik ingress
             - name: GF_SERVER_ROOT_URL
               value: "%(protocol)s://%(domain)s/grafana"
-
             - name: GF_SERVER_SERVE_FROM_SUB_PATH
               value: "true"
-
+            # Admin password from a Secret created by hand, never committed:
+            #   kubectl -n llmops create secret generic grafana-admin --from-literal=password='<strong password>'
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-admin
+                  key: password
+            - name: GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH
+              value: /var/lib/grafana/dashboards/support-assistant.json
           readinessProbe:
             httpGet:
               path: /api/health
               port: 3000
             initialDelaySeconds: 10
             periodSeconds: 5
-
           livenessProbe:
             httpGet:
               path: /api/health
               port: 3000
             initialDelaySeconds: 30
             periodSeconds: 10
-
           resources:
             requests:
               memory: "128Mi"
               cpu: "100m"
             limits:
-              memory: "512Mi"
+              memory: "256Mi"
               cpu: "500m"
+          volumeMounts:
+            - name: datasources
+              mountPath: /etc/grafana/provisioning/datasources
+            - name: dashboard-provider
+              mountPath: /etc/grafana/provisioning/dashboards
+            - name: dashboards
+              mountPath: /var/lib/grafana/dashboards
+      volumes:
+        - name: datasources
+          configMap:
+            name: grafana-datasources
+        - name: dashboard-provider
+          configMap:
+            name: grafana-dashboard-provider
+        - name: dashboards
+          configMap:
+            name: grafana-dashboards

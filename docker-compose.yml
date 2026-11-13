@@ -1,23 +1,45 @@
-version: "3.9"
+# Local observability stack: app + Prometheus + Grafana.
+#   docker compose up --build -d     then open http://localhost:3000 (dashboard "Support Assistant")
+# Ollama runs on the host (as on EC2), reached via host.docker.internal.
+# Ports are bound to 127.0.0.1 so nothing is exposed to the network.
 
 services:
+  app:
+    build:
+      context: .
+      args:
+        GIT_SHA: ${GIT_SHA:-local}
+    image: llmops-support-assistant:local
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./llm/chroma_db:/app/llm/chroma_db   # built by `make ingest`
+    ports:
+      - "127.0.0.1:8000:8000"
 
   prometheus:
-    image: prom/prometheus
-
-    container_name: prometheus
-
-    ports:
-      - "9090:9090"
-
+    image: prom/prometheus:v2.53.0
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=2d
     volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
-
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "127.0.0.1:9090:9090"
+    depends_on: [app]
 
   grafana:
-    image: grafana/grafana
-
-    container_name: grafana
-
+    image: grafana/grafana:11.1.0
+    environment:
+      # Local only: anonymous read access, so the dashboard opens without a login.
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/support-assistant.json
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
+    depends_on: [prometheus]

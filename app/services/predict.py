@@ -20,6 +20,6 @@ def predict_priority(text: str) -> str:
 
     logger.info("Prediction result: %s", prediction)
 
-    prediction_counter.labels(priority=prediction).inc()
+    prediction_counter.labels(priority=prediction, model_version=model_meta["version"]).inc()
 
     return prediction

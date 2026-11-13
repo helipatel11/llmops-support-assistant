@@ -6,7 +6,7 @@ LABEL ?= current
 MODEL_VERSION ?= v1
 
 .PHONY: help install lint test data train ingest \
-        eval eval-classifier eval-retrieval eval-judge eval-answers spot-check compare
+        eval eval-classifier eval-retrieval eval-judge eval-answers spot-check compare k8s-dashboard
 
 help:
 	@echo "install          install runtime + dev dependencies"
@@ -19,6 +19,7 @@ help:
 	@echo "eval-judge       test the LLM judge on cases with known labels"
 	@echo "spot-check       judge vs human agreement, after filling the spot-check CSV"
 	@echo "compare          side-by-side table, e.g. make compare KIND=classifier A=v1 B=v2"
+	@echo "k8s-dashboard    regenerate the Grafana dashboard ConfigMap for k3s from the JSON"
 	@echo "Set LABEL=v2 to name result files, e.g. make eval LABEL=v2"
 
 install:
@@ -58,3 +59,9 @@ spot-check:
 
 compare:
 	$(PYTHON) -m evaluation.compare $(KIND) $(A) $(B)
+
+# The dashboard JSON is the single source of truth; this wraps it in a ConfigMap for k3s.
+k8s-dashboard:
+	kubectl create configmap grafana-dashboards -n llmops \
+	  --from-file=support-assistant.json=monitoring/grafana/dashboards/support-assistant.json \
+	  --dry-run=client -o yaml > infra/k8s/grafana-dashboards-configmap.yaml
