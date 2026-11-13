@@ -16,6 +16,7 @@ PREDICT_DURATION=${PREDICT_DURATION:-45}   # seconds
 ASK_VUS=${ASK_VUS:-"1 2 4"}
 ASK_DURATION=${ASK_DURATION:-90}           # seconds
 MIXED_DURATION=${MIXED_DURATION:-180}      # seconds
+MIXED_ASK_EVERY=${MIXED_ASK_EVERY:-4}      # one /ask every N seconds (keep below capacity)
 mkdir -p "$OUT"
 
 run() {  # run <result-name> <script> <duration-seconds> [ENV=VALUE ...]
@@ -36,6 +37,6 @@ done
 for v in $ASK_VUS; do
   run "ask-vus${v}" loadtest/ask.js "$ASK_DURATION" "VUS=$v" "DURATION=${ASK_DURATION}s"
 done
-run "mixed" loadtest/mixed.js "$MIXED_DURATION" "PREDICT_RATE=5" "ASK_EVERY=4" "DURATION=${MIXED_DURATION}s"
+run "mixed" loadtest/mixed.js "$MIXED_DURATION" "PREDICT_RATE=5" "ASK_EVERY=$MIXED_ASK_EVERY" "DURATION=${MIXED_DURATION}s"
 
 echo "$(date -u +%H:%M:%S) done -> $OUT"

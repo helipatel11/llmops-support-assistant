@@ -52,7 +52,8 @@ def main() -> None:
         checks = root.get("checks") or {}
         checks = checks.values() if isinstance(checks, dict) else checks
         per_endpoint = {c["name"].split()[0]: c["passes"] + c["fails"] for c in checks}
-        print(f"\n**Mixed (5 req/s /predict + 1 /ask every 4 s)**\n\n{header}")
+        params = json.loads((results / "mixed.meta.json").read_text()).get("params", "")
+        print(f"\n**Mixed ({params or '5 req/s /predict + 1 /ask every 4 s'})**\n\n{header}")
         for ep in ("predict", "ask"):
             n = per_endpoint[ep]  # every request runs exactly one check
             print(row(f"/{ep}", m, secs["mixed"], f"http_req_duration{{endpoint:{ep}}}",
