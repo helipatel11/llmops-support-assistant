@@ -1,0 +1,68 @@
+#!/bin/bash
+# First-boot setup for the llmops node (rendered by Terraform templatefile, runs as root).
+# Replaces the ~40 manual setup commands. Progress: /var/log/bootstrap.log;
+# done when /var/lib/bootstrap-done exists.
+set -euxo pipefail
+exec > >(tee -a /var/log/bootstrap.log) 2>&1
+echo "bootstrap start $(date -u +%FT%TZ)"
+
+export DEBIAN_FRONTEND=noninteractive
+apt-get update -y
+apt-get install -y awscli docker.io   # docker only for running k6 load tests on the node
+usermod -aG docker ubuntu
+
+# k3s (pinned). Kubeconfig is root-only (was chmod 644: every user had cluster-admin).
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="${k3s_version}" sh -s - --write-kubeconfig-mode 600
+install -d -o ubuntu -g ubuntu -m 700 /home/ubuntu/.kube
+install -o ubuntu -g ubuntu -m 600 /etc/rancher/k3s/k3s.yaml /home/ubuntu/.kube/config
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+until kubectl get nodes 2>/dev/null | grep -q " Ready"; do sleep 3; done
+
+# Ollama (pinned), listening on all interfaces so pods reach it via the node IP.
+# Port 11434 is not open in the security group.
+curl -fsSL https://ollama.com/install.sh | OLLAMA_VERSION="${ollama_version}" sh
+mkdir -p /etc/systemd/system/ollama.service.d
+printf '[Service]\nEnvironment="OLLAMA_HOST=0.0.0.0:11434"\n' > /etc/systemd/system/ollama.service.d/override.conf
+systemctl daemon-reload
+systemctl restart ollama
+until curl -sf http://localhost:11434/api/tags >/dev/null; do sleep 2; done
+ollama pull tinyllama
+ollama pull nomic-embed-text
+
+# ECR pull secret, refreshed every 6 h with the instance role (tokens expire after 12 h;
+# a hand-made secret caused ImagePullBackOff on later deploys).
+cat > /usr/local/bin/refresh-ecr-secret <<'SCRIPT'
+#!/bin/bash
+set -euo pipefail
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+kubectl get namespace llmops >/dev/null 2>&1 || kubectl create namespace llmops
+kubectl -n llmops create secret docker-registry ecr-secret \
+  --docker-server=${ecr_registry} --docker-username=AWS \
+  --docker-password="$(aws ecr get-login-password --region ${region})" \
+  --dry-run=client -o yaml | kubectl apply -f -
+SCRIPT
+chmod 755 /usr/local/bin/refresh-ecr-secret
+
+cat > /etc/systemd/system/refresh-ecr-secret.service <<'UNIT'
+[Unit]
+Description=Refresh the ECR image pull secret in namespace llmops
+After=k3s.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/refresh-ecr-secret
+UNIT
+cat > /etc/systemd/system/refresh-ecr-secret.timer <<'UNIT'
+[Unit]
+Description=Refresh the ECR pull secret every 6 hours
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=6h
+[Install]
+WantedBy=timers.target
+UNIT
+systemctl daemon-reload
+systemctl enable --now refresh-ecr-secret.timer
+/usr/local/bin/refresh-ecr-secret
+
+touch /var/lib/bootstrap-done
+echo "bootstrap done $(date -u +%FT%TZ)"

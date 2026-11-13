@@ -28,6 +28,27 @@ spec:
       imagePullSecrets:
         - name: ecr-secret
 
+      # Each pod builds its ChromaDB index at startup (36 chunks, a few seconds), so the
+      # image needs no vector store and the index always matches the image's docs/config.
+      initContainers:
+        - name: ingest
+          image: 183631323298.dkr.ecr.us-east-1.amazonaws.com/llmops-support-assistant:v1
+          command: ["python", "-m", "llm.rag.ingest"]
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: OLLAMA_BASE_URL
+              value: "http://$(NODE_IP):11434"
+          volumeMounts:
+            - name: chroma
+              mountPath: /app/llm/chroma_db
+
+      volumes:
+        - name: chroma
+          emptyDir: {}
+
       containers:
         - name: support-assistant
 
@@ -42,8 +63,19 @@ spec:
             - configMapRef:
                 name: llmops-config
 
-            - secretRef:
-                name: llmops-secret
+          env:
+            # Ollama runs on the node (systemd), so reach it via the node's IP. The downward
+            # API injects it, replacing the hardcoded IP that changed with every new instance.
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: OLLAMA_BASE_URL
+              value: "http://$(NODE_IP):11434"
+
+          volumeMounts:
+            - name: chroma
+              mountPath: /app/llm/chroma_db
 
           resources:
             requests:
