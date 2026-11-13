@@ -1,0 +1,283 @@
+18:25:18
+grafana-6fc94d7c59-jp797             7m    69Mi    
+prometheus-78b74f9f4-jhfwb           8m    34Mi    
+support-assistant-758fbd76dd-kjbrg   3m    151Mi   
+support-assistant-758fbd76dd-x5sxw   3m    158Mi   
+ip-10-0-1-54   102m   5%    2710Mi   34%   
+18:25:48
+grafana-6fc94d7c59-jp797             5m    69Mi    
+prometheus-78b74f9f4-jhfwb           10m   34Mi    
+support-assistant-758fbd76dd-kjbrg   18m   151Mi   
+support-assistant-758fbd76dd-x5sxw   19m   158Mi   
+ip-10-0-1-54   168m   8%    2768Mi   35%   
+18:26:18
+grafana-6fc94d7c59-jp797             2m    69Mi    
+prometheus-78b74f9f4-jhfwb           1m    34Mi    
+support-assistant-758fbd76dd-kjbrg   12m   151Mi   
+support-assistant-758fbd76dd-x5sxw   19m   158Mi   
+ip-10-0-1-54   161m   8%    2717Mi   34%   
+18:26:49
+grafana-6fc94d7c59-jp797             2m    69Mi    
+prometheus-78b74f9f4-jhfwb           1m    34Mi    
+support-assistant-758fbd76dd-kjbrg   47m   151Mi   
+support-assistant-758fbd76dd-x5sxw   48m   158Mi   
+ip-10-0-1-54   254m   12%   2785Mi   35%   
+18:27:19
+grafana-6fc94d7c59-jp797             4m    60Mi    
+prometheus-78b74f9f4-jhfwb           2m    34Mi    
+support-assistant-758fbd76dd-kjbrg   10m   151Mi   
+support-assistant-758fbd76dd-x5sxw   49m   158Mi   
+ip-10-0-1-54   161m   8%    2715Mi   34%   
+18:27:49
+grafana-6fc94d7c59-jp797             2m    60Mi    
+prometheus-78b74f9f4-jhfwb           2m    21Mi    
+support-assistant-758fbd76dd-kjbrg   86m   151Mi   
+support-assistant-758fbd76dd-x5sxw   92m   158Mi   
+ip-10-0-1-54   376m   18%   2769Mi   35%   
+18:28:20
+grafana-6fc94d7c59-jp797             17m   60Mi    
+prometheus-78b74f9f4-jhfwb           15m   29Mi    
+support-assistant-758fbd76dd-kjbrg   41m   151Mi   
+support-assistant-758fbd76dd-x5sxw   40m   158Mi   
+ip-10-0-1-54   162m   8%    2754Mi   35%   
+18:28:50
+grafana-6fc94d7c59-jp797             7m     64Mi    
+prometheus-78b74f9f4-jhfwb           11m    27Mi    
+support-assistant-758fbd76dd-kjbrg   181m   151Mi   
+support-assistant-758fbd76dd-x5sxw   175m   158Mi   
+ip-10-0-1-54   679m   33%   2789Mi   35%   
+18:29:21
+grafana-6fc94d7c59-jp797             16m    67Mi    
+prometheus-78b74f9f4-jhfwb           10m    32Mi    
+support-assistant-758fbd76dd-kjbrg   105m   151Mi   
+support-assistant-758fbd76dd-x5sxw   103m   158Mi   
+ip-10-0-1-54   497m   24%   2793Mi   35%   
+18:29:51
+grafana-6fc94d7c59-jp797             6m     67Mi    
+prometheus-78b74f9f4-jhfwb           11m    28Mi    
+support-assistant-758fbd76dd-kjbrg   249m   151Mi   
+support-assistant-758fbd76dd-x5sxw   243m   158Mi   
+ip-10-0-1-54   914m   45%   2817Mi   36%   
+18:30:22
+grafana-6fc94d7c59-jp797             11m    69Mi    
+prometheus-78b74f9f4-jhfwb           9m     30Mi    
+support-assistant-758fbd76dd-kjbrg   84m    151Mi   
+support-assistant-758fbd76dd-m26fp   468m   121Mi   
+support-assistant-758fbd76dd-x5sxw   89m    158Mi   
+ip-10-0-1-54   1653m   82%   1988Mi   25%   
+18:30:53
+grafana-6fc94d7c59-jp797             12m    69Mi    
+prometheus-78b74f9f4-jhfwb           16m    29Mi    
+support-assistant-758fbd76dd-kjbrg   242m   151Mi   
+support-assistant-758fbd76dd-m26fp   187m   123Mi   
+support-assistant-758fbd76dd-x5sxw   241m   158Mi   
+ip-10-0-1-54   1177m   58%   2092Mi   26%   
+18:31:23
+grafana-6fc94d7c59-jp797             8m     69Mi    
+prometheus-78b74f9f4-jhfwb           2m     34Mi    
+support-assistant-758fbd76dd-55gkw   433m   99Mi    
+support-assistant-758fbd76dd-kjbrg   150m   155Mi   
+support-assistant-758fbd76dd-m26fp   64m    125Mi   
+support-assistant-758fbd76dd-x5sxw   243m   160Mi   
+ip-10-0-1-54   1985m   99%   2256Mi   28%   
+18:31:54
+grafana-6fc94d7c59-jp797             2m     69Mi    
+prometheus-78b74f9f4-jhfwb           2m     34Mi    
+support-assistant-758fbd76dd-55gkw   103m   123Mi   
+support-assistant-758fbd76dd-kjbrg   387m   157Mi   
+support-assistant-758fbd76dd-m26fp   410m   131Mi   
+support-assistant-758fbd76dd-x5sxw   414m   160Mi   
+ip-10-0-1-54   1954m   97%   2671Mi   34%   
+18:32:24
+grafana-6fc94d7c59-jp797             13m    69Mi    
+prometheus-78b74f9f4-jhfwb           12m    35Mi    
+support-assistant-758fbd76dd-55gkw   81m    142Mi   
+support-assistant-758fbd76dd-6ncdn   492m   121Mi   
+support-assistant-758fbd76dd-kjbrg   67m    155Mi   
+support-assistant-758fbd76dd-m26fp   3m     129Mi   
+support-assistant-758fbd76dd-x5sxw   3m     158Mi   
+ip-10-0-1-54   1470m   73%   3250Mi   41%   
+18:32:55
+grafana-6fc94d7c59-jp797             10m   69Mi    
+prometheus-78b74f9f4-jhfwb           6m    37Mi    
+support-assistant-758fbd76dd-55gkw   5m    146Mi   
+support-assistant-758fbd76dd-6ncdn   3m    122Mi   
+support-assistant-758fbd76dd-kjbrg   4m    155Mi   
+support-assistant-758fbd76dd-m26fp   3m    129Mi   
+support-assistant-758fbd76dd-x5sxw   4m    158Mi   
+ip-10-0-1-54   1014m   50%   3291Mi   42%   
+18:33:25
+grafana-6fc94d7c59-jp797             11m   69Mi    
+prometheus-78b74f9f4-jhfwb           3m    37Mi    
+support-assistant-758fbd76dd-55gkw   3m    146Mi   
+support-assistant-758fbd76dd-6ncdn   3m    122Mi   
+support-assistant-758fbd76dd-kjbrg   5m    155Mi   
+support-assistant-758fbd76dd-m26fp   5m    148Mi   
+support-assistant-758fbd76dd-x5sxw   3m    158Mi   
+ip-10-0-1-54   978m   48%   3320Mi   42%   
+18:33:56
+grafana-6fc94d7c59-jp797             7m    69Mi    
+prometheus-78b74f9f4-jhfwb           6m    39Mi    
+support-assistant-758fbd76dd-55gkw   5m    146Mi   
+support-assistant-758fbd76dd-6ncdn   3m    122Mi   
+support-assistant-758fbd76dd-kjbrg   3m    155Mi   
+support-assistant-758fbd76dd-m26fp   3m    147Mi   
+support-assistant-758fbd76dd-x5sxw   3m    158Mi   
+ip-10-0-1-54   953m   47%   3349Mi   42%   
+18:34:27
+grafana-6fc94d7c59-jp797             8m    69Mi    
+prometheus-78b74f9f4-jhfwb           5m    38Mi    
+support-assistant-758fbd76dd-55gkw   3m    146Mi   
+support-assistant-758fbd76dd-6ncdn   4m    145Mi   
+support-assistant-758fbd76dd-kjbrg   4m    155Mi   
+support-assistant-758fbd76dd-m26fp   4m    148Mi   
+support-assistant-758fbd76dd-x5sxw   5m    158Mi   
+ip-10-0-1-54   1023m   51%   3134Mi   40%   
+18:34:57
+grafana-6fc94d7c59-jp797             5m    69Mi    
+prometheus-78b74f9f4-jhfwb           4m    38Mi    
+support-assistant-758fbd76dd-55gkw   6m    146Mi   
+support-assistant-758fbd76dd-6ncdn   5m    145Mi   
+support-assistant-758fbd76dd-kjbrg   3m    155Mi   
+support-assistant-758fbd76dd-m26fp   4m    148Mi   
+support-assistant-758fbd76dd-x5sxw   3m    158Mi   
+ip-10-0-1-54   1080m   54%   3134Mi   40%   
+18:35:28
+grafana-6fc94d7c59-jp797             7m    69Mi    
+prometheus-78b74f9f4-jhfwb           8m    37Mi    
+support-assistant-758fbd76dd-55gkw   3m    146Mi   
+support-assistant-758fbd76dd-6ncdn   3m    145Mi   
+support-assistant-758fbd76dd-kjbrg   7m    155Mi   
+support-assistant-758fbd76dd-m26fp   3m    148Mi   
+support-assistant-758fbd76dd-x5sxw   3m    158Mi   
+ip-10-0-1-54   911m   45%   3081Mi   39%   
+18:35:58
+grafana-6fc94d7c59-jp797             2m    69Mi    
+prometheus-78b74f9f4-jhfwb           2m    37Mi    
+support-assistant-758fbd76dd-55gkw   11m   146Mi   
+support-assistant-758fbd76dd-6ncdn   3m    145Mi   
+support-assistant-758fbd76dd-kjbrg   3m    155Mi   
+support-assistant-758fbd76dd-m26fp   4m    148Mi   
+support-assistant-758fbd76dd-x5sxw   3m    158Mi   
+ip-10-0-1-54   1064m   53%   3155Mi   40%   
+18:36:29
+grafana-6fc94d7c59-jp797             7m    69Mi    
+prometheus-78b74f9f4-jhfwb           5m    40Mi    
+support-assistant-758fbd76dd-55gkw   3m    146Mi   
+support-assistant-758fbd76dd-6ncdn   3m    145Mi   
+support-assistant-758fbd76dd-kjbrg   3m    155Mi   
+support-assistant-758fbd76dd-m26fp   3m    148Mi   
+support-assistant-758fbd76dd-x5sxw   8m    158Mi   
+ip-10-0-1-54   1053m   52%   3121Mi   39%   
+18:37:00
+grafana-6fc94d7c59-jp797             7m    66Mi    
+prometheus-78b74f9f4-jhfwb           6m    36Mi    
+support-assistant-758fbd76dd-55gkw   5m    146Mi   
+support-assistant-758fbd76dd-6ncdn   3m    145Mi   
+support-assistant-758fbd76dd-kjbrg   7m    155Mi   
+support-assistant-758fbd76dd-m26fp   4m    148Mi   
+support-assistant-758fbd76dd-x5sxw   3m    158Mi   
+ip-10-0-1-54   1141m   57%   3127Mi   39%   
+18:37:30
+grafana-6fc94d7c59-jp797             8m    66Mi    
+prometheus-78b74f9f4-jhfwb           6m    39Mi    
+support-assistant-758fbd76dd-6ncdn   3m    145Mi   
+support-assistant-758fbd76dd-kjbrg   4m    155Mi   
+support-assistant-758fbd76dd-x5sxw   3m    158Mi   
+ip-10-0-1-54   1195m   59%   2850Mi   36%   
+18:38:01
+grafana-6fc94d7c59-jp797             10m   66Mi    
+prometheus-78b74f9f4-jhfwb           4m    39Mi    
+support-assistant-758fbd76dd-kjbrg   4m    155Mi   
+support-assistant-758fbd76dd-x5sxw   5m    158Mi   
+ip-10-0-1-54   1129m   56%   2725Mi   34%   
+18:38:31
+grafana-6fc94d7c59-jp797             2m    66Mi    
+prometheus-78b74f9f4-jhfwb           1m    38Mi    
+support-assistant-758fbd76dd-kjbrg   5m    155Mi   
+support-assistant-758fbd76dd-x5sxw   6m    158Mi   
+ip-10-0-1-54   1020m   51%   2728Mi   34%   
+18:39:02
+grafana-6fc94d7c59-jp797             2m    66Mi    
+prometheus-78b74f9f4-jhfwb           1m    38Mi    
+support-assistant-758fbd76dd-kjbrg   5m    156Mi   
+support-assistant-758fbd76dd-x5sxw   5m    159Mi   
+ip-10-0-1-54   617m   30%   2726Mi   34%   
+18:39:32
+grafana-6fc94d7c59-jp797             1m    66Mi    
+prometheus-78b74f9f4-jhfwb           1m    38Mi    
+support-assistant-758fbd76dd-kjbrg   4m    156Mi   
+support-assistant-758fbd76dd-x5sxw   7m    159Mi   
+ip-10-0-1-54   1056m   52%   2735Mi   34%   
+18:40:03
+grafana-6fc94d7c59-jp797             5m    53Mi    
+prometheus-78b74f9f4-jhfwb           1m    38Mi    
+support-assistant-758fbd76dd-kjbrg   3m    156Mi   
+support-assistant-758fbd76dd-x5sxw   8m    159Mi   
+ip-10-0-1-54   1036m   51%   2731Mi   34%   
+18:40:33
+grafana-6fc94d7c59-jp797             1m    53Mi    
+prometheus-78b74f9f4-jhfwb           2m    26Mi    
+support-assistant-758fbd76dd-kjbrg   5m    156Mi   
+support-assistant-758fbd76dd-x5sxw   5m    159Mi   
+ip-10-0-1-54   1041m   52%   2694Mi   34%   
+18:41:04
+grafana-6fc94d7c59-jp797             3m    53Mi    
+prometheus-78b74f9f4-jhfwb           1m    26Mi    
+support-assistant-758fbd76dd-kjbrg   5m    156Mi   
+support-assistant-758fbd76dd-x5sxw   4m    159Mi   
+ip-10-0-1-54   1069m   53%   2694Mi   34%   
+18:41:34
+grafana-6fc94d7c59-jp797             2m    53Mi    
+prometheus-78b74f9f4-jhfwb           1m    26Mi    
+support-assistant-758fbd76dd-kjbrg   5m    156Mi   
+support-assistant-758fbd76dd-x5sxw   3m    159Mi   
+ip-10-0-1-54   1044m   52%   2696Mi   34%   
+18:42:05
+grafana-6fc94d7c59-jp797             7m    53Mi    
+prometheus-78b74f9f4-jhfwb           9m    38Mi    
+support-assistant-758fbd76dd-kjbrg   6m    156Mi   
+support-assistant-758fbd76dd-x5sxw   4m    159Mi   
+ip-10-0-1-54   1057m   52%   2710Mi   34%   
+18:42:36
+grafana-6fc94d7c59-jp797             6m    52Mi    
+prometheus-78b74f9f4-jhfwb           6m    36Mi    
+support-assistant-758fbd76dd-kjbrg   4m    156Mi   
+support-assistant-758fbd76dd-x5sxw   4m    159Mi   
+ip-10-0-1-54   1039m   51%   2653Mi   33%   
+18:43:06
+grafana-6fc94d7c59-jp797             5m    54Mi    
+prometheus-78b74f9f4-jhfwb           7m    38Mi    
+support-assistant-758fbd76dd-kjbrg   11m   156Mi   
+support-assistant-758fbd76dd-x5sxw   16m   159Mi   
+ip-10-0-1-54   1104m   55%   2729Mi   34%   
+18:43:37
+grafana-6fc94d7c59-jp797             11m   59Mi    
+prometheus-78b74f9f4-jhfwb           7m    39Mi    
+support-assistant-758fbd76dd-kjbrg   19m   156Mi   
+support-assistant-758fbd76dd-x5sxw   13m   158Mi   
+ip-10-0-1-54   887m   44%   2744Mi   35%   
+18:44:07
+grafana-6fc94d7c59-jp797             9m    67Mi    
+prometheus-78b74f9f4-jhfwb           5m    41Mi    
+support-assistant-758fbd76dd-kjbrg   13m   155Mi   
+support-assistant-758fbd76dd-x5sxw   17m   159Mi   
+ip-10-0-1-54   1091m   54%   2749Mi   35%   
+18:44:38
+grafana-6fc94d7c59-jp797             2m    68Mi    
+prometheus-78b74f9f4-jhfwb           1m    38Mi    
+support-assistant-758fbd76dd-kjbrg   13m   155Mi   
+support-assistant-758fbd76dd-x5sxw   12m   159Mi   
+ip-10-0-1-54   615m   30%   2756Mi   35%   
+18:45:08
+grafana-6fc94d7c59-jp797             2m    68Mi    
+prometheus-78b74f9f4-jhfwb           1m    38Mi    
+support-assistant-758fbd76dd-kjbrg   15m   156Mi   
+support-assistant-758fbd76dd-x5sxw   12m   158Mi   
+ip-10-0-1-54   666m   33%   2757Mi   35%   
+18:45:39
+grafana-6fc94d7c59-jp797             2m    68Mi    
+prometheus-78b74f9f4-jhfwb           1m    38Mi    
+support-assistant-758fbd76dd-kjbrg   12m   155Mi   
+support-assistant-758fbd76dd-x5sxw   14m   159Mi   
+ip-10-0-1-54   127m   6%    2765Mi   35%   
