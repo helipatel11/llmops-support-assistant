@@ -24,4 +24,4 @@ export const questions = new SharedArray('questions', () =>
 export const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 // Percentiles reported for every trend metric.
-export const SUMMARY_STATS = ['avg', 'min', 'med', 'p(90)', 'p(95)', 'p(99)', 'max'];
+export const SUMMARY_STATS = ['count', 'avg', 'min', 'med', 'p(90)', 'p(95)', 'p(99)', 'max'];

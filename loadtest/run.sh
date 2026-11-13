@@ -12,14 +12,15 @@ NETWORK=${3:-host}
 K6_IMAGE=grafana/k6:0.52.0
 OUT=loadtest/results/$LABEL
 PREDICT_RATES=${PREDICT_RATES:-"10 25 50 100 200"}
-PREDICT_DURATION=${PREDICT_DURATION:-45s}
+PREDICT_DURATION=${PREDICT_DURATION:-45}   # seconds
 ASK_VUS=${ASK_VUS:-"1 2 4"}
-ASK_DURATION=${ASK_DURATION:-90s}
-MIXED_DURATION=${MIXED_DURATION:-3m}
+ASK_DURATION=${ASK_DURATION:-90}           # seconds
+MIXED_DURATION=${MIXED_DURATION:-180}      # seconds
 mkdir -p "$OUT"
 
-run() {  # run <result-name> <script> [ENV=VALUE ...]
-  local name=$1 script=$2; shift 2
+run() {  # run <result-name> <script> <duration-seconds> [ENV=VALUE ...]
+  local name=$1 script=$2 seconds=$3; shift 3
+  printf '{"duration_s": %s, "params": "%s"}\n' "$seconds" "$*" > "$OUT/$name.meta.json"
   local envs=(-e "BASE_URL=$BASE_URL")
   for kv in "$@"; do envs+=(-e "$kv"); done
   echo "$(date -u +%H:%M:%S) $name"
@@ -30,11 +31,11 @@ run() {  # run <result-name> <script> [ENV=VALUE ...]
 }
 
 for r in $PREDICT_RATES; do
-  run "predict-rate${r}" loadtest/predict.js "RATE=$r" "DURATION=$PREDICT_DURATION"
+  run "predict-rate${r}" loadtest/predict.js "$PREDICT_DURATION" "RATE=$r" "DURATION=${PREDICT_DURATION}s"
 done
 for v in $ASK_VUS; do
-  run "ask-vus${v}" loadtest/ask.js "VUS=$v" "DURATION=$ASK_DURATION"
+  run "ask-vus${v}" loadtest/ask.js "$ASK_DURATION" "VUS=$v" "DURATION=${ASK_DURATION}s"
 done
-run "mixed" loadtest/mixed.js "PREDICT_RATE=5" "ASK_EVERY=4" "DURATION=$MIXED_DURATION"
+run "mixed" loadtest/mixed.js "$MIXED_DURATION" "PREDICT_RATE=5" "ASK_EVERY=4" "DURATION=${MIXED_DURATION}s"
 
 echo "$(date -u +%H:%M:%S) done -> $OUT"
