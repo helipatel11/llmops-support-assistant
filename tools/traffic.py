@@ -28,7 +28,9 @@ def post(base_url: str, path: str, payload: dict, timeout: float = 120) -> int:
             return resp.status
     except urllib.error.HTTPError as exc:
         return exc.code
-    except (urllib.error.URLError, TimeoutError):
+    except (urllib.error.URLError, OSError):
+        # No HTTP response at all: refused, reset, or dropped mid-request (e.g. the app
+        # restarted). Counted as status 0 instead of crashing the generator.
         return 0
 
 
