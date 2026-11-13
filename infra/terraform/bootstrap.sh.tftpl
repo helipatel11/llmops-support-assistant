@@ -6,6 +6,9 @@ set -euxo pipefail
 exec > >(tee -a /var/log/bootstrap.log) 2>&1
 echo "bootstrap start $(date -u +%FT%TZ)"
 
+# cloud-init runs user_data without HOME; the ollama CLI panics without it
+# ("panic: $HOME is not defined"), which stopped the first bootstrap at the model pull.
+export HOME=/root
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -y
 apt-get install -y awscli docker.io   # docker only for running k6 load tests on the node
