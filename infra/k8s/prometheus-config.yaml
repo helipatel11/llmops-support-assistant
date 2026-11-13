@@ -1,18 +1,31 @@
 apiVersion: v1
 kind: ConfigMap
-
 metadata:
   name: prometheus-config
   namespace: llmops
-
 data:
   prometheus.yml: |
     global:
       scrape_interval: 15s
+      evaluation_interval: 15s
 
     scrape_configs:
+      # One target per support-assistant pod (not the Service), so per-pod counters
+      # are not mixed and every replica is visible.
       - job_name: "support-assistant"
-
-        static_configs:
-          - targets:
-              - support-assistant:80
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names: ["llmops"]
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_label_app]
+            regex: support-assistant
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_phase]
+            regex: Running
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_ip]
+            target_label: __address__
+            replacement: "$1:8000"
+          - source_labels: [__meta_kubernetes_pod_name]
+            target_label: pod

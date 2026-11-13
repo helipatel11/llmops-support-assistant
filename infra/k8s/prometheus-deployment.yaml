@@ -1,40 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: prometheus
   namespace: llmops
-
 spec:
   replicas: 1
-
   selector:
     matchLabels:
       app: prometheus
-
   template:
     metadata:
       labels:
         app: prometheus
-
     spec:
+      serviceAccountName: prometheus
       containers:
-      - name: prometheus
-
-        image: prom/prometheus
-
-        args:
-          - "--config.file=/etc/prometheus/prometheus.yml"
-
-        ports:
-          - containerPort: 9090
-
-        volumeMounts:
-          - name: config-volume
-            mountPath: /etc/prometheus
-
+        - name: prometheus
+          image: prom/prometheus:v2.53.0
+          args:
+            - --config.file=/etc/prometheus/prometheus.yml
+            - --storage.tsdb.retention.time=3d
+          ports:
+            - containerPort: 9090
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: 9090
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /-/healthy
+              port: 9090
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/prometheus
       volumes:
         - name: config-volume
-
           configMap:
             name: prometheus-config
