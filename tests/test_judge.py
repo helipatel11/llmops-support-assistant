@@ -2,7 +2,7 @@
 
 import pytest
 
-from evaluation.judge import _facts_skeleton, is_refusal, quote_found
+from evaluation.judge import _facts_skeleton, is_exact_refusal, is_refusal, quote_found
 
 CONTEXT = (
     "Office Wi-Fi\n\nIf a company laptop cannot join Corp:\n"
@@ -30,9 +30,23 @@ def test_quote_found(quote, expected):
     assert quote_found(quote, CONTEXT) is expected
 
 
-def test_refusal_detection():
-    assert is_refusal("I could not find this information in the knowledge base.")
-    assert not is_refusal("Restart the VPN client.")
+@pytest.mark.parametrize(
+    "answer, declined, exact",
+    [
+        ("I could not find this information in the knowledge base.", True, True),
+        # real tinyllama paraphrases from the v1 baseline run
+        ("The provided context does not contain information about Terraform.", True, False),
+        ("The CEO's phone number is not mentioned in the given context.", True, False),
+        ("The guest Wi-Fi password today is not available in the knowledge base.", True, False),
+        # real answers must not be mistaken for refusals
+        ("Restart the VPN client.", False, False),
+        ("The VPN disconnects automatically after 12 hours. Reconnect to continue.", False, False),
+        ("You cannot get access without manager approval.", False, False),
+    ],
+)
+def test_refusal_detection(answer, declined, exact):
+    assert is_refusal(answer) is declined
+    assert is_exact_refusal(answer) is exact
 
 
 def test_facts_skeleton_has_one_entry_per_fact():

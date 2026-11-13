@@ -13,19 +13,17 @@ Unanswerable questions are scored by rule: success = the exact refusal sentence.
 """
 
 import argparse
-import csv
 import json
-import random
 import time
 from statistics import mean, median
 
 from app import config
+from app.services.index import check_index
 from app.services.rag import generate, retrieve
 from evaluation.common import PROJECT_ROOT, RESULTS_DIR, file_sha256, run_metadata, write_result
-from evaluation.judge import Judge, is_refusal
+from evaluation.judge import Judge, is_exact_refusal, is_refusal
 from evaluation.retrieval_eval import GOLDEN, load_golden
-
-SPOT_CHECK_SIZE = 10
+from evaluation.spot_check import make_sheet
 
 
 def answer_all(golden: list[dict]) -> list[dict]:
@@ -50,6 +48,7 @@ def answer_all(golden: list[dict]) -> list[dict]:
 def judge_all(rows: list[dict], judge: Judge) -> None:
     for i, r in enumerate(rows, 1):
         r["refused"] = is_refusal(r["answer"])
+        r["exact_refusal"] = is_exact_refusal(r["answer"])
         if r["answerable"]:
             r["judge"] = judge.score(r["context"], r["key_facts"], r["answer"])
         else:
@@ -75,6 +74,7 @@ def summarise(rows: list[dict]) -> dict:
         "unanswerable": {
             "n": len(unans),
             "correct_refusal_rate": round(mean(r["refused"] for r in unans), 4),
+            "exact_refusal_format_rate": round(mean(r["exact_refusal"] for r in unans), 4),
         },
         "latency_s_informal": {
             "note": "Single sequential run on the dev laptop; not a load test (see Phase 4).",
@@ -83,21 +83,6 @@ def summarise(rows: list[dict]) -> dict:
             "generation_max": round(max(r["generation_s"] for r in rows), 3),
         },
     }
-
-
-def write_spot_check(rows: list[dict], label: str) -> str:
-    """Seeded sample of answerable questions for a human to score with the same rubric."""
-    sample = random.Random(42).sample([r for r in rows if r["answerable"]], SPOT_CHECK_SIZE)
-    path = RESULTS_DIR / f"spot_check_{label}.csv"
-    with path.open("w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["id", "question", "key_facts", "context", "answer",
-                    "judge_grounded", "judge_correct", "human_grounded", "human_correct"])
-        for r in sorted(sample, key=lambda r: r["id"]):
-            w.writerow([r["id"], r["question"], " | ".join(r["key_facts"]), r["context"],
-                        r["answer"], r["judge"].get("grounded"), r["judge"].get("correct"),
-                        "", ""])
-    return str(path.relative_to(PROJECT_ROOT))
 
 
 def main() -> None:
@@ -118,10 +103,14 @@ def main() -> None:
     else:
         rows = answer_all(load_golden())
         serving = {
+            "prompt_version": config.PROMPT_VERSION,
+            "retrieval_version": config.RETRIEVAL_VERSION,
+            "generation_version": config.GENERATION_VERSION,
+            "index_id": check_index()["found"],
             "serving_model": config.OLLAMA_MODEL,
             "embedding_model": config.EMBEDDING_MODEL,
             "serving_top_k": config.RETRIEVER_K,
-            "temperature": 0,
+            "temperature": config.LLM_TEMPERATURE,
         }
 
     judge_all(rows, Judge(args.judge_model))
@@ -136,7 +125,7 @@ def main() -> None:
     }
     print(json.dumps(summary, indent=2))
     write_result(f"answers_{args.label}", result)
-    print(f"wrote {out_path.relative_to(PROJECT_ROOT)} and {write_spot_check(rows, args.label)}")
+    print(f"wrote {out_path.relative_to(PROJECT_ROOT)} and {make_sheet(args.label)[0]}")
 
 
 if __name__ == "__main__":

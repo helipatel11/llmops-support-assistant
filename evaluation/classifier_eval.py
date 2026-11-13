@@ -1,7 +1,7 @@
-"""Evaluate the classifier artifacts the API serves, on the held-out test set.
+"""Evaluate a classifier version (the artifact the API serves) on the held-out test set.
 
-Run from the repo root:  python -m evaluation.classifier_eval [--label NAME]
-Writes evaluation/results/classifier_<label>.json
+Run from the repo root:  python -m evaluation.classifier_eval [--version v1] [--label NAME]
+Writes evaluation/results/classifier_<label>.json (label defaults to the version).
 """
 
 import argparse
@@ -23,21 +23,19 @@ def load_test_set():
     return [r["text"] for r in rows], [r["priority"] for r in rows]
 
 
-def evaluate() -> dict:
-    model = joblib.load(config.MODEL_PATH)
-    vectorizer = joblib.load(config.VECTORIZER_PATH)
+def evaluate(version: str) -> dict:
+    artifact = config.classifier_artifact(version)
+    pipeline = joblib.load(artifact)
     texts, y_true = load_test_set()
-    y_pred = list(model.predict(vectorizer.transform(texts)))
+    y_pred = list(pipeline.predict(texts))
 
     report = classification_report(
         y_true, y_pred, labels=LABELS, output_dict=True, zero_division=0
     )
     return {
         "metadata": run_metadata(),
-        "artifacts": {
-            "model_sha256": file_sha256(config.MODEL_PATH),
-            "vectorizer_sha256": file_sha256(config.VECTORIZER_PATH),
-        },
+        "classifier_version": version,
+        "artifact_sha256": file_sha256(artifact),
         "dataset": {
             "path": str(TEST_SET.relative_to(PROJECT_ROOT)),
             "rows": len(texts),
@@ -77,12 +75,13 @@ def print_summary(result: dict) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--label", default="current", help="name for the result file")
+    parser.add_argument("--version", default=config.MODEL_VERSION)
+    parser.add_argument("--label", default=None, help="result file name (default: version)")
     args = parser.parse_args()
 
-    result = evaluate()
+    result = evaluate(args.version)
     print_summary(result)
-    path = write_result(f"classifier_{args.label}", result)
+    path = write_result(f"classifier_{args.label or args.version}", result)
     print(f"wrote {path.relative_to(PROJECT_ROOT)}")
 
 

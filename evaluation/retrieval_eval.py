@@ -14,6 +14,7 @@ from pathlib import Path
 from statistics import mean
 
 from app import config
+from app.services.index import check_index
 from app.services.rag import get_vectordb
 from evaluation.common import PROJECT_ROOT, file_sha256, run_metadata, write_result
 
@@ -60,6 +61,10 @@ def evaluate() -> dict:
 
     return {
         "metadata": run_metadata(),
+        "versions": {
+            "retrieval": config.RETRIEVAL_VERSION,
+            "index_id": check_index()["found"],
+        },
         "config": {
             "embedding_model": config.EMBEDDING_MODEL,
             "chunk_size": config.CHUNK_SIZE,

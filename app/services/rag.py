@@ -7,29 +7,25 @@ from langchain_ollama import ChatOllama, OllamaEmbeddings
 from app import config
 from app.logging_config import logger
 from app.monitoring.metrics import rag_requests_counter
+from app.services.index import check_index
 
-PROMPT_TEMPLATE = """
-You are an IT support assistant.
 
-Answer ONLY from the provided context.
-
-If the answer is not present in the context, reply:
-
-"I could not find this information in the knowledge base."
-
-Context:
-{context}
-
-Question:
-{question}
-
-Answer:
-"""
+@lru_cache(maxsize=None)
+def load_prompt(version: str) -> str:
+    """Prompt templates live in prompts/rag_<version>.txt, with {context} and {question}."""
+    return (config.PROMPTS_DIR / f"rag_{version}.txt").read_text()
 
 
 @lru_cache(maxsize=1)
 def get_vectordb():
-    """Open the persisted ChromaDB collection on first use, not at import time."""
+    """Open the persisted ChromaDB collection on first use, not at import time.
+
+    Refuses to serve from an index built with a different embedding model, chunking
+    or document set than the running retrieval config (see app/services/index.py).
+    """
+    status = check_index()
+    if not status["ok"]:
+        raise RuntimeError(f"ChromaDB index mismatch: {status['reason']}")
     embedding = OllamaEmbeddings(
         model=config.EMBEDDING_MODEL,
         base_url=config.OLLAMA_BASE_URL,
@@ -44,7 +40,7 @@ def get_vectordb():
 def get_llm():
     return ChatOllama(
         model=config.OLLAMA_MODEL,
-        temperature=0,
+        temperature=config.LLM_TEMPERATURE,
         base_url=config.OLLAMA_BASE_URL,
     )
 
@@ -56,7 +52,7 @@ def retrieve(question: str, k: Optional[int] = None) -> list:
 
 def generate(question: str, docs: list) -> str:
     context = "\n\n".join(doc.page_content for doc in docs)
-    prompt = PROMPT_TEMPLATE.format(context=context, question=question)
+    prompt = load_prompt(config.PROMPT_VERSION).format(context=context, question=question)
     return get_llm().invoke(prompt).content
 
 

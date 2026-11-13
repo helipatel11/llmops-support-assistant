@@ -1,14 +1,12 @@
 {
   "metadata": {
-    "timestamp_utc": "2026-11-12T18:42:33+00:00",
-    "git_commit": "ff674da-dirty",
+    "timestamp_utc": "2026-11-12T20:10:35+00:00",
+    "git_commit": "fbd9665-dirty",
     "python": "3.9.6",
     "machine": "Darwin arm64"
   },
-  "artifacts": {
-    "model_sha256": "97c5df0ca212",
-    "vectorizer_sha256": "57e56be1460b"
-  },
+  "classifier_version": "v1",
+  "artifact_sha256": "2b2b3f80e689",
   "dataset": {
     "path": "training/data/tickets_test.csv",
     "rows": 150,
