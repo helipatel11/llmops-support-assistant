@@ -122,7 +122,22 @@ All runs: same 30 golden questions, same judge and scorer (all re-judged after t
 - **Retrieval v2: rejected.** It fixed the only retrieval miss, but end-to-end quality got worse: more context made tinyllama write longer, invented step lists, and it answered 2 questions it should have refused. A component metric improved while the product got worse.
 - **llama3 instead of tinyllama:** far better on every quality metric, at about 2× the generation time on this laptop. Caveat: llama3 is also the judge here, and judges tend to favour their own outputs. Memory and latency on the small EC2 instance must be measured before considering it (Phase 4).
 
-## 6. Latency (informal, not a benchmark)
+## 6. Live metrics and outage drill (Phase 3, local stack)
+
+**Method:** `docker compose up` (app + Prometheus + Grafana) on the dev laptop; `tools/traffic.py` sending one request at a time (~3 `/predict` per `/ask`); values read from Prometheus. Not a load test. Panel guide: `docs/dashboard.md`.
+
+| Metric (2026-11-13, tinyllama) | p50 | p95 | p99 |
+|---|---|---|---|
+| `/predict` latency | 12 ms | 24 ms | 25 ms |
+| `/ask` latency | 1.03 s | 3.1 s | 4.6 s |
+| Retrieval stage | 65 ms | 98 ms | |
+| Generation stage | 1.02 s | 2.77 s | |
+
+Generation is **≈ 96%** of `/ask` time. Percentiles are estimated from histogram buckets.
+
+**Outage drill:** Ollama unreachable for 90 s under traffic. Detected on the dashboard in about 30 s (error ratio peaked at 26%, `rag_errors_total{stage="retrieval",error="ConnectionError"}`); 36 `/ask` requests got 503 while `/predict` stayed 100% successful; Prometheus `up` and `/health` stayed healthy throughout; each restart of the single container dropped in-flight requests (8 with no response).
+
+## 7. Latency (informal, not a benchmark)
 
 Single sequential runs on the dev laptop, with other models loaded; **not** a load test. Retrieval median 0.02–0.14 s; generation median 1.1 s (tinyllama, top-2) to 2.3 s (llama3). Generation dominates `/ask` in every run. Proper p50/p95/p99 per endpoint is Phase 4.
 
