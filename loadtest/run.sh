@@ -25,7 +25,10 @@ run() {  # run <result-name> <script> <duration-seconds> [ENV=VALUE ...]
   local envs=(-e "BASE_URL=$BASE_URL")
   for kv in "$@"; do envs+=(-e "$kv"); done
   echo "$(date -u +%H:%M:%S) $name"
-  docker run --rm --network "$NETWORK" -v "$PWD":/repo -w /repo "${envs[@]}" "$K6_IMAGE" \
+  # Run k6 as the calling user so it can write results into the bind mount (the image's
+  # default uid 12345 gets "permission denied" on Linux; Docker Desktop hides this on macOS).
+  docker run --rm --user "$(id -u):$(id -g)" --network "$NETWORK" -v "$PWD":/repo -w /repo \
+    "${envs[@]}" "$K6_IMAGE" \
     run -q --summary-export="$OUT/$name.json" "$script" > "$OUT/$name.log" 2>&1 \
     || echo "  (k6 exited non-zero; see $OUT/$name.log)"
   sleep 10  # let the service settle between levels
