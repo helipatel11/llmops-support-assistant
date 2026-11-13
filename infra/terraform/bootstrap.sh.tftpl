@@ -18,6 +18,9 @@ usermod -aG docker ubuntu
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="${k3s_version}" sh -s - --write-kubeconfig-mode 600
 install -d -o ubuntu -g ubuntu -m 700 /home/ubuntu/.kube
 install -o ubuntu -g ubuntu -m 600 /etc/rancher/k3s/k3s.yaml /home/ubuntu/.kube/config
+# k3s's kubectl reads /etc/rancher/k3s/k3s.yaml unless KUBECONFIG is set; point the
+# ubuntu user at its own copy (first line, so non-interactive shells get it too).
+sed -i '1i export KUBECONFIG=/home/ubuntu/.kube/config' /home/ubuntu/.bashrc
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 until kubectl get nodes 2>/dev/null | grep -q " Ready"; do sleep 3; done
 
