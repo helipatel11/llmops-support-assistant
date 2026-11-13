@@ -32,8 +32,11 @@ def main() -> None:
         base_url=config.OLLAMA_BASE_URL,
     )
 
-    if config.CHROMA_DIR.exists():
-        shutil.rmtree(config.CHROMA_DIR)
+    # Empty the directory instead of deleting it: in k3s it is a mounted volume
+    # (emptyDir shared with the app container), and a mount point cannot be removed.
+    config.CHROMA_DIR.mkdir(parents=True, exist_ok=True)
+    for child in config.CHROMA_DIR.iterdir():
+        shutil.rmtree(child) if child.is_dir() else child.unlink()
 
     # chromadb >= 0.4 persists automatically; no .persist() call needed.
     Chroma.from_documents(

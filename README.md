@@ -62,7 +62,7 @@ MLflow is used to track experiments, parameters, metrics, and trained model arti
 
 ## Grafana Dashboard
 
-![Grafana](docs/images/grafana-dashboard.png)
+![Grafana](docs/images/grafana-dashboard1.png)
 
 Grafana visualizes Prometheus metrics including HTTP requests, ML predictions, and RAG requests.
 

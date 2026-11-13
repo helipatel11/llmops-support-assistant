@@ -34,6 +34,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no \
           ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} bash -s -- "$IMAGE" << 'EOF'
           set -e
-          kubectl -n llmops set image deployment/support-assistant support-assistant="$1"
+          kubectl -n llmops set image deployment/support-assistant ingest="$1" support-assistant="$1"
           kubectl -n llmops rollout status deployment/support-assistant --timeout=180s
           EOF

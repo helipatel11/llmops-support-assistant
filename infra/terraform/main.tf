@@ -58,7 +58,8 @@ resource "aws_route_table_association" "public_assoc" {
 }
 
 ##################################
-# Security Group
+# Security Group: only the admin IP can reach SSH and HTTP (Traefik ingress).
+# Grafana is served at /grafana through the ingress; Prometheus is port-forward only.
 ##################################
 
 resource "aws_security_group" "llmops_sg" {
@@ -66,52 +67,19 @@ resource "aws_security_group" "llmops_sg" {
   vpc_id = aws_vpc.llmops_vpc.id
 
   ingress {
+    description = "SSH from admin IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["104.63.146.17/32"]
+    cidr_blocks = [var.admin_cidr]
   }
 
   ingress {
-  from_port   = 22
-  to_port     = 22
-  protocol    = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
-}
-
-  ingress {
-    from_port   = 8000
-    to_port     = 8000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 9090
-    to_port     = 9090
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
+    description = "HTTP (Traefik ingress) from admin IP"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.admin_cidr]
   }
 
   egress {
@@ -123,7 +91,7 @@ resource "aws_security_group" "llmops_sg" {
 }
 
 ##################################
-# Latest Ubuntu AMI
+# Latest Ubuntu 22.04 AMI
 ##################################
 
 data "aws_ami" "ubuntu" {
@@ -138,28 +106,37 @@ data "aws_ami" "ubuntu" {
 }
 
 ##################################
-# EC2
+# EC2: k3s + Ollama, configured at first boot by bootstrap.sh.tftpl
 ##################################
 
 resource "aws_instance" "llmops_server" {
+  ami                  = data.aws_ami.ubuntu.id
+  instance_type        = var.instance_type
+  key_name             = var.key_name
+  iam_instance_profile = aws_iam_instance_profile.node.name
 
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.instance_type
-
-  key_name = var.key_name
+  subnet_id                   = aws_subnet.public_subnet.id
+  vpc_security_group_ids      = [aws_security_group.llmops_sg.id]
+  associate_public_ip_address = true
 
   root_block_device {
     volume_size = 40
     volume_type = "gp3"
   }
 
-  subnet_id = aws_subnet.public_subnet.id
+  # IMDSv2 only, and hop limit 1: containers cannot reach the instance metadata
+  # endpoint, so a compromised pod cannot read the node's AWS credentials.
+  metadata_options {
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 1
+  }
 
-  vpc_security_group_ids = [
-    aws_security_group.llmops_sg.id
-  ]
-
-  associate_public_ip_address = true
+  user_data = templatefile("${path.module}/bootstrap.sh.tftpl", {
+    k3s_version    = var.k3s_version
+    ollama_version = var.ollama_version
+    region         = var.aws_region
+    ecr_registry   = split("/", aws_ecr_repository.app.repository_url)[0]
+  })
 
   tags = {
     Name = "llmops-server"

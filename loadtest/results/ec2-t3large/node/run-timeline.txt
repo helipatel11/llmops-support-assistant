@@ -1,0 +1,12 @@
+18:25:18 predict-rate10
+18:26:14 predict-rate25
+18:27:10 predict-rate50
+18:28:07 predict-rate100
+18:29:03 predict-rate150
+18:29:59 predict-rate200
+18:30:57 predict-rate300
+18:31:55 ask-vus1
+18:35:17 ask-vus2
+18:38:52 ask-vus4
+18:42:33 mixed
+18:46:05 done -> loadtest/results/ec2-t3large
