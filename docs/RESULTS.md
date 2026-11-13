@@ -71,15 +71,17 @@ v1 confusion matrix (rows = true, cols = predicted: high / medium / low): high `
 
 The remaining miss ("five" vs "5") was scored too strictly. Source: `judge_calibration_llama3.json`.
 
-**Human spot check (2026-11-12):** the project owner scored 10 tinyllama answers blind (`spot_check_v1.md`, scores in `spot_check_v1_scores.csv`). 4 of the 10 were declined answers, which a fixed rule scores (agreement 4/4 by construction). On the **6 answers the LLM judge scored, agreement was grounded 3/6 and correct 1/6**, well below calibration.
+**Human spot check (2026-11-12, re-checked 2026-11-13):** the project owner scored 10 tinyllama answers blind (`spot_check_v1.md`, scores in `spot_check_v1_scores.csv`). 4 of the 10 were declined answers, which a fixed rule scores (agreement 4/4 by construction). On the **6 answers the LLM judge scored, agreement is grounded 4/6 and correct 3/6.**
 
-| Disagreement | Likely cause |
+| Remaining disagreement | Cause |
 |---|---|
-| q24, q25 (correct), q08 (grounded) | **Judge too strict:** answers contained every key fact, or the flagged claim was in the context |
-| q05 (both), q04 (correct) | **Human scoring lenient:** q05 invents steps that contradict the context ("scan the QR code with the app on the old phone"); q04 omits "update or remove the saved password" |
-| q14 (correct) | Ambiguous: partially right, mixed with unrelated rules |
+| q24, q25 (correct) | **Judge too strict:** both key facts present, judge counted one |
+| q08 (grounded) | **Judge too strict:** flagged "redirect loop", which is in the context |
+| q14 (both) | Ambiguous: partially right, mixed with unrelated rules |
 
-**What this means:** the judge under-scores correct answers (consistent with its calibration miss), so tinyllama's correctness is probably somewhat **higher** than reported. Its flags for invented content held up on review. 10 calibration cases overstated the judge's agreement with a person, so calibration needs more cases (Phase 2 follow-up).
+On first pass the owner also scored q04 and q05 leniently (q05 invents steps that contradict the context); after reviewing the disagreements they re-scored both, which then matched the judge. Recorded because spotting invented detail is hard for people too.
+
+**What this means:** every clear judge error goes the same way: it **under-scores correct answers**. Tinyllama's correctness is therefore probably somewhat higher than reported; its flags for invented content held up. 10 calibration cases (9/10 on correctness) overstated agreement with a person, so calibration needs more multi-fact cases.
 
 ## 4. Answer quality: baseline (tinyllama, all v1)
 
@@ -129,7 +131,7 @@ Single sequential runs on the dev laptop, with other models loaded; **not** a lo
 - **Synthetic data:** cleaner than real tickets and docs; real-world scores are likely lower.
 - **Small sets:** 150 test tickets, 25 + 5 golden questions, 10 calibration cases. One golden question is 4 percentage points.
 - **Run-to-run noise:** between v1 and retrieval v2, many individual answers flipped in both directions, and at least one obviously correct answer was scored 0 by the judge (q24, retrieval v2). Large differences (llama3 vs tinyllama, 0.28 → 0.08) are meaningful; differences of one or two questions are not.
-- **Judge:** a small local model calibrated on only 10 cases; the human spot check found it under-scores correct answers (correct agreement 1/6 on judged answers). It also judges its own outputs in the llama3 comparison.
+- **Judge:** a small local model calibrated on only 10 cases; the human spot check found it under-scores correct answers (correct agreement 3/6 on judged answers). It also judges its own outputs in the llama3 comparison.
 - **Dev hardware only:** nothing is measured on EC2/k3s yet.
 
 ## Corrections
