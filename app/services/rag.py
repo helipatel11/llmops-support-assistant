@@ -1,3 +1,4 @@
+import time
 from functools import lru_cache
 from typing import Optional
 
@@ -6,8 +7,23 @@ from langchain_ollama import ChatOllama, OllamaEmbeddings
 
 from app import config
 from app.logging_config import logger
-from app.monitoring.metrics import rag_requests_counter
+from app.monitoring.metrics import (
+    rag_errors_counter,
+    rag_index_ok,
+    rag_requests_counter,
+    rag_stage_seconds,
+)
 from app.services.index import check_index
+from app.services.refusal import is_refusal
+
+
+class RAGUnavailable(Exception):
+    """A dependency of /ask failed (index, embeddings or LLM); the API returns 503."""
+
+    def __init__(self, stage: str, error: Exception):
+        super().__init__(f"{stage} failed: {type(error).__name__}: {error}")
+        self.stage = stage
+        self.error_type = type(error).__name__
 
 
 @lru_cache(maxsize=None)
@@ -24,6 +40,7 @@ def get_vectordb():
     or document set than the running retrieval config (see app/services/index.py).
     """
     status = check_index()
+    rag_index_ok.set(1 if status["ok"] else 0)
     if not status["ok"]:
         raise RuntimeError(f"ChromaDB index mismatch: {status['reason']}")
     embedding = OllamaEmbeddings(
@@ -56,13 +73,27 @@ def generate(question: str, docs: list) -> str:
     return get_llm().invoke(prompt).content
 
 
+def _timed(stage: str, fn, *args):
+    """Run one /ask stage, record its duration, and turn failures into RAGUnavailable."""
+    start = time.perf_counter()
+    try:
+        return fn(*args)
+    except Exception as exc:  # any dependency failure: index, Ollama, network
+        rag_errors_counter.labels(stage=stage, error=type(exc).__name__).inc()
+        rag_requests_counter.labels(outcome="error").inc()
+        logger.error("RAG %s failed: %s: %s", stage, type(exc).__name__, exc)
+        raise RAGUnavailable(stage, exc) from exc
+    finally:
+        rag_stage_seconds.labels(stage=stage).observe(time.perf_counter() - start)
+
+
 def ask_question(question: str) -> str:
     logger.info("Question received (%d chars)", len(question))
 
-    rag_requests_counter.inc()
-
-    docs = retrieve(question)
-
+    docs = _timed("retrieval", retrieve, question)
     logger.info("Retrieved %d docs", len(docs))
 
-    return generate(question, docs)
+    answer = _timed("generation", generate, question, docs)
+
+    rag_requests_counter.labels(outcome="declined" if is_refusal(answer) else "answered").inc()
+    return answer

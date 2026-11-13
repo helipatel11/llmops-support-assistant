@@ -22,18 +22,8 @@ from langchain_ollama import ChatOllama
 
 from app import config
 
-# The exact refusal sentence the prompt asks for (product-facing format).
-REFUSAL_MARKER = "could not find this information"
-# Paraphrased refusals: small models often decline in their own words. Added after the
-# tinyllama baseline, where every unanswerable question was declined but none used the
-# exact sentence. Both views are reported: exact format, and declined in any wording.
-DECLINE_PATTERNS = [
-    REFUSAL_MARKER,
-    r"\b(does|do|did) not (mention|contain|include|provide|say|specify)\b",
-    r"\bdoesn'?t (mention|contain|include|provide|say|specify)\b",
-    r"\bnot (mentioned|present|available|provided|included|specified) in\b",
-    r"\bno information (about|on|regarding)\b",
-]
+# Refusal detection lives in the app so live metrics and evaluation use the same rule.
+from app.services.refusal import REFUSAL_MARKER, is_exact_refusal, is_refusal  # noqa: E402,F401
 
 GROUNDEDNESS_PROMPT = """You verify an answer against a source text, claim by claim.
 
@@ -74,16 +64,6 @@ def _facts_skeleton(n: int) -> str:
     """JSON template with exactly n entries; small models copy the shape of the example."""
     items = ", ".join(f'{{"id": {i}, "present": ?, "quote": "?"}}' for i in range(1, n + 1))
     return f'{{"facts": [{items}], "contradiction": ?}}'
-
-
-def is_exact_refusal(answer: str) -> bool:
-    return REFUSAL_MARKER in answer.lower()
-
-
-def is_refusal(answer: str) -> bool:
-    """True if the answer declines to answer, in the exact format or in its own words."""
-    text = answer.lower()
-    return any(re.search(pattern, text) for pattern in DECLINE_PATTERNS)
 
 
 def _norm(text: str) -> str:
