@@ -1,0 +1,8 @@
+deployment.apps/support-assistant 
+REVISION  CHANGE-CAUSE
+2         DRILL A: GENERATION_VERSION=llama3 (model not on node)
+4         DRILL B: fa2bce4 (LLM timeout 5 s)
+5         release df0f53c (CI-built, PR #6)
+7         DRILL B2: 07837e1 (LLM deadline 5 s)
+8         release fa9f809 (whole-answer LLM deadline fix)
+
