@@ -41,7 +41,9 @@ cat > /usr/local/bin/refresh-ecr-secret <<'SCRIPT'
 #!/bin/bash
 set -euo pipefail
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-kubectl get namespace llmops >/dev/null 2>&1 || kubectl create namespace llmops
+# Idempotent: the timer's first run and the direct call below can overlap; a
+# check-then-create raced (AlreadyExists) on the first clean boot.
+kubectl create namespace llmops --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n llmops create secret docker-registry ecr-secret \
   --docker-server=${ecr_registry} --docker-username=AWS \
   --docker-password="$(aws ecr get-login-password --region ${region})" \
