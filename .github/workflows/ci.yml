@@ -41,10 +41,20 @@ jobs:
         run: pytest -q
 
   build-and-push:
-    # Tests gate the push; images are only pushed from main.
+    # Tests gate the push; images are only pushed from main. The AWS stack (ECR repo, CI
+    # role) only exists during a deploy session, so pushing is switched on with the repo
+    # variable ECR_PUSH_ENABLED=true while it is up (otherwise every merge fails red).
     needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: >-
+      github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+      vars.ECR_PUSH_ENABLED == 'true'
     runs-on: ubuntu-latest
+
+    # OIDC: GitHub issues a short-lived token that AWS trades for temporary credentials
+    # of the llmops-github-ci role (infra/terraform/iam.tf). No AWS keys stored in GitHub.
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - name: Checkout Repository
@@ -53,8 +63,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::183631323298:role/llmops-github-ci
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR

@@ -11,8 +11,14 @@ permissions:
 
 jobs:
   deploy:
-    # Deploy only after a successful CI run for a push to main (not for pull requests).
+    # Deploy only after a successful CI run for a push to main (not for pull requests),
+    # and only when DEPLOY_ENABLED=true. Off by default: the security group allows SSH
+    # only from the admin IP, so GitHub-hosted runners cannot reach the node. Deploys run
+    # from the admin machine with infra/k8s/deploy.sh <sha>. Turning this on needs a
+    # self-hosted runner or a pull-based GitOps agent (Argo CD / Flux) on the cluster,
+    # not opening SSH to the internet.
     if: >-
+      vars.DEPLOY_ENABLED == 'true' &&
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.event == 'push' &&
       github.event.workflow_run.head_branch == 'main'
@@ -35,5 +41,7 @@ jobs:
           ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} bash -s -- "$IMAGE" << 'EOF'
           set -e
           kubectl -n llmops set image deployment/support-assistant ingest="$1" support-assistant="$1"
+          kubectl -n llmops annotate deployment/support-assistant --overwrite \
+            kubernetes.io/change-cause="CD: $1"
           kubectl -n llmops rollout status deployment/support-assistant --timeout=180s
           EOF

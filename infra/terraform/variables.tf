@@ -24,3 +24,8 @@ variable "k3s_version" {
 variable "ollama_version" {
   default = "0.40.16"
 }
+
+variable "github_repo" {
+  description = "owner/name of the repo whose main-branch CI may push images (GitHub OIDC)."
+  default     = "helipatel11/llmops-support-assistant"
+}
