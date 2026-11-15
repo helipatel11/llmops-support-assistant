@@ -6,7 +6,7 @@ LABEL ?= current
 MODEL_VERSION ?= v1
 
 .PHONY: help install lint test data train ingest \
-        eval eval-classifier eval-retrieval eval-judge eval-answers spot-check compare k8s-dashboard
+        eval eval-classifier eval-retrieval eval-judge eval-answers spot-check compare k8s-dashboard k8s-prometheus
 
 help:
 	@echo "install          install runtime + dev dependencies"
@@ -20,6 +20,7 @@ help:
 	@echo "spot-check       judge vs human agreement, after filling the spot-check CSV"
 	@echo "compare          side-by-side table, e.g. make compare KIND=classifier A=v1 B=v2"
 	@echo "k8s-dashboard    regenerate the Grafana dashboard ConfigMap for k3s from the JSON"
+	@echo "k8s-prometheus   regenerate the Prometheus ConfigMap (config + alert rules) for k3s"
 	@echo "Set LABEL=v2 to name result files, e.g. make eval LABEL=v2"
 
 install:
@@ -65,3 +66,9 @@ k8s-dashboard:
 	kubectl create configmap grafana-dashboards -n llmops \
 	  --from-file=support-assistant.json=monitoring/grafana/dashboards/support-assistant.json \
 	  --dry-run=client -o yaml > infra/k8s/grafana-dashboards-configmap.yaml
+
+k8s-prometheus:
+	kubectl create configmap prometheus-config -n llmops \
+	  --from-file=prometheus.yml=monitoring/prometheus-k8s.yml \
+	  --from-file=alerts.yml=monitoring/alerts.yml \
+	  --dry-run=client -o yaml > infra/k8s/prometheus-config.yaml

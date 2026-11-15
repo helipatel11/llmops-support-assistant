@@ -23,6 +23,9 @@ GENERATION_VERSION = os.getenv("GENERATION_VERSION", "v1")
 GENERATION = json.loads((CONFIGS_DIR / f"generation_{GENERATION_VERSION}.json").read_text())
 OLLAMA_MODEL = GENERATION["model"]
 LLM_TEMPERATURE = GENERATION["temperature"]
+# Max seconds per LLM call. Without one, a stuck Ollama call holds a worker forever.
+# 60 s covers every /ask measured on EC2 up to 2 concurrent users (max 43.5 s, Phase 4).
+LLM_TIMEOUT_S = GENERATION["timeout_s"]
 # A leftover OLLAMA_MODEL (old .env or k8s Secret) must not silently change the model.
 IGNORED_ENV = [name for name in ("OLLAMA_MODEL",) if os.getenv(name)]
 

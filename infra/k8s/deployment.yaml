@@ -6,14 +6,24 @@ metadata:
   namespace: llmops
 
 spec:
-  replicas: 2
+  # No `replicas`: the HPA owns the pod count. With it here, every `kubectl apply`
+  # would reset the HPA's choice back to this number.
 
+  # Zero-downtime rollout: start one new pod, wait until it is Ready (and stays Ready
+  # for minReadySeconds), only then remove an old one. A release that never becomes
+  # Ready stalls here while the old pods keep serving.
   strategy:
     type: RollingUpdate
 
     rollingUpdate:
-      maxUnavailable: 1
+      maxUnavailable: 0
       maxSurge: 1
+
+  minReadySeconds: 10
+  # A stalled rollout is marked failed (ProgressDeadlineExceeded) after this long.
+  progressDeadlineSeconds: 240
+  # Old ReplicaSets kept for `kubectl rollout undo`.
+  revisionHistoryLimit: 5
 
   selector:
     matchLabels:
@@ -32,7 +42,7 @@ spec:
       # image needs no vector store and the index always matches the image's docs/config.
       initContainers:
         - name: ingest
-          image: 183631323298.dkr.ecr.us-east-1.amazonaws.com/llmops-support-assistant:v1
+          image: support-assistant  # tag set at deploy time: infra/k8s/deploy.sh <git-sha>
           command: ["python", "-m", "llm.rag.ingest"]
           env:
             - name: NODE_IP
@@ -52,7 +62,7 @@ spec:
       containers:
         - name: support-assistant
 
-          image: 183631323298.dkr.ecr.us-east-1.amazonaws.com/llmops-support-assistant:v1
+          image: support-assistant  # tag set at deploy time: infra/k8s/deploy.sh <git-sha>
 
           imagePullPolicy: Always
 
@@ -86,14 +96,20 @@ spec:
               cpu: "500m"
               memory: "512Mi"
 
+          # Readiness: should this pod get traffic? Checks the pod's own index and that
+          # Ollama has this release's models (see /ready in app/main.py).
           readinessProbe:
             httpGet:
-              path: /health
+              path: /ready
               port: 8000
 
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
 
+          # Liveness: is the process alive? Deliberately does not check dependencies,
+          # or an Ollama outage would restart every pod in a loop without fixing anything.
           livenessProbe:
             httpGet:
               path: /health
@@ -101,3 +117,5 @@ spec:
 
             initialDelaySeconds: 30
             periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3

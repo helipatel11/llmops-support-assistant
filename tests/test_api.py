@@ -65,3 +65,11 @@ def test_version_reports_what_is_running(client, monkeypatch):
     assert body["rag"]["prompt"] == "v1"
     assert body["rag"]["retrieval"] == "v1"
     assert set(body["index"]) == {"ok", "index_id", "expected", "reason"}
+
+
+def test_llm_call_has_the_configured_timeout():
+    from app import config
+    from app.services import rag
+
+    llm = rag.get_llm()
+    assert llm.client_kwargs == {"timeout": config.LLM_TIMEOUT_S}

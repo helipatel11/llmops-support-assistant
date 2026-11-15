@@ -1,0 +1,21 @@
+# Applied by deploy.sh, which adds the image tag. Don't `kubectl apply -k` this directly:
+# the image name `support-assistant` is a placeholder and pods would fail to pull,
+# which is intentional (loud failure) instead of silently running an old tag.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - deployment.yaml
+  - service.yaml
+  - hpa.yaml
+  - ingress.yaml
+  - prometheus-rbac.yaml
+  - prometheus-config.yaml
+  - prometheus-deployment.yaml
+  - prometheus-service.yaml
+  - grafana-provisioning.yaml
+  - grafana-dashboards-configmap.yaml
+  - grafana-deployment.yaml
+  - grafana-service.yaml
