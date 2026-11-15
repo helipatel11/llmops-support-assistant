@@ -2,5 +2,6 @@
   "version": "v1",
   "description": "Baseline: tinyllama (what the EC2/k3s deployment serves), deterministic decoding.",
   "model": "tinyllama",
-  "temperature": 0
+  "temperature": 0,
+  "timeout_s": 60
 }

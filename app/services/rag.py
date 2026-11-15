@@ -59,6 +59,7 @@ def get_llm():
         model=config.OLLAMA_MODEL,
         temperature=config.LLM_TEMPERATURE,
         base_url=config.OLLAMA_BASE_URL,
+        client_kwargs={"timeout": config.LLM_TIMEOUT_S},
     )
 
 
