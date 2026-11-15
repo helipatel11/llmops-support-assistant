@@ -37,7 +37,7 @@ def test_llm_down_returns_503_and_counts_generation_error(client, fake_rag, monk
     def ollama_down(prompt):
         raise ConnectionError("connection refused")
 
-    monkeypatch.setattr(fake_rag.llm, "invoke", ollama_down)
+    monkeypatch.setattr(fake_rag.llm, "stream", ollama_down)
     before = sample("rag_errors_total", stage="generation", error="ConnectionError")
 
     response = client.post("/ask", json={"question": "reset password?"})

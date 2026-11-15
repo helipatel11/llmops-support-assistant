@@ -68,10 +68,31 @@ def retrieve(question: str, k: Optional[int] = None) -> list:
     return get_vectordb().similarity_search(question, k=k or config.RETRIEVER_K)
 
 
+class LLMDeadlineExceeded(TimeoutError):
+    pass
+
+
 def generate(question: str, docs: list) -> str:
+    """Stream the answer and enforce a deadline on the WHOLE call.
+
+    The HTTP client's timeout only limits each wait for the next chunk; with a streamed
+    answer it resets on every token, so a 12 s answer passed a "5 s timeout" (found in
+    the Phase 5 rollback drill). Closing the stream at the deadline drops the connection,
+    so Ollama stops generating instead of burning CPU on an answer nobody receives.
+    """
     context = "\n\n".join(doc.page_content for doc in docs)
     prompt = load_prompt(config.PROMPT_VERSION).format(context=context, question=question)
-    return get_llm().invoke(prompt).content
+    deadline = time.monotonic() + config.LLM_TIMEOUT_S
+    parts = []
+    stream = get_llm().stream(prompt)
+    try:
+        for chunk in stream:
+            parts.append(chunk.content)
+            if time.monotonic() > deadline:
+                raise LLMDeadlineExceeded(f"no complete answer within {config.LLM_TIMEOUT_S} s")
+    finally:
+        stream.close()
+    return "".join(parts)
 
 
 def _timed(stage: str, fn, *args):

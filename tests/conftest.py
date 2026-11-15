@@ -22,9 +22,11 @@ class FakeLLM:
         self.answer = answer
         self.prompts = []
 
-    def invoke(self, prompt):
+    def stream(self, prompt):
+        """Like ChatOllama.stream: the answer arrives in chunks (here, word by word)."""
         self.prompts.append(prompt)
-        return SimpleNamespace(content=self.answer)
+        words = self.answer.split(" ")
+        return (SimpleNamespace(content=w) for w in [words[0]] + [" " + w for w in words[1:]])
 
 
 @pytest.fixture
