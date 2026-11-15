@@ -1,4 +1,6 @@
+import json
 import os
+import urllib.request
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -66,6 +68,41 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "healthy"}
+
+
+def ollama_status() -> dict:
+    """Is Ollama reachable, and does it have the models this release is configured for?"""
+    url = f"{config.OLLAMA_BASE_URL.rstrip('/')}/api/tags"
+    try:
+        with urllib.request.urlopen(url, timeout=1) as resp:
+            names = {m["name"] for m in json.load(resp).get("models", [])}
+    except (OSError, ValueError) as exc:
+        return {"reachable": False, "error": type(exc).__name__}
+    available = names | {n.removesuffix(":latest") for n in names}
+    wanted = [config.OLLAMA_MODEL, config.EMBEDDING_MODEL]
+    return {"reachable": True, "missing_models": [m for m in wanted if m not in available]}
+
+
+@app.get("/ready")
+def ready():
+    """Readiness: should this pod receive traffic?
+
+    Fails only for problems that are this pod's (or this release's) own fault: a broken
+    index, or an LLM/embedding model that Ollama doesn't have (a config typo in this
+    release). Ollama being unreachable does NOT fail readiness: it is shared by every pod,
+    so failing would remove all pods from the Service and take /predict down with /ask.
+    """
+    index = check_index()
+    rag_index_ok.set(1 if index["ok"] else 0)
+    ollama = ollama_status()
+    problems = []
+    if not index["ok"]:
+        problems.append(f"index: {index['reason']}")
+    if ollama.get("missing_models"):
+        problems.append(f"ollama is missing models: {', '.join(ollama['missing_models'])}")
+    body = {"ready": not problems, "problems": problems, "index_ok": index["ok"],
+            "ollama": ollama}
+    return JSONResponse(status_code=200 if not problems else 503, content=body)
 
 
 @app.get("/version")
