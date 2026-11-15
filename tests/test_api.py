@@ -72,5 +72,4 @@ def test_llm_call_has_the_configured_timeout():
     from app.services import rag
 
     llm = rag.get_llm()
-    assert config.LLM_TIMEOUT_S == 60
-    assert llm.client_kwargs == {"timeout": 60}
+    assert llm.client_kwargs == {"timeout": config.LLM_TIMEOUT_S}
