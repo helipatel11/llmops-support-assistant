@@ -1,380 +1,131 @@
-# Support Intelligence Platform
+# LLMOps Support Assistant
 
-An end-to-end **MLOps** and **LLMOps** platform that combines machine learning–based support ticket classification with a Retrieval-Augmented Generation (RAG) assistant. The project demonstrates the complete machine learning lifecycle—from model training and experiment tracking to containerized deployment on Kubernetes with monitoring and CI/CD automation.
+A support API with two jobs:
 
----
+- **`POST /predict`:** classifies a ticket's priority (TF-IDF + logistic regression).
+- **`POST /ask`:** answers IT questions from a knowledge base, using retrieval-augmented generation with a local LLM.
 
-## Project Overview
+It runs on k3s on AWS EC2, built and deployed through GitHub Actions and Terraform.
 
-Modern support teams receive a large volume of support requests every day. Quickly identifying high-priority tickets and providing relevant troubleshooting information can significantly improve response times and operational efficiency.
+The models are deliberately small. The point of the project is everything around them: **measuring** quality, **versioning** every component, **monitoring** in production, **load testing** to find the real bottleneck, and **deploying safely**, with a rollback drill that caught a bug. Every number below was measured, and [`docs/RESULTS.md`](docs/RESULTS.md) records how, where and when.
 
-This project demonstrates how traditional machine learning and large language models can work together in a production-style environment.
+## Key results
 
-The platform provides two core capabilities:
+| Question | Answer (measured) |
+|---|---|
+| How good is the classifier? | Macro F1 **0.50** on 150 held-out synthetic tickets. It misses 33 of 45 outages; a char-n-gram v2 catches more outages but misroutes more medium tickets, so v1 stays the default ([§1](docs/RESULTS.md#1-ticket-classifier)) |
+| Does retrieval find the right doc? | hit@2 **0.96**, MRR **0.97** on 25 golden questions ([§2](docs/RESULTS.md#2-retrieval)) |
+| Are the answers right? | tinyllama is fully correct on **28%**; llama3 on **64%**, at about 2× the latency. Scored by an LLM judge calibrated 9/10 and checked against a human ([§3–5](docs/RESULTS.md#3-llm-judge-calibration)) |
+| Where does the time go? | Generation is **~96%** of `/ask` time ([§6](docs/RESULTS.md#6-live-metrics-and-outage-drill-phase-3-local-stack)) |
+| How much load can it take? | On a t3.large, `/predict` has p95 **8 ms at 100 req/s**. `/ask` is capped at **~0.07 answers/s** by the LLM on one CPU core, and extra users just queue. The autoscaler added pods but no capacity ([§7](docs/RESULTS.md#7-load-tests-bottleneck-and-slos-phase-4)) |
+| What happens when a bad release ships? | A bad **config** was stopped by the readiness probe, with **0 user errors** and a **2 s** rollback. A bad **image** passed every probe; the alert fired after **3 min 39 s**, and the rollback took **83 s**. The drill also exposed a timeout that had never worked ([§9](docs/RESULTS.md#9-deployment-safety-and-rollback-drill-phase-5)) |
 
-* **Ticket Priority Classification** — Predicts the priority of incoming support tickets using a Logistic Regression model trained on TF-IDF features.
-* **RAG Support Assistant** — Answers user questions by retrieving relevant information from a vector database before generating responses using a local Large Language Model powered by Ollama.
+![Rollback drill: a bad image passes every probe; only monitoring catches it](docs/images/drill-b2.png)
 
-Beyond the machine learning components, the project focuses on production engineering practices including infrastructure provisioning, containerization, Kubernetes deployment, experiment tracking, monitoring, and automated CI/CD pipelines.
+## Architecture
 
-The primary goal of this project is to demonstrate an end-to-end production-style MLOps workflow rather than achieving state-of-the-art machine learning accuracy.
+```mermaid
+flowchart LR
+  user([Client]) -->|HTTP, admin IP only| ing[Traefik ingress]
 
----
+  subgraph node["EC2 t3.large (Terraform)"]
+    subgraph k3s["k3s, namespace llmops"]
+      ing --> svc[Service] --> pods
+      subgraph pods["support-assistant pods (HPA 2-5)"]
+        init["init container:<br/>ingest docs → ChromaDB"] -.-> api["FastAPI<br/>/predict /ask /ready /version /metrics"]
+      end
+      prom[Prometheus + alert rules] -->|scrapes each pod| api
+      graf[Grafana dashboard] --> prom
+    end
+    ollama["Ollama (systemd, outside k8s)<br/>tinyllama + nomic-embed-text"]
+  end
 
-## Key Features
+  api -->|embeddings + generation| ollama
+  init -->|embeddings| ollama
 
-* Machine Learning–based support ticket priority classification
-* Retrieval-Augmented Generation (RAG) assistant
-* Local LLM inference using Ollama (`tinyllama`)
-* Local embedding generation using `nomic-embed-text`
-* Persistent vector storage with ChromaDB
-* Experiment tracking and model registry using MLflow
-* FastAPI REST API for inference
-* Dockerized application
-* Kubernetes deployment using k3s
-* Infrastructure provisioning with Terraform
-* CI/CD pipeline using GitHub Actions
-* Monitoring with Prometheus and Grafana
-
----
-
-# System Architecture
-
-![Architecture](docs/images/architecture-v2.2.png)
-
-# Application Screenshots
-
-## FastAPI Swagger UI
-
-![Swagger UI](docs/images/swagger-ui.png)
-
-The interactive API documentation automatically generated by FastAPI.
-
----
-
-## MLflow Experiment Tracking
-
-![MLflow](docs/images/mlflow.png)
-
-MLflow is used to track experiments, parameters, metrics, and trained model artifacts during the training pipeline.
-
----
-
-## Grafana Dashboard
-
-![Grafana](docs/images/grafana-dashboard1.png)
-
-Grafana visualizes Prometheus metrics including HTTP requests, ML predictions, and RAG requests.
-
----
-
-## Kubernetes Deployment
-
-![Kubernetes](docs/images/k8s-pods.png)
-
-Application pods running inside the k3s cluster after deployment.
-
----
-
-The platform consists of two independent workflows:
-
-## Offline Training Pipeline
-
-Historical support tickets are used to train a machine learning model independently from the deployed application.
-
-Training workflow:
-
-```
-tickets.csv
-      │
-      ▼
-Data Preprocessing
-      │
-      ▼
-TF-IDF Vectorization
-      │
-      ▼
-Logistic Regression
-      │
-      ▼
-MLflow Experiment Tracking
-      │
-      ▼
-Serialized Model
+  gh[GitHub Actions] -->|"tests gate the build;<br/>OIDC, no stored keys"| ecr[(ECR, immutable<br/>git-SHA tags)]
+  ecr -->|instance role pulls| pods
+  admin([Admin]) -->|"deploy.sh SHA / rollout undo"| k3s
 ```
 
-The trained model is exported and loaded by the FastAPI application during inference.
+- **`/predict`** runs in-process: a versioned scikit-learn pipeline tracked in MLflow.
+- **`/ask`** follows three steps:
+  1. Embed the question and retrieve the top-k chunks from ChromaDB.
+  2. Build the prompt from a versioned template.
+  3. Have tinyllama answer, with a deadline on the whole answer.
 
----
+  Each pod builds its own ChromaDB index at startup, and `/ready` refuses traffic if the index doesn't match the retrieval config.
+- **Versions everywhere:** model, prompt, retrieval and generation settings live in committed files (`configs/`, `prompts/`). Every response and `GET /version` say exactly what's running.
 
-## Online Inference Pipeline
+Details: [architecture](docs/architecture.md) · [decisions (ADRs)](docs/adr/) · [runbook](docs/runbook.md) · [case study](docs/case-study.md) · [dashboard guide](docs/dashboard.md)
 
-The application is deployed on Kubernetes and exposes two REST endpoints.
+**Screenshots** (real deployments): [Grafana dashboard](docs/images/grafana-dashboard1.png) · [dashboard, lower panels](docs/images/grafana-dashboard2.png) · [RAG stage timing](docs/images/grafana-rag-stages.png) · [HPA scaling under load](docs/images/hpa-scaled.png) · [pods on k3s](docs/images/k8s-pods.png) · [`/version`](docs/images/version-endpoint.png) · [Swagger UI](docs/images/swagger-ui.png)
 
-### POST /predict
+## Run it locally
 
-Predicts ticket priority using the trained TF-IDF + Logistic Regression model.
-
-```
-User
-   │
-   ▼
-FastAPI
-   │
-   ▼
-TF-IDF
-   │
-   ▼
-Logistic Regression
-   │
-   ▼
-Prediction
-```
-
-### POST /ask
-
-Implements a Retrieval-Augmented Generation workflow.
-
-```
-User
-   │
-   ▼
-FastAPI
-   │
-   ▼
-Embedding
-(nomic-embed-text)
-   │
-   ▼
-ChromaDB
-   │
-Retrieve Context
-   │
-   ▼
-tinyllama (Ollama)
-   │
-   ▼
-Generated Answer
-```
-
----
-
-# Technology Stack
-
-| Category | Technologies |
-|-----------|--------------|
-| Programming Language | Python |
-| Backend API | FastAPI |
-| Machine Learning | scikit-learn, TF-IDF, Logistic Regression |
-| LLMOps | Ollama, tinyllama, nomic-embed-text |
-| Vector Database | ChromaDB |
-| Experiment Tracking | MLflow |
-| Containerization | Docker |
-| Container Orchestration | Kubernetes (k3s), Traefik |
-| Cloud Platform | AWS EC2, Amazon ECR |
-| Infrastructure as Code | Terraform |
-| Monitoring | Prometheus, Grafana |
-| CI/CD | GitHub Actions |
-
----
-
-# Repository Organization
-
-| Directory | Responsibility |
-|-----------|----------------|
-| `app/` | FastAPI application and REST APIs |
-| `training/` | Machine learning training pipeline and MLflow |
-| `llm/` | RAG pipeline, embeddings, and vector database |
-| `infra/` | Terraform infrastructure and Kubernetes manifests |
-
----
-
-# Deployment & Operations
-
-## Infrastructure
-
-Terraform provisions the AWS infrastructure including:
-
-- Virtual Private Cloud (VPC)
-- Public Subnet
-- Internet Gateway
-- Route Table
-- Security Group
-- EC2 instance running Ubuntu 22.04 and k3s
-
----
-
-## Containerization & Orchestration
-
-The application is packaged as a Docker image and deployed on a lightweight Kubernetes (k3s) cluster.
-
-Kubernetes manages:
-
-- Application deployment
-- Service discovery
-- Ingress routing using Traefik
-- Readiness probes
-- Liveness probes
-- Rolling updates
-
----
-
-## CI/CD Pipeline
-
-The project uses GitHub Actions to implement a two-stage Continuous Integration and Continuous Deployment (CI/CD) pipeline.
-
-### Continuous Integration (CI)
-
-On every push to the `main` branch, GitHub Actions:
-
-1. Builds the Docker image using Docker Buildx.
-2. Tags the Docker image.
-3. Pushes the image to Amazon Elastic Container Registry (ECR).
-
-### Continuous Deployment (CD)
-
-After the CI workflow completes successfully:
-
-1. A second GitHub Actions workflow is triggered.
-2. The workflow connects securely to the EC2 instance using SSH.
-3. Executes:
+Needs Python 3.11 (CI and the image use 3.11), Docker and [Ollama](https://ollama.com):
 
 ```bash
-kubectl rollout restart deployment/support-assistant -n llmops
-kubectl rollout status deployment/support-assistant -n llmops
+ollama pull tinyllama && ollama pull nomic-embed-text
+make install            # runtime + dev dependencies
+make test               # 46 tests, no Ollama needed
+make ingest             # build the ChromaDB index from llm/docs/
+docker compose up --build -d
 ```
 
-4. Kubernetes performs a rolling deployment of the updated application.
-
----
-
-## Monitoring
-
-The application is instrumented using **prometheus-fastapi-instrumentator**, which automatically exposes HTTP metrics for the FastAPI service.
-
-Prometheus scrapes these metrics every **5 seconds**, while Grafana visualizes operational dashboards.
-
-The monitoring stack currently tracks:
-
-### Application Metrics
-
-- HTTP request count
-- HTTP request latency
-- HTTP response status codes
-- In-progress requests
-
-### Machine Learning Metrics
-
-- Total ML predictions
-- Prediction counts grouped by ticket priority
-
-### LLM / RAG Metrics
-
-- Total RAG requests
-
-This monitoring setup provides visibility into API traffic, model usage, and RAG activity during runtime.
----
-
-# Getting Started
-
-## Prerequisites
-
-- Python 3.11+
-- Docker
-- Ollama
-- Kubernetes (k3s)
-- Terraform
-- AWS CLI
-
----
-
-## Install Ollama Models
+- API: http://localhost:8000/docs
+- Grafana: http://localhost:3000, dashboard "Support Assistant"
+- Prometheus: http://localhost:9090, including `/alerts`
 
 ```bash
-ollama pull tinyllama
-ollama pull nomic-embed-text
+curl -s localhost:8000/predict -H 'content-type: application/json' -d '{"text":"Production database is down"}'
+curl -s localhost:8000/ask -H 'content-type: application/json' -d '{"question":"How do I reset my password?"}'
+curl -s localhost:8000/version
 ```
 
----
+Evaluate: `make eval` (all; needs llama3 as the judge) or `make eval-classifier`. Compare versions: `make compare KIND=answers A=v1 B=gen-llama3`. Load test: `loadtest/run.sh local http://app:8000 llmops-support-assistant_default`.
 
-## Clone Repository
+## Deploy to AWS
+
+The stack is built for a session and destroyed afterwards: about $0.08/hour for the t3.large.
 
 ```bash
-git clone https://github.com/<your-username>/support-intelligence-platform.git
-
-cd support-intelligence-platform
+cd infra/terraform && terraform apply -var "admin_cidr=$(curl -s https://checkip.amazonaws.com)/32"
+#   VPC, security group (SSH + HTTP from your IP only), EC2 with IMDSv2, instance role
+#   for ECR pulls, ECR repo, GitHub OIDC role for CI. user_data installs k3s + Ollama
+#   and pulls the models (2 min 12 s on a clean boot).
+infra/k8s/deploy.sh <git-sha> "reason"                       # on the node
+kubectl -n llmops rollout undo deployment/support-assistant  # roll back
+terraform destroy
 ```
 
----
+CI (`.github/workflows/ci.yml`) runs ruff and pytest on every PR. On `main` it builds and pushes `:<git-sha>` to ECR, with no AWS keys stored in GitHub. Deploys run from the admin machine: the security group admits only the admin IP, so GitHub-hosted runners can't reach the node ([ADR 0007](docs/adr/0007-ci-oidc-and-admin-deploys.md)).
 
-## Install Dependencies
+## Repository map
 
-```bash
-pip install -r requirements.txt
-```
+| Path | What |
+|---|---|
+| `app/` | FastAPI service: endpoints, RAG pipeline, classifier, metrics, index check |
+| `configs/`, `prompts/` | Versioned classifier, retrieval and generation configs, and prompt templates |
+| `training/` | Synthetic data generator, training with MLflow, model artifacts |
+| `llm/` | Knowledge-base documents and the ingest script |
+| `evaluation/` | Classifier, retrieval, LLM-judge and answer evaluations; golden set; results |
+| `loadtest/` | k6 scripts, runner, and results per environment |
+| `monitoring/` | Prometheus config, alert rules, Grafana dashboard (source for the k8s ConfigMaps) |
+| `infra/terraform/`, `infra/k8s/` | AWS infrastructure and bootstrap; Kubernetes manifests and `deploy.sh` |
+| `tools/` | Traffic generator, load-test report, drill recorder and charts |
+| `docs/` | Results, architecture, ADRs, runbook, case study, status |
 
----
+## Limitations
 
-## Run the Application
+- **Synthetic data:** the tickets and knowledge base are synthetic (labelled as such), so real-world scores would likely be lower.
+- **Small evaluation sets:** 150 test tickets and 30 golden questions.
+- **Weak judge:** the LLM judge is small and under-scores correct answers.
+- **Too slow for interactive chat:** `/ask` on CPU is about 13 s per answer. An honest SLO here is p95 ≤ 30 s.
+- **One node:** there's no redundancy, and Ollama runs outside Kubernetes.
 
-```bash
-uvicorn app.main:app --reload
-```
+See [`docs/RESULTS.md`](docs/RESULTS.md#limitations).
 
-Application:
+## License
 
-```
-http://localhost:8000
-```
-
-Swagger UI:
-
-```
-http://localhost:8000/docs
-```
-
----
-
-# API Endpoints
-
-| Method | Endpoint | Description |
-|----------|----------|-------------|
-| GET | `/` | Application status |
-| GET | `/health` | Health check |
-| POST | `/predict` | Predict ticket priority |
-| POST | `/ask` | Ask questions using the RAG assistant |
-
----
-
-# Future Improvements
-
-Potential future enhancements include:
-
-- Multi-label ticket classification (Priority, Department, Sentiment)
-- Automated unit and integration testing in GitHub Actions
-- Remote MLflow artifact storage
-- Terraform remote state
-- Managed Kubernetes deployment using Amazon EKS
-
----
-
-# Lessons Learned
-
-Building this project provided hands-on experience across the complete MLOps lifecycle.
-
-Key takeaways include:
-
-- Separating model training from inference services.
-- Deploying machine learning workloads on Kubernetes.
-- Provisioning cloud infrastructure using Terraform.
-- Integrating traditional machine learning with Retrieval-Augmented Generation.
-- Monitoring production services using Prometheus and Grafana.
-- Automating container builds and deployments with GitHub Actions.
-
-More importantly, this project reinforced that successful MLOps extends beyond building machine learning models—it also requires reproducibility, deployment automation, infrastructure management, observability, and operational reliability.
-
----
-
-# License
-
-This project is licensed under the MIT License.
+MIT

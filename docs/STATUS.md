@@ -1,9 +1,25 @@
 # Project Status
 
-Audit date: 2026-11-12. Baseline commit: `d23f9d1` (main).
-This file records the state of the repo **before** the Phase 0.5 clean-up. Each area lists what is **Done**, **Partial**, or **Missing** against the goals in `CLAUDE.md`.
+## Current status (2026-11-16, all phases complete)
 
-## How it runs today
+| Area | Done | Open (planned, not done) |
+|---|---|---|
+| **Evaluation** | Classifier, retrieval (hit@k, MRR), answer quality with a calibrated LLM judge + human spot check; `make eval` | Bigger and real-world datasets; more multi-fact judge calibration cases; prompt v2 |
+| **Versioning** | Model, prompt, retrieval and generation configs as files; MLflow registry; index fingerprint; versions in every response and `/version` | |
+| **Observability** | RED metrics per endpoint, RAG stage timing, version info-metric, dashboard as code, alert rules (`monitoring/alerts.yml`) | `/ask` alert is slow at low traffic (count-based rule + synthetic probe); no Alertmanager routing |
+| **Performance** | k6 load tests on M1 and EC2; bottleneck analysis; SLO proposals | Ollama tuning; `/ask` concurrency cap |
+| **Deployment** | Immutable SHA images; tag chosen at deploy time (`deploy.sh`); zero-downtime rollouts; readiness on own faults; whole-answer LLM deadline; rollback drill documented | Automated rollback (canary analysis); GitOps; pod-shutdown behaviour under load (5 client-only `/predict` failures in the drill, unexplained) |
+| **Infrastructure** | Terraform: VPC, SG locked to admin IP, IMDSv2, instance role, ECR (immutable, lifecycle), CI OIDC role; cloud-init bootstrap (2 min 12 s) | Remote Terraform state; `terraform destroy` took 510 s once (not investigated) |
+| **CI/CD** | ruff + pytest gate; build/push on main via OIDC, switched by `ECR_PUSH_ENABLED` | CD disabled by design (node closed to the internet); delete the old static-key secrets |
+| **Docs** | README, [architecture](architecture.md), [ADRs](adr/), [runbook](runbook.md), [case study](case-study.md), [RESULTS](RESULTS.md) | |
+
+---
+
+## Phase 0 audit (historical, 2026-11-12)
+
+Baseline commit: `d23f9d1` (main). The rest of this file records the state of the repo **before** any of the work above. Kept as the "before" picture for the case study; it is not updated.
+
+## How it ran then
 
 ```
 Offline:  tickets.csv ──► train.py (TF-IDF + LogisticRegression) ──► model.pkl / vectorizer.pkl (committed) + MLflow (local ./mlruns)
