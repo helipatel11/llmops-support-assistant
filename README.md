@@ -59,7 +59,7 @@ flowchart LR
 
 Details: [architecture](docs/architecture.md) · [decisions (ADRs)](docs/adr/) · [runbook](docs/runbook.md) · [case study](docs/case-study.md) · [dashboard guide](docs/dashboard.md)
 
-**Screenshots** (real deployments): [Grafana dashboard](docs/images/grafana-dashboard1.png) · [dashboard, lower panels](docs/images/grafana-dashboard2.png) · [RAG stage timing](docs/images/grafana-rag-stages.png) · [HPA scaling under load](docs/images/hpa-scaled.png) · [pods on k3s](docs/images/k8s-pods.png) · [`/version`](docs/images/version-endpoint.png) · [Swagger UI](docs/images/swagger-ui.png)
+**Screenshots** (real deployments): [Grafana dashboard](docs/images/grafana-dashboard1.png) · [dashboard, lower panels](docs/images/grafana-dashboard2.png) · [RAG stage timing](docs/images/grafana-rag-stages.png) · [HPA scaling under load](docs/images/hpa-scaled.png) · [pods on k3s](docs/images/k8s-pods.png) · [`/version`](docs/images/version-endpoint.png) · [Swagger UI](docs/images/swagger-ui.png) · [MLflow: classifier v1 vs v2](docs/images/mlflow1.png) · [v1 vs v2, macro F1](docs/images/mlflow2.png)
 
 ## Run it locally
 
