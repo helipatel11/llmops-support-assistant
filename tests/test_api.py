@@ -73,3 +73,33 @@ def test_llm_call_has_the_configured_timeout():
 
     llm = rag.get_llm()
     assert llm.client_kwargs == {"timeout": config.LLM_TIMEOUT_S}
+
+
+def test_generation_deadline_covers_the_whole_streamed_answer(client, fake_rag, monkeypatch):
+    """Each chunk arrives quickly, but the whole answer takes longer than the deadline:
+    must fail (503), not pass because no single read was slow (Phase 5 drill finding)."""
+    from app import config
+    from app.services import rag
+
+    clock = iter(range(0, 100, 2))  # every chunk "takes" 2 s
+    monkeypatch.setattr(rag.time, "monotonic", lambda: next(clock))
+    monkeypatch.setattr(config, "LLM_TIMEOUT_S", 3)
+    closed = []
+
+    class SlowStreamLLM:
+        def stream(self, prompt):
+            def chunks():
+                try:
+                    for word in ["a", " b", " c", " d"]:
+                        yield type("C", (), {"content": word})()
+                finally:
+                    closed.append(True)
+            return chunks()
+
+    monkeypatch.setattr(rag, "get_llm", lambda: SlowStreamLLM())
+    response = client.post("/ask", json={"question": "anything"})
+
+    assert response.status_code == 503
+    assert response.json() == {"detail": "RAG assistant temporarily unavailable",
+                               "stage": "generation", "error": "LLMDeadlineExceeded"}
+    assert closed  # stream closed: Ollama connection dropped, generation stops
