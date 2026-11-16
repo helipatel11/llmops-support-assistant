@@ -80,3 +80,6 @@ secret.yaml
 .env
 .env.*
 evaluation/results/*_current.json
+
+# Local assistant working notes (not part of the project)
+CLAUDE.md
