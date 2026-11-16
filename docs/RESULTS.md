@@ -201,7 +201,7 @@ Proposed targets the current system can meet with margin, over a 30-day window. 
 |---|---|
 | `terraform apply` (12 resources) | 39 s |
 | Image build (amd64, emulated on M1) + push to ECR | 102 s |
-| First-boot bootstrap | **Failed** at `ollama pull` (`$HOME` unset under cloud-init); fixed, re-run on the node in 45 s with packages cached. A clean first-boot timing is still to be measured |
+| First-boot bootstrap | **Failed** at `ollama pull` (`$HOME` unset under cloud-init); fixed, re-run on the node in 45 s with packages cached. Clean first boot measured in Phase 5: 2 min 12 s (section 9) |
 | `kubectl apply` → app ready (2 pods, init-container ingest) | 72 s |
 | `terraform destroy` (12 resources) | 39 s |
 | Whole AWS session | ~1 h 53 min (≈ $0.16 instance time) |
@@ -209,6 +209,105 @@ Proposed targets the current system can meet with margin, over a 30-day window. 
 ## 8. Latency (informal, not a benchmark)
 
 Single sequential runs on the dev laptop, with other models loaded; **not** a load test. Retrieval median 0.02–0.14 s; generation median 1.1 s (tinyllama, top-2) to 2.3 s (llama3). Generation dominates `/ask` in every run. Proper p50/p95/p99 per endpoint is Phase 4.
+
+## 9. Deployment safety and rollback drill (Phase 5)
+
+**Date:** 2026-11-15. **Where:** EC2 t3.large, k3s v1.30.4, tinyllama on CPU (same stack as section 7). **Evidence:** `loadtest/results/ec2-drill/` (5 s timeline from `tools/drill_watch.sh`, event timestamps, `kubectl rollout history`, k6 log, Prometheus range exports). Charts are rebuilt from those files by `tools/drill_charts.py`.
+
+**What was in place for the drill:**
+
+- **Immutable releases:** images are tagged with the git SHA, and ECR rejects overwriting a tag. `infra/k8s/deploy.sh <sha>` picks the tag at deploy time, so re-applying the manifests can't roll pods back to an old tag.
+- **Safe rollouts:** `maxUnavailable: 0`, `maxSurge: 1`, `minReadySeconds: 10`, `progressDeadlineSeconds: 240`.
+- **Two probes with different jobs:**
+  - Readiness (`/ready`) fails only for the pod's own faults: a broken index, or a model Ollama doesn't have.
+  - Liveness (`/health`) checks nothing external.
+- **Alerts** (`monitoring/alerts.yml`): 5xx ratio per endpoint above 5% for 1 minute, broken vector index, and scrape target down.
+- **Background traffic** during both drills: 2 req/s `/predict` plus one `/ask` every 20 s (k6, open model).
+
+### Session timings
+
+| Step | Time |
+|---|---|
+| `terraform apply` (14 resources) | 39 s |
+| First-boot bootstrap (k3s, Ollama, model pulls), clean instance | **2 min 12 s** after apply (cloud-init log: done at 03:52:14Z) |
+| CI: GitHub OIDC login → image pushed to ECR (no stored AWS keys) | AWS STS `AssumeRoleWithWebIdentity` by `repo:…:ref:refs/heads/main` at 04:09:14Z; image pushed 87 s later |
+| First deploy with `deploy.sh` (all manifests, 2 app pods with init-container ingest) | 73 s |
+| `terraform destroy` (14 resources) | 510 s (39 s in the previous session; not investigated) |
+| Whole AWS session | 1 h 20 min (≈ $0.11 instance time) |
+
+### Drill A: bad config release, stopped by the readiness probe
+
+A config-only release: `kubectl set env GENERATION_VERSION=llama3`. The config file is valid and passes every test, but the node never pulled llama3.
+
+![Drill A](images/drill-a.png)
+
+| Time (UTC) | Event |
+|---|---|
+| 04:32:09 | Bad config released |
+| 04:32:11 | New pod running, **not Ready**: `/ready` → 503 `"ollama is missing models: llama3"` |
+| 04:32 – 04:36 | Both old pods keep serving; the rollout waits (`maxUnavailable: 0`) |
+| 04:36:11 | Kubernetes marks the rollout failed: `ProgressDeadlineExceeded` (`Available` stayed True) |
+| 04:36:33 → 04:36:35 | `kubectl rollout undo`: **2 s** |
+
+**User impact: none.** In the 4 minutes of the stalled rollout, 481 `/predict` and 12 `/ask` requests were all 2xx (Prometheus, app side). The rollback is instant because the old ReplicaSet was never scaled down.
+
+### Drill B, run 1: the drill found a bug in the timeout
+
+The bad release (`fa2bce4`) lowered `timeout_s` from 60 to 5. Since `/ask` takes a median 12.7 s here (section 7), almost every request should have failed. Instead, most still returned 200, and the alert went pending once (04:40:15) but never fired. After 5 minutes I rolled back anyway (04:43:41 → 04:45:09, 88 s).
+
+- **Cause:** the timeout was passed to the HTTP client (httpx), where it limits each *read*, not the whole call. `ChatOllama` streams tokens, so the clock reset on every token, and only a slow first token could trip it. The pods really ran `timeout_s: 5` (checked inside the image).
+- **Local reproduction:** with a 1 s timeout, a call succeeded after 5.70 s.
+- **Consequence:** the 60 s timeout added earlier in Phase 5 had never limited anything.
+- **Fix** (`fa9f809`): `generate()` streams and enforces a deadline across the whole answer. At the deadline it closes the stream, which drops the connection to Ollama. Verified locally: a 2 s deadline now stops at 2.01 s.
+- **Errors during the rollback were not caused by pod shutdown.** The `/ask` errors seen during the rollback (04:44:30–04:45:00) were all `ReadTimeout` (`rag_errors_total`). The bad release was still serving until its replacements were Ready. No connection-level errors appeared in the app metrics.
+
+### Drill B, run 2: bad image, caught by monitoring
+
+The same bad change, rebuilt on top of the fix (`07837e1`, deadline 5 s), deployed with `deploy.sh` like a normal release. It passes every probe.
+
+![Drill B](images/drill-b2.png)
+
+| Time (UTC) | Event | Since bad release live |
+|---|---|---|
+| 04:53:27 | `deploy.sh 07837e1` | |
+| 04:53:58 | First bad pod Ready: starts receiving traffic | |
+| 04:54:48 | Rollout complete: both pods on the bad image, Ready | 0 |
+| ~04:55:45 | First `LLMDeadlineExceeded` errors (`rag_errors_total{stage="generation"}`) | ~1 min |
+| 04:56:00 → 04:56:41 | Alert pending, then reset (see below) | |
+| 04:57:29 | Alert pending again | |
+| **04:58:27** | **`EndpointErrorRatioHigh{handler="/ask"}` firing** | **3 min 39 s** (time to detect) |
+| 04:58:29 | `kubectl rollout undo` | |
+| 04:59:52 | Rollback complete | 83 s rollback |
+| 04:59:58 | Only good pods left, alert resolved | ~6 min of bad pods serving (04:53:58 → 04:59:58) |
+
+**`/predict` was unaffected throughout:** 0 app-side 5xx. Only `/ask` failed.
+
+**Why detection took 3 min 39 s rather than about 2 min:**
+
+- **Sparse traffic.** At 3 `/ask` per minute, the 1-minute window holds about 3 requests.
+- **Successes reset the `for: 1m` timer.** Two `/ask` requests finished *within* the 5 s deadline (04:56:30–04:57:00). That dropped the ratio to 0 and reset the timer.
+- **No data right after the rollout.** The ratio was `NaN` because no `/ask` had completed in the window, and an alert can't evaluate `NaN`.
+- **Run 1 shows the extreme case:** with mostly-successful responses, the same alert never fired.
+- **Conclusion:** a ratio alert with a short window is unreliable for a low-volume, slow endpoint.
+
+**Why rollback took 83 s here but 2 s in drill A:** run 2's rollout had *completed*, so the old ReplicaSet was at 0 pods. Rolling back meant starting new pods from scratch: init-container ingest, then model load, then readiness.
+
+**Client view (k6, whole session, 41 min, aborted at the end):**
+- `/predict`: 5 of 4,932 failed (0.10%).
+- `/ask`: 14 of 124 failed.
+- The 5 `/predict` failures do **not** appear in the app's metrics, so they failed before reaching the app (ingress or pod turnover is the likely place). This is **unverified**: k6 didn't log per-request times or status codes.
+
+### What the drills changed, and follow-ups
+
+- **Fixed:**
+  - the whole-answer LLM deadline (above)
+  - an idempotent namespace step in the bootstrap: the ECR-secret refresh raced with its own timer on the clean first boot (`AlreadyExists`)
+- **Follow-ups (not yet done):**
+  - **Alerting for `/ask`:** a count-based or longer-window rule (e.g. ≥ 3 errors in 5 min), plus a synthetic `/ask` probe so there is always traffic to judge.
+  - **Automated rollback:** progressive delivery (Argo Rollouts analysis, or a canary gated on the error ratio) instead of a human running `rollout undo`.
+  - **Faster rollback:** to keep it near-instant after a completed rollout, keep the previous ReplicaSet warm (blue/green) or make pod startup faster.
+  - **Drill traffic logging:** log each failed request with its time and status, so client-only failures can be explained.
+  - **Alert noise:** `AppTargetDown` goes pending at every rollout while terminating pods are still scraped. It never fired (`for: 1m`), but it's noise.
 
 ## Limitations
 
@@ -227,7 +326,8 @@ Single sequential runs on the dev laptop, with other models loaded; **not** a lo
 
 - **Prompt v2** (stricter refusal instructions), the obvious next experiment given 0/5 exact refusals and 8/25 false refusals.
 - Ollama tuning (threads, parallel requests) and an `/ask` concurrency cap: hypotheses from the Phase 4 bottleneck analysis.
-- A clean first-boot bootstrap timing on a fresh instance.
+- Alerting and automated rollback improvements from the Phase 5 drill (section 9, follow-ups).
+- `terraform destroy` taking 510 s instead of 39 s (2026-11-15): cause not investigated.
 
 ## Provenance
 
